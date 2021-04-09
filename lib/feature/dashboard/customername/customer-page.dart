@@ -99,9 +99,19 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
     print(urlGetCategory);
     setState((){
       _dataCategory = listData;
+      if(!categoryContains(_valCategory)) {
+        _valCategory = null;
+      }
     });
     print("Data Category : $listData");
   }
+  bool categoryContains(String category)  {
+    for(int i=0; i<_dataCategory.length; i++){
+      if(category==_dataCategory[i]["MASTER_SETUP"]) return true;
+    }
+    return false;
+  }
+
 
   //Hit API Dropdown Segmen dan SubSegment
   var urlGetSegment = "http://119.18.157.236:8893/Api/CustSegment";
@@ -268,12 +278,12 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
     print("Ini perfs dari savedFormMap : $savedFormMap");
     _customerNameController.text=savedFormMap["CustName"];
     _brandNameController.text=savedFormMap["BrandName"];
-//    _valCategory=savedFormMap["Category"];
-//    _valSegment=savedFormMap["Category"];
-//    _valSubSegment=savedFormMap["Category"];
-//    _valClass=savedFormMap["Category"];
+    _valCategory=savedFormMap["Category"];_dataCategory.add(<String, dynamic>{"Category":_valCategory});
+//    _valSegment=savedFormMap["Segment"]; _dataSegment.add(<String, dynamic>{"Segment":_valSegment});
+//    _valSubSegment=savedFormMap["SubSegment"]; _dataSubSegment.add(<String, dynamic>{"SubSegment":_valSubSegment});
+//    _valClass=savedFormMap["Class"];_dataClass.add(<String, dynamic>{"Class":_valClass});
     _phoneController.text=savedFormMap["PhoneNo"];
-//    _valCompanyStatus=savedFormMap["CompanyStatus"];
+//    _valCompanyStatus=savedFormMap["CompanyStatus"]; _dataCompanyStatus.add(<String, dynamic>{"CompanyStatus":_valCompanyStatus});
     _faxController.text=savedFormMap["FaxNo"];
     _contactPersonController.text=savedFormMap["ContactPerson"];
     _emailAddressController.text=savedFormMap["EmailAddress"];
