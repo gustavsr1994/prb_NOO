@@ -3,29 +3,64 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:prb_app/feature/dashboard/companyaddress/companyaddress-page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-class CustomerNamePage extends StatefulWidget {
+class CustomerPage extends StatefulWidget {
   @override
-  _CustomerNamePageState createState() => _CustomerNamePageState();
+  _CustomerPageState createState() => _CustomerPageState();
 }
 
-class _CustomerNamePageState extends State<CustomerNamePage>{
+class _CustomerPageState extends State<CustomerPage>{
 
-  TextEditingController _customerNameController = TextEditingController();
-  TextEditingController _brandNameController = TextEditingController();
-  TextEditingController _categoryController = TextEditingController();
-  TextEditingController _segmenController = TextEditingController();
-  TextEditingController _subSegmenController = TextEditingController();
-  TextEditingController _classController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _companyStausController = TextEditingController();
-  TextEditingController _faxController = TextEditingController();
-  TextEditingController _contactPersonController = TextEditingController();
-  TextEditingController _emailAddressController = TextEditingController();
-  TextEditingController _websiteController = TextEditingController();
+  //Customer Controller
+  TextEditingController _customerNameControllerCustomer = TextEditingController();
+  TextEditingController _brandNameControllerCustomer = TextEditingController();
+  TextEditingController _categoryControllerCustomer = TextEditingController();
+  TextEditingController _segmenControllerCustomer = TextEditingController();
+  TextEditingController _subSegmenControllerCustomer = TextEditingController();
+  TextEditingController _classControllerCustomer = TextEditingController();
+  TextEditingController _phoneControllerCustomer = TextEditingController();
+  TextEditingController _companyStausControllerCustomer = TextEditingController();
+  TextEditingController _faxControllerCustomer = TextEditingController();
+  TextEditingController _contactPersonControllerCustomer = TextEditingController();
+  TextEditingController _emailAddressControllerCustomer = TextEditingController();
+  TextEditingController _npwpControllerCustomer = TextEditingController();
+  TextEditingController _ktpControllerCustomer = TextEditingController();
+  TextEditingController _currencyControllerCustomer = TextEditingController();
+  TextEditingController _salesOfficeControllerCustomer = TextEditingController();
+  TextEditingController _priceGroupControllerCustomer = TextEditingController();
+  TextEditingController _businessUnitControllerCustomer = TextEditingController();
+  TextEditingController _salesmanControllerCustomer = TextEditingController();
+  TextEditingController _websiteControllerCustomer = TextEditingController();
+  TextEditingController _fotoktpControllerCustomer = TextEditingController();
+  TextEditingController _fotonpwpControllerCustomer = TextEditingController();
+  TextEditingController _fotosiupControllerCustomer = TextEditingController();
+  TextEditingController _fotobuildingControllerCustomer = TextEditingController();
+
+  //Company Controller
+  TextEditingController _nameControllerCompany = TextEditingController();
+  TextEditingController _streetControllerCompany = TextEditingController();
+  TextEditingController _cityControllerCompany = TextEditingController();
+  TextEditingController _countryControllerCompany = TextEditingController();
+  TextEditingController _stateControllerCompany = TextEditingController();
+  TextEditingController _zipCodeControllerCompany = TextEditingController();
+
+  //Tax Controller
+  TextEditingController _nameControllerTax = TextEditingController();
+  TextEditingController _streetControllerTax = TextEditingController();
+  TextEditingController _cityControllerTax = TextEditingController();
+  TextEditingController _countryControllerTax = TextEditingController();
+  TextEditingController _stateControllerTax = TextEditingController();
+  TextEditingController _zipCodeControllerTax = TextEditingController();
+
+  //Delivery Controller
+  TextEditingController _nameControllerDelivery = TextEditingController();
+  TextEditingController _streetControllerDelivery = TextEditingController();
+  TextEditingController _cityControllerDelivery = TextEditingController();
+  TextEditingController _countryControllerDelivery = TextEditingController();
+  TextEditingController _stateControllerDelivery = TextEditingController();
+  TextEditingController _zipCodeControllerDelivery = TextEditingController();
 
   final _formkey = GlobalKey<FormState>();
 
@@ -92,6 +127,7 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
   //hit api Category
   var urlGetCategory = "http://119.18.157.236:8893/Api/CustCategory";
   String _valCategory;
+  // ignore: deprecated_member_use
   List<dynamic> _dataCategory = List();
   void getCategory() async {
     final response = await http.get(Uri.parse(urlGetCategory));
@@ -112,40 +148,56 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
     return false;
   }
 
-
   //Hit API Dropdown Segmen dan SubSegment
   var urlGetSegment = "http://119.18.157.236:8893/Api/CustSegment";
   var urlGetSubSegment = "http://119.18.157.236:8893/Api/CustSubSegment";
   String _valSegment, _valSubSegment;
+  // ignore: deprecated_member_use
   List<dynamic> _dataSegment = List(), _dataSubSegment = List();
-
   void getSegment() async {
    final response = await http.get(Uri.parse(urlGetSegment)); //untuk melakukan request ke webservice
     var listData = jsonDecode(response.body); //lalu kita decode hasil datanya
    print(urlGetSegment);
    setState(() {
       _dataSegment = listData; // dan kita set kedalam variable _dataProvince
+     if(!segmenContains(_valSegment)){
+       _valSegment = null;
+     }
     });
     print("Data Segment : $listData");
   }
-
+  bool segmenContains(String segmen){
+    for (int i=0; i<_dataSegment.length; i++){
+      if(segmen==_dataSegment[i]["SEGMENTID"]) return true;
+    }
+    return false;
+  }
   void getSubSegment(String SelectedSegment) async {
     final response = await http.get(Uri.parse(urlGetSubSegment));
     var listData = jsonDecode(response.body);
     print(SelectedSegment);
     setState(() {
-//      String SelectedSegment;
-//      listData = listData.where((element) => element["SEGMENTID"] == SelectedSegment).toList();
-//      SelectedSegment = "Agro";
       listData = listData.where((element) => element["SEGMENTID"] == SelectedSegment).toList();
       _dataSubSegment = listData;
+      print("test $_dataSubSegment");
+      print("test $_dataSubSegment filter by $SelectedSegment");
+      if(!subsegmenContains(_valSubSegment)){
+        _valSubSegment = null;
+      }
     });
     print("Data SubSegment : $listData");
+  }
+  bool subsegmenContains(String subSegmen){
+    for (int i=0; i<_dataSubSegment.length; i++){
+      if(subSegmen==_dataSubSegment[i]["SUBSEGMENTID"]) return true;
+    }
+    return false;
   }
 
   //hit api Class
   var urlGetClass = "http://119.18.157.236:8893/Api/CustClass";
   String _valClass;
+  bool _selectedClass = false;
   List<dynamic> _dataClass = List();
   void getClass() async {
     final response = await http.get(Uri.parse(urlGetClass));
@@ -153,13 +205,23 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
     print(urlGetClass);
     setState((){
       _dataClass = listData;
+      if(!classContains(_valClass)){
+        _valClass = null;
+      }
     });
     print("Data Class : $listData");
+  }
+  bool classContains(String classs){
+    for (int i=0; i<_dataClass.length; i++){
+      if(classs==_dataClass[i]["CLASS"]) return true;
+    }
+    return false;
   }
 
   //hit api CompanyStatus
   var urlGetCompanyStatus = "http://119.18.157.236:8893/Api/CustCompanyChain";
   String _valCompanyStatus;
+  bool _selectedCompanyStatus = false;
   List<dynamic> _dataCompanyStatus = List();
 
   void getCompanyStatus() async {
@@ -168,15 +230,66 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
     print(urlGetCompanyStatus);
     setState((){
       _dataCompanyStatus = listData;
+      if(!companyContains(_valCompanyStatus)){
+        _valCompanyStatus = null;
+      }
     });
     print("Data CompanyStatus : $listData");
   }
+  bool companyContains(String company){
+    for (int i=0; i<_dataCompanyStatus.length; i++){
+      if(company==_dataCompanyStatus[i]["CHAINID"]) return true;
+    }
+    return false;
+  }
+
+  //hit api PriceGroup
+  var urlGetPriceGroup = "http://119.18.157.236:8893/Api/CustPriceGroup";
+  String _valPriceGroup;
+  // ignore: deprecated_member_use
+  List<dynamic> _dataPriceGroup = List();
+  void getPriceGroup() async {
+    final response = await http.get(Uri.parse(urlGetPriceGroup));
+    var listData = jsonDecode(response.body);
+    print(urlGetPriceGroup);
+    setState((){
+      _dataPriceGroup = listData;
+      if(!pricegroupContains(_valPriceGroup)){
+        _valPriceGroup = null;
+      }
+    });
+    print("Data CompanyStatus : $listData");
+  }
+  bool pricegroupContains(String pricegroup){
+    for(int i = 0; i<_dataPriceGroup.length; i++){
+      if(pricegroup==_dataPriceGroup[i]["NAME"]) return true;
+    }
+    return false;
+  }
+
 
   //Proses di submit button
-  processSubmitCustomerForm(String customerName, String brandName, String category,
-      String segmen, String subSegmen, String selectClass, String phone, String companyStatus,
-      String fax, String contactPerson, String emailAddress, String website,) async {
+  processSubmitCustomerForm(
+      //Customer
+      String customerNameCustomer, String brandNameCustomer, String categoryCustomer,
+      String segmenCustomer, String subSegmenCustomer, String selectClassCustomer, String phoneCustomer,
+      String companyStatusCustomer, String faxCustomer, String contactPersonCustomer, String emailAddressCustomer,
+      String npwpCustomer, String ktpCustomer, String currencyCustomer, String salesofficeCustomer, String pricegroupCustomer,
+      String businessunitCustomer, String salesmanCustomer, String websiteCustomer,
 
+      //Company
+      String nameCompany, String streetnameCompany, String cityCompany, String countryCompany,
+      String stateCompany, String zipcodeCompany,
+
+      //Tax
+      String nameTax, String streetNameTax, String cityTax, String countryTax,
+      String stateTax, String zipcodeTax,
+
+      //Delivery
+      String nameDelivery, String streetNameDelivery, String cityDelivery, String countryDelivery,
+      String stateDelivery, String zipcodeDelivery,
+
+      ) async {
     var urlPostSubmitCustomerForm = "http://192.168.0.13:8893/Api/NOOCustTables";
     print("Ini url Post Submit Customer : $urlPostSubmitCustomerForm");
     var jsonSubmitCustomerForm = await http.post(Uri.parse(
@@ -185,34 +298,57 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
         body: jsonEncode(<String,dynamic>{
-      "CustName" : "$customerName",
-      "BrandName" : "$brandName",
-      "Category" : "$category",
-      "Segment" : "$segmen",
-      "SubSegment" : "$subSegmen",
-      "Class" : "$selectClass",
-      "PhoneNo" : "$phone",
-      "CompanyStatus" : "$companyStatus",
-      "FaxNo" : "$fax",
-      "ContactPerson" : "$contactPerson",
-      "EmailAddress" : "$emailAddress",
-      "NPWP" : "Rachmat NPWP",
-      "KTP" : "Rachmat KTP",
-      "Currency" : "Rachmat Currency",
-      "SalesOffice" : "Rachmat SalesOffice",
-      "PriceGroup" : "Rachmat PriceGroup",
-      "BusinessUnit" : "Rachmat BusinessUnit",
-      "Salesman" : "Rachmat Salesman",
-      "Notes" : "Rachmat Notes",
-      "Website" : "$website",
-      "FotoNPWP" : "Rachmat FotoNPWP",
-      "FotoKTP" : "Rachmat FotoKTP",
-      "FotoSIUP" : "Rachmat FotoSIUP",
-      "FotoGedung" : "Rachmat FotoGedung",
-      "CustSignature" : "Rachmat CustSignature",
-      "CreatedBy" : 1,
-      "CreatedDate" : "2021-04-05T14:56:48.57",
-    }));
+        "CustName" : "$customerNameCustomer",
+        "BrandName" : "$brandNameCustomer",
+        "Category" : "$categoryCustomer",
+        "Segment" : "$segmenCustomer",
+        "SubSegment" : "$subSegmenCustomer",
+        "Class" : "$selectClassCustomer",
+        "PhoneNo" : "$phoneCustomer",
+        "CompanyStatus" : "$companyStatusCustomer",
+        "FaxNo" : "$faxCustomer",
+        "ContactPerson" : "$contactPersonCustomer",
+        "EmailAddress" : "$emailAddressCustomer",
+        "NPWP" : "$npwpCustomer",
+        "KTP" : "$ktpCustomer",
+        "Currency" : "$currencyCustomer",
+        "SalesOffice" : "$salesofficeCustomer",
+        "PriceGroup" : "$pricegroupCustomer",
+        "BusinessUnit" : "$businessunitCustomer",
+        "Salesman" : "$salesmanCustomer",
+        "Notes" : "Rachmat Notes",
+        "Website" : "$websiteCustomer",
+        "FotoNPWP" : "Rachmat FotoNPWP",
+        "FotoKTP" : "Rachmat FotoKTP",
+        "FotoSIUP" : "Rachmat FotoSIUP",
+        "FotoGedung" : "Rachmat FotoGedung",
+        "CustSignature" : "Rachmat CustSignature",
+        "CreatedBy" : 1,
+        "CreatedDate" : "2021-04-05T14:56:48.57",
+        "TaxAddresses":[{
+        "Name" : "$nameTax",
+        "StreetName" : "$streetNameTax",
+        "City" : "$cityTax",
+        "Country" : "$countryTax",
+        "State" : "$stateTax",
+        "ZipCode" : "$zipcodeTax"
+        }],
+        "CompanyAddresses":[{
+        "Name" : "$nameCompany",
+        "StreetName" : "$streetnameCompany",
+        "City" : "$cityCompany",
+        "Country" : "$countryCompany",
+        "State" : "$stateCompany",
+        "ZipCode" : "$zipcodeCompany"
+        }],
+        "DeliveryAddresses":[{
+        "Name" : "$nameDelivery",
+        "StreetName" : "$streetNameDelivery",
+        "City" : "$cityDelivery",
+        "Country" : "$countryDelivery",
+        "State" : "$stateDelivery",
+        "ZipCode" : "$zipcodeDelivery"
+    }]}));
     print(jsonSubmitCustomerForm.body.toString());
     if (jsonSubmitCustomerForm.statusCode == 200) {
       return jsonDecode(jsonSubmitCustomerForm.body);
@@ -221,45 +357,6 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
     }
   }
 
-  @override
-  void dispose() async {
-    super.dispose();
-    var savedForm = jsonEncode(
-        <String,dynamic> {
-          "CustName" : "${_customerNameController.text}",
-          "BrandName" : "${_brandNameController.text}",
-          "Category" : "${_valCategory}",
-          "Segment" : "${_valSegment}",
-          "SubSegment" : "${_valSubSegment}",
-          "Class" : "${_valClass}",
-          "PhoneNo" : "${_phoneController.text}",
-          "CompanyStatus" : "${_valCompanyStatus}",
-          "FaxNo" : "${_faxController.text}",
-          "ContactPerson" : "${_contactPersonController.text}",
-          "EmailAddress" : "${_emailAddressController.text}",
-          "NPWP" : "Rachmat NPWP",
-          "KTP" : "Rachmat KTP",
-          "Currency" : "Rachmat Currency",
-          "SalesOffice" : "Rachmat SalesOffice",
-          "PriceGroup" : "Rachmat PriceGroup",
-          "BusinessUnit" : "Rachmat BusinessUnit",
-          "Salesman" : "Rachmat Salesman",
-          "Notes" : "Rachmat Notes",
-          "Website" : "${_websiteController.text}",
-          "FotoNPWP" : "Rachmat FotoNPWP",
-          "FotoKTP" : "Rachmat FotoKTP",
-          "FotoSIUP" : "Rachmat FotoSIUP",
-          "FotoGedung" : "Rachmat FotoGedung",
-          "CustSignature" : "Rachmat CustSignature",
-          "CreatedBy" : 1,
-          "CreatedDate" : "2021-04-05T14:56:48.57",
-        }
-    );
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("customer", savedForm);
-    // TODO: implement dispose
-    print("page customer disposed");
-  }
 
   void initState() {
     // TODO: implement initState
@@ -267,27 +364,9 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
     getSegment();
     getCategory();
     getClass();
+    getPriceGroup();
     getCompanyStatus();
-    getDataFromPerf();
-  }
-
-  getDataFromPerf() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var savedForm = prefs.getString("customer");
-    var savedFormMap = jsonDecode(savedForm);
-    print("Ini perfs dari savedFormMap : $savedFormMap");
-    _customerNameController.text=savedFormMap["CustName"];
-    _brandNameController.text=savedFormMap["BrandName"];
-    _valCategory=savedFormMap["Category"];_dataCategory.add(<String, dynamic>{"Category":_valCategory});
-//    _valSegment=savedFormMap["Segment"]; _dataSegment.add(<String, dynamic>{"Segment":_valSegment});
-//    _valSubSegment=savedFormMap["SubSegment"]; _dataSubSegment.add(<String, dynamic>{"SubSegment":_valSubSegment});
-//    _valClass=savedFormMap["Class"];_dataClass.add(<String, dynamic>{"Class":_valClass});
-    _phoneController.text=savedFormMap["PhoneNo"];
-//    _valCompanyStatus=savedFormMap["CompanyStatus"]; _dataCompanyStatus.add(<String, dynamic>{"CompanyStatus":_valCompanyStatus});
-    _faxController.text=savedFormMap["FaxNo"];
-    _contactPersonController.text=savedFormMap["ContactPerson"];
-    _emailAddressController.text=savedFormMap["EmailAddress"];
-    _websiteController.text=savedFormMap["Website"];
+//    getDataFromPerf();
   }
 
   @override
@@ -299,7 +378,7 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
       appBar: AppBar(
         backgroundColor: Colors.white60,
         title: Text(
-          "Customer Form",
+          "NOO Form",
           style: TextStyle(
             color: Colors.blue,
             fontWeight: FontWeight.bold,
@@ -313,6 +392,18 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
           padding: EdgeInsets.all(15),
           children: <Widget>[
 
+            Center(
+              child: Text(
+                "Customer Form",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.blue,
+                ),
+              ),
+            ),
+
+            SizedBox(height: 20,),
+
             //Customer Name
             Row(
               children: <Widget>[
@@ -324,9 +415,9 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
                 SizedBox(width: 10,),
                 Container(
                   child: Expanded(
-                    child: TextField(
+                    child: TextFormField(
                       textAlign: TextAlign.center,
-                      controller: _customerNameController,
+                      controller: _customerNameControllerCustomer,
                       keyboardType: TextInputType.text,
                       autofocus: false,
                       decoration: InputDecoration(
@@ -356,7 +447,7 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
                   child: Expanded(
                     child: TextFormField(
                       textAlign: TextAlign.center,
-                      controller: _brandNameController,
+                      controller: _brandNameControllerCustomer,
                       keyboardType: TextInputType.text,
                       autofocus: false,
                       decoration: InputDecoration(
@@ -387,7 +478,7 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
                   value: _valCategory,
                   items: _dataCategory.map((item) {
                     return DropdownMenuItem(
-                      child: Text(item['MASTER_SETUP']),
+                      child: Text(item['MASTER_SETUP']??"loading.."),
                       value: item['MASTER_SETUP'],
                     );
                   }).toList(),
@@ -412,10 +503,10 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
                 SizedBox(width: 10,),
                 DropdownButton(
                   hint: Text("Select Segment"),
-                  value: _valSegment,
+                  value:  _valSegment,
                   items: _dataSegment.map((item){
                     return DropdownMenuItem(
-                      child: Text(item['SEGMENTID']),
+                      child: Text(item['SEGMENTID']??"loading.."),
                       value: item['SEGMENTID'],
                     );
                   }).toList(),
@@ -448,7 +539,7 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
                   value: _valSubSegment,
                   items: _dataSubSegment.map((item){
                     return DropdownMenuItem(
-                      child: Text("${item['SUBSEGMENTID']}"),
+                      child: Text("${item['SUBSEGMENTID']??"loading.."}"),
                       value: item['SUBSEGMENTID'],
                     );
                   }).toList(),
@@ -477,7 +568,7 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
                   value: _valClass,
                   items: _dataClass.map((item) {
                     return DropdownMenuItem(
-                      child: Text(item['CLASS']),
+                      child: Text(item['CLASS']??"loading.."),
                       value: item['CLASS'],
                     );
                   }).toList(),
@@ -504,7 +595,7 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
                   child: Expanded(
                     child: TextFormField(
                       textAlign: TextAlign.center,
-                      controller: _phoneController,
+                      controller: _phoneControllerCustomer,
                       keyboardType: TextInputType.phone,
                       autofocus: false,
                       decoration: InputDecoration(
@@ -535,7 +626,7 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
                   value: _valCompanyStatus,
                   items: _dataCompanyStatus.map((item) {
                     return DropdownMenuItem(
-                      child: Text(item['CHAINID']),
+                      child: Text(item['CHAINID']??"loading.."),
                       value: item['CHAINID'],
                     );
                   }).toList(),
@@ -562,7 +653,7 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
                   child: Expanded(
                     child: TextFormField(
                       textAlign: TextAlign.center,
-                      controller: _faxController,
+                      controller: _faxControllerCustomer,
                       keyboardType: TextInputType.number,
                       autofocus: false,
                       decoration: InputDecoration(
@@ -592,7 +683,7 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
                   child: Expanded(
                     child: TextFormField(
                       textAlign: TextAlign.center,
-                      controller: _contactPersonController,
+                      controller: _contactPersonControllerCustomer,
                       keyboardType: TextInputType.text,
                       autofocus: false,
                       decoration: InputDecoration(
@@ -622,7 +713,7 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
                   child: Expanded(
                     child: TextFormField(
                       textAlign: TextAlign.center,
-                      controller: _emailAddressController,
+                      controller: _emailAddressControllerCustomer,
                       keyboardType: TextInputType.emailAddress,
                       autofocus: false,
                       decoration: InputDecoration(
@@ -639,12 +730,12 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
             ),
             SizedBox(height: 10,),
 
-            //Website
+            //NPWP
             Row(
               children: <Widget>[
                 Container(
                   child: Text(
-                    "Website               :",
+                    "NPWP                   :",
                   ),
                 ),
                 SizedBox(width: 10,),
@@ -652,7 +743,216 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
                   child: Expanded(
                     child: TextFormField(
                       textAlign: TextAlign.center,
-                      controller: _websiteController,
+                      controller: _npwpControllerCustomer,
+                      keyboardType: TextInputType.number,
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hintText: 'NPWP',
+                        filled: true,
+                        contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: 10,),
+
+            //KTP
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "KTP                       :",
+                  ),
+                ),
+                SizedBox(width: 10,),
+                Container(
+                  child: Expanded(
+                    child: TextFormField(
+                      textAlign: TextAlign.center,
+                      controller: _ktpControllerCustomer,
+                      keyboardType: TextInputType.number,
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hintText: 'KTP',
+                        filled: true,
+                        contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: 10,),
+
+            //Currency
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "Currency              :",
+                  ),
+                ),
+                SizedBox(width: 10,),
+                Container(
+                  child: Expanded(
+                    child: TextFormField(
+                      textAlign: TextAlign.center,
+                      controller: _currencyControllerCustomer,
+                      keyboardType: TextInputType.text,
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hintText: 'Currency',
+                        filled: true,
+                        contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: 10,),
+
+            //Sales Office
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "Sales Office         :",
+                  ),
+                ),
+                SizedBox(width: 10,),
+                Container(
+                  child: Expanded(
+                    child: TextFormField(
+                      textAlign: TextAlign.center,
+                      controller: _salesOfficeControllerCustomer,
+                      keyboardType: TextInputType.text,
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hintText: 'Sales Office',
+                        filled: true,
+                        contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: 10,),
+
+            //Price Group
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "Price Group         :",
+                  ),
+                ),
+                SizedBox(width: 10,),
+                DropdownButton(
+                  hint: Text("Select PriceGroup"),
+                  value: _valPriceGroup,
+                  items: _dataPriceGroup.map((item) {
+                    return DropdownMenuItem(
+                      child: Text(item['NAME']??"loading.."),
+                      value: item['NAME'],
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _valPriceGroup = value;
+//                      this._salutationPriceGroup = value;
+                    });
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 10,),
+
+            //Business Unit
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "Business Unit      :",
+                  ),
+                ),
+                SizedBox(width: 10,),
+                Container(
+                  child: Expanded(
+                    child: TextFormField(
+                      textAlign: TextAlign.center,
+                      controller: _businessUnitControllerCustomer,
+                      keyboardType: TextInputType.text,
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hintText: 'Business Unit',
+                        filled: true,
+                        contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: 10,),
+
+            //Salesman
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "Salesman             :",
+                  ),
+                ),
+                SizedBox(width: 10,),
+                Container(
+                  child: Expanded(
+                    child: TextFormField(
+                      textAlign: TextAlign.center,
+                      controller: _salesmanControllerCustomer,
+                      keyboardType: TextInputType.text,
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hintText: 'Salesman',
+                        filled: true,
+                        contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: 10,),
+
+            //Website
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "Website                :",
+                  ),
+                ),
+                SizedBox(width: 10,),
+                Container(
+                  child: Expanded(
+                    child: TextFormField(
+                      textAlign: TextAlign.center,
+                      controller: _websiteControllerCustomer,
                       keyboardType: TextInputType.url,
                       autofocus: false,
                       decoration: InputDecoration(
@@ -674,7 +974,7 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
               children: <Widget>[
                 Container(
                   child: Text(
-                    "Attachment         :",
+                    "Attachment          :",
                   ),
                 ),
                 SizedBox(width: 10,),
@@ -808,8 +1108,6 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
                                 ): Image.file(
                                   _imageBuilding,
                                   fit: BoxFit.cover,
-//                                  width: 150,
-//                                  height: 80,
                                 ),
                               ),
                               SizedBox(height: 10,),
@@ -827,8 +1125,657 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
                 ],
               ),
             ),
+
             SizedBox(height: 20,),
 
+            Divider(
+              color: Colors.black,
+              height:0,
+              thickness: 1,
+              indent: 10,
+              endIndent: 10,
+            ),
+
+            SizedBox(height: 20,),
+
+            //Label Company Form
+            Center(
+              child: Text(
+                "Company Address",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.blue,
+                ),
+              ),
+            ),
+
+            SizedBox(height: 20,),
+
+            //Company Widget
+            Column(
+              children: [
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "Name                    :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _nameControllerCompany,
+                          keyboardType: TextInputType.text,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'Name',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+                //Street Name
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "Street Name        :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _streetControllerCompany,
+                          keyboardType: TextInputType.text,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'Street Name',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+                //City
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "City                        :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _cityControllerCompany,
+                          keyboardType: TextInputType.text,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'city',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+                //Country
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "Country                :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _countryControllerCompany,
+                          keyboardType: TextInputType.text,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'Country',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+                //State
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "State                     :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _stateControllerCompany,
+                          keyboardType: TextInputType.text,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'State',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+                //ZIP Code
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "ZIP Code              :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _zipCodeControllerCompany,
+                          keyboardType: TextInputType.number,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'ZIP Code',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+              ],
+            ),
+
+            SizedBox(height: 20,),
+
+            Divider(
+              color: Colors.black,
+              height:0,
+              thickness: 1,
+              indent: 10,
+              endIndent: 10,
+            ),
+
+            SizedBox(height: 20,),
+
+            //Label Tax Form
+            Center(
+              child: Text(
+                "Tax Address",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.blue,
+                ),
+              ),
+            ),
+
+            SizedBox(height: 20,),
+
+            //Tax Widget
+            Column(
+              children: [
+                //Name
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "Name                    :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _nameControllerTax,
+                          keyboardType: TextInputType.text,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'Name',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+                //Street Name
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "Street Name        :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _streetControllerTax,
+                          keyboardType: TextInputType.text,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'Street Name',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+                //City
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "City                        :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _cityControllerTax,
+                          keyboardType: TextInputType.text,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'city',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+                //Country
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "Country                :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _countryControllerTax,
+                          keyboardType: TextInputType.text,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'Country',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+                //State
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "State                     :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _stateControllerTax,
+                          keyboardType: TextInputType.text,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'State',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+                //ZIP Code
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "ZIP Code              :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _zipCodeControllerTax,
+                          keyboardType: TextInputType.number,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'ZIP Code',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+              ],
+            ),
+
+            SizedBox(height: 20,),
+
+            Divider(
+              color: Colors.black,
+              height:0,
+              thickness: 1,
+              indent: 10,
+              endIndent: 10,
+            ),
+
+            SizedBox(height: 20,),
+
+            //Label Delivery Form
+            Center(
+              child: Text(
+                "Delivery Address",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.blue,
+                ),
+              ),
+            ),
+
+            SizedBox(height: 20,),
+
+            //Delivery Widget
+            Column(
+              children: [
+                //Name
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "Name                    :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _nameControllerDelivery,
+                          keyboardType: TextInputType.text,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'Name',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+                //Street Name
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "Street Name        :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _streetControllerDelivery,
+                          keyboardType: TextInputType.text,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'Street Name',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+                //City
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "City                        :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _cityControllerDelivery,
+                          keyboardType: TextInputType.text,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'city',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+                //Country
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "Country                :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _countryControllerDelivery,
+                          keyboardType: TextInputType.text,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'Country',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+                //State
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "State                     :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _stateControllerDelivery,
+                          keyboardType: TextInputType.text,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'State',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+                //ZIP Code
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "ZIP Code              :",
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      child: Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          controller: _zipCodeControllerDelivery,
+                          keyboardType: TextInputType.number,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'ZIP Code',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+
+              ],
+            ),
+
+            //Button Refresh
+            Center(
+              child: RaisedButton(
+                color: Colors.blue,
+                onPressed: () async {
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.remove("customer");
+                },
+                child: Text(
+                  "Refresh",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+
+            //Button Submit
             Center(
               child: RaisedButton(
                 color: Colors.blue,
@@ -836,10 +1783,26 @@ class _CustomerNamePageState extends State<CustomerNamePage>{
                   print(_formkey.currentState.validate());
                   if (_formkey.currentState.validate()) {
                     print("Ini proses submit");
-                    processSubmitCustomerForm(_customerNameController.text, _brandNameController.text,
-                      _valCategory, _valSegment, _valSubSegment, _valClass, _phoneController.text,
-                      _valCompanyStatus, _faxController.text, _contactPersonController.text,
-                      _emailAddressController.text, _websiteController.text,
+                    processSubmitCustomerForm(
+                      //Customer
+                      _customerNameControllerCustomer.text, _brandNameControllerCustomer.text,
+                      _valCategory, _valSegment, _valSubSegment, _valClass, _phoneControllerCustomer.text,
+                      _valCompanyStatus, _faxControllerCustomer.text, _contactPersonControllerCustomer.text,
+                      _emailAddressControllerCustomer.text, _npwpControllerCustomer.text, _ktpControllerCustomer.text,
+                      _currencyControllerCustomer.text, _salesOfficeControllerCustomer.text, _valPriceGroup,
+                      _businessUnitControllerCustomer.text, _salesmanControllerCustomer.text, _websiteControllerCustomer.text,
+                      
+                      //Company
+                      _nameControllerCompany.text, _streetControllerCompany.text, _cityControllerCompany.text,
+                      _countryControllerCompany.text, _stateControllerCompany.text, _zipCodeControllerCompany.text,
+
+                      //Tax
+                      _nameControllerTax.text, _streetControllerTax.text, _cityControllerTax.text,
+                      _countryControllerTax.text, _stateControllerTax.text, _zipCodeControllerTax.text,
+
+                      //Delivery
+                      _nameControllerDelivery.text, _streetControllerDelivery.text, _cityControllerDelivery.text,
+                      _countryControllerDelivery.text, _stateControllerDelivery.text, _zipCodeControllerDelivery.text,
                     );
                   }
                 },

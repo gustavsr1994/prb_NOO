@@ -4,8 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:location/location.dart';
 
-
-
 class CompanyAddressPage extends StatefulWidget {
   @override
   _CompanyAddressPageState createState() => _CompanyAddressPageState();
@@ -33,6 +31,7 @@ class _CompanyAddressPageState extends State<CompanyAddressPage> {
   //hit api PriceGroup
   var urlGetPriceGroup = "http://119.18.157.236:8893/Api/CustPriceGroup";
   String _valPriceGroup;
+  // ignore: deprecated_member_use
   List<dynamic> _dataPriceGroup = List();
   void getPriceGroup() async {
     final response = await http.get(Uri.parse(urlGetPriceGroup));
@@ -40,53 +39,47 @@ class _CompanyAddressPageState extends State<CompanyAddressPage> {
     print(urlGetPriceGroup);
     setState((){
       _dataPriceGroup = listData;
+      if(!pricegroupContains(_valPriceGroup)){
+        _valPriceGroup = null;
+      }
     });
     print("Data CompanyStatus : $listData");
   }
+  bool pricegroupContains(String pricegroup){
+    for(int i = 0; i<_dataPriceGroup.length; i++){
+      if(pricegroup==_dataPriceGroup[i]["NAME"]) return true;
+    }
+    return false;
+  }
 
-  processSubmitCompanyForm(String customerName, String brandName, String category,
-      String segmen, String subSegmen, String selectClass, String phone, String companyStatus,
-      String fax, String contactPerson, String emailAddress, String website,) async {
-
-    var urlPostSubmitCustomerForm = "http://192.168.0.13:8893/Api/NOOCustTables";
-    print("Ini url Post Submit Customer : $urlPostSubmitCustomerForm");
-    var jsonSubmitCustomerForm = await http.post(Uri.parse(
-      "$urlPostSubmitCustomerForm",
+  processSubmitCompanyForm(String name, String streetname, String city,
+      String country, String state, String zipcode, String salesman, String salesoffice,
+      String businessunit, String npwp, String ktp, String pricegroup, String currency) async {
+    var urlPostSubmitCompanyForm = "http://192.168.0.13:8893/Api/NOOCustTables";
+    print("Ini url Post Submit Company : $urlPostSubmitCompanyForm");
+    var jsonSubmitCompanyForm = await http.post(Uri.parse(
+      "$urlPostSubmitCompanyForm",
     ), headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
         body: jsonEncode(<String,dynamic>{
-          "CustName" : "$customerName",
-          "BrandName" : "$brandName",
-          "Category" : "$category",
-          "Segment" : "$segmen",
-          "SubSegment" : "$subSegmen",
-          "Class" : "$selectClass",
-          "PhoneNo" : "$phone",
-          "CompanyStatus" : "$companyStatus",
-          "FaxNo" : "$fax",
-          "ContactPerson" : "$contactPerson",
-          "EmailAddress" : "$emailAddress",
-          "NPWP" : "Rachmat NPWP",
-          "KTP" : "Rachmat KTP",
-          "Currency" : "Rachmat Currency",
-          "SalesOffice" : "Rachmat SalesOffice",
-          "PriceGroup" : "Rachmat PriceGroup",
-          "BusinessUnit" : "Rachmat BusinessUnit",
-          "Salesman" : "Rachmat Salesman",
-          "Notes" : "Rachmat Notes",
-          "Website" : "$website",
-          "FotoNPWP" : "Rachmat FotoNPWP",
-          "FotoKTP" : "Rachmat FotoKTP",
-          "FotoSIUP" : "Rachmat FotoSIUP",
-          "FotoGedung" : "Rachmat FotoGedung",
-          "CustSignature" : "Rachmat CustSignature",
-          "CreatedBy" : 1,
-          "CreatedDate" : "2021-04-05T14:56:48.57",
+          "Name" : "$name",
+          "StreetName" : "$streetname",
+          "City" : "$city",
+          "Country" : "$country",
+          "State" : "$state",
+          "ZipCode" : "$zipcode",
+          "Salesman" : "$salesman",
+          "SalesOffice" : "$salesoffice",
+          "BusinessUnit" : "$businessunit",
+          "NPWP" : "$npwp",
+          "KTP" : "$ktp",
+          "PriceGroup" : "$pricegroup",
+          "Currency" : "$currency",
         }));
-    print(jsonSubmitCustomerForm.body.toString());
-    if (jsonSubmitCustomerForm.statusCode == 200) {
-      return jsonDecode(jsonSubmitCustomerForm.body);
+    print(jsonSubmitCompanyForm.body.toString());
+    if (jsonSubmitCompanyForm.statusCode == 200) {
+      return jsonDecode(jsonSubmitCompanyForm.body);
     } else {
       throw Exception("Failed");
     }
@@ -94,20 +87,46 @@ class _CompanyAddressPageState extends State<CompanyAddressPage> {
 
   void dispose() async {
     super.dispose();
-    var savedForm = jsonEncode(
-        <String,dynamic> {
-          "Name" : "Rachmat Address",
-          "StreetName" : "Rachmat StreetName",
-          "City" : "Rachmat City",
-          "Country" : "Rachmat Country",
-          "State" : "Rachmat State",
-          "ZipCode" : "11850"
-        }
-    );
+    var mapForm = <String, dynamic>{
+      "Name" : "${_nameController.text}",
+      "StreetName" : "${_streetController.text}",
+      "City" : "${_cityController.text}",
+      "Country" : "${_countryController.text}",
+      "State" : "${_stateController.text}",
+      "ZipCode" : "${_zipCodeController.text}",
+      "Salesman" : "${_salesmanController.text}",
+      "SalesOffice" : "${_salesOfficeController.text}",
+      "BusinerssUnit" : "${_businessUnitController.text}",
+      "NPWP" : "${_npwpController.text}",
+      "KTP" : "${_ktpController.text}",
+      "PriceGroup" : "$_valPriceGroup",
+      "Currency" : "${_currencyController.text}",
+    };
+    var savedForm = jsonEncode(mapForm);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("customer", savedForm);
+    prefs.setString("company", savedForm);
     // TODO: implement dispose
-    print("page customer disposed");
+    print("page company disposed");
+  }
+
+  getDataFromPerf() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var savedForm = prefs.getString("company");
+    var savedFormMap = jsonDecode(savedForm);
+    print("Ini perfs dari savedFormMap : $savedFormMap");
+    _nameController.text=savedFormMap["Name"];
+    _streetController.text=savedFormMap["StreetName"];
+    _cityController.text=savedFormMap["City"];
+    _countryController.text=savedFormMap["Country"];
+    _stateController.text=savedFormMap["State"];
+    _zipCodeController.text=savedFormMap["ZipCode"];
+    _salesmanController.text=savedFormMap["Salesman"];
+    _salesOfficeController.text=savedFormMap["SalesOffice"];
+    _businessUnitController.text=savedFormMap["BusinessUnit"];
+    _npwpController.text=savedFormMap["NPWP"];
+    _ktpController.text=savedFormMap["KTP"];
+    _valPriceGroup=savedFormMap["PriceGroup"];_dataPriceGroup.add(<String, dynamic>{"PriceGroup":_valPriceGroup});
+    _currencyController.text=savedFormMap["Currency"];
   }
 
   @override
@@ -115,8 +134,8 @@ class _CompanyAddressPageState extends State<CompanyAddressPage> {
     // TODO: implement initState
     super.initState();
     getPriceGroup();
+    getDataFromPerf();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -487,13 +506,14 @@ class _CompanyAddressPageState extends State<CompanyAddressPage> {
                   value: _valPriceGroup,
                   items: _dataPriceGroup.map((item) {
                     return DropdownMenuItem(
-                      child: Text(item['NAME']),
+                      child: Text(item['NAME']??"loading.."),
                       value: item['NAME'],
                     );
                   }).toList(),
                   onChanged: (value) {
                     setState(() {
                       _valPriceGroup = value;
+//                      this._salutationPriceGroup = value;
                     });
                   },
                 ),

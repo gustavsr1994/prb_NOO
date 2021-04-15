@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:prb_app/feature/dashboard/dashboard-page.dart';
+import 'package:prb_app/feature/dashboard/approval/approval-page.dart';
+import 'package:prb_app/feature/dashboard/dashboardemployee-page.dart';
 import 'package:http/http.dart' as http;
+import 'package:prb_app/feature/dashboard/dashboardmanager-page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
 
   processLogin(String username, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var urlPostLogin = "http://192.168.0.13:8893/Api/Login?username=$username&password=$password";
+    var urlPostLogin = "http://119.18.157.236:8893/Api/Login?username=$username&password=$password";
     print("Ini urlPostLogin okay : $urlPostLogin");
     var jsonLogin = await http.post(Uri.parse(urlPostLogin));
     print(jsonLogin.body.toString());
@@ -58,17 +60,30 @@ class _LoginPageState extends State<LoginPage> {
     print("Ini datalogin : $dataLogin");
     print("Ini username: $username");
     print("Ini password $password");
-    if (dataLogin['Username'] ==  username
-    ) {
+    if (dataLogin['Username'] ==  username){
       print("ini button login");
       prefs.setString("username", dataLogin['Username']);
       prefs.setString("password", password);
-      // Go to Profile Page
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => DashboardPage(
-              )));
+      //Buat login beda page
+      if (dataLogin['Role'] == "0") {
+        print("Ini role 0");
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DashboardEmployeePage(),
+            )
+        );
+      } else if (dataLogin['Role'] == "1") {
+        print("Ini Role 1");
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DashboardManagerPage(),
+            )
+        );// As manager
+      } else {
+        throw Exception("Gagal Login");
+      }
     }
     setState(() {
       txtMsg = dataLogin['Username'].toString();
@@ -164,11 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                     if (_formKey.currentState.validate()) {
                       print("Ini proses login");
                       processLogin(_usernameController.text, _passController.text);
-                      // SignInSignUpResult result = await AuthenticationService.signInWithEmail
-                      //   (
-                      // email: _emailController.text, pass: _passController.text);
-                      bool isSuccessLogin = true;
-                    }bool isSuccessLogin = await processLogin(_usernameController.text, _passController.text);
+                    }
                   },
                   child: Text(
                     'Next',

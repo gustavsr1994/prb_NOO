@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TaxAddressPage extends StatefulWidget {
   @override
@@ -15,6 +18,68 @@ class _TaxAddressPageState extends State<TaxAddressPage> {
   TextEditingController _zipCodeController = TextEditingController();
 
   final _formkey = GlobalKey<FormState>();
+
+  processSubmitTaxForm(String name, String streetname, String city,
+      String country, String state, String zipcode) async {
+    var urlPostSubmitTaxForm = "http://192.168.0.13:8893/Api/NOOCustTables";
+    print("Ini url Post Submit Tax : $urlPostSubmitTaxForm");
+    var jsonSubmitTaxForm = await http.post(Uri.parse(
+      "$urlPostSubmitTaxForm",
+    ), headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+        body: jsonEncode(<String,dynamic>{
+          "Name" : "$name",
+          "StreetName" : "$streetname",
+          "City" : "$city",
+          "Country" : "$country",
+          "State" : "$state",
+          "ZipCode" : "$zipcode",
+        }));
+    print(jsonSubmitTaxForm.body.toString());
+    if (jsonSubmitTaxForm.statusCode == 200) {
+      return jsonDecode(jsonSubmitTaxForm.body);
+    } else {
+      throw Exception("Failed");
+    }
+  }
+
+  void dispose() async {
+    super.dispose();
+    var mapForm = <String, dynamic>{
+      "Name" : "${_nameController.text}",
+      "StreetName" : "${_streetController.text}",
+      "City" : "${_cityController.text}",
+      "Country" : "${_countryController.text}",
+      "State" : "${_stateController.text}",
+      "ZipCode" : "${_zipCodeController.text}",
+    };
+    var savedForm = jsonEncode(mapForm);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("tax", savedForm);
+    // TODO: implement dispose
+    print("page tax disposed");
+  }
+
+  getDataFromPerf() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var savedForm = prefs.getString("tax");
+    var savedFormMap = jsonDecode(savedForm);
+    print("Ini perfs dari savedFormMap : $savedFormMap");
+    _nameController.text=savedFormMap["Name"];
+    _streetController.text=savedFormMap["StreetName"];
+    _cityController.text=savedFormMap["City"];
+    _countryController.text=savedFormMap["Country"];
+    _stateController.text=savedFormMap["State"];
+    _zipCodeController.text=savedFormMap["ZipCode"];
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getDataFromPerf();
+  }
 
   @override
   Widget build(BuildContext context) {
