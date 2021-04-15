@@ -1,9 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:prb_app/model/Approval.dart';
+
+import 'approval-detail.dart';
+import 'approval-detail.dart';
 
 class ApprovalPage extends StatefulWidget {
   @override
@@ -33,7 +35,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                   padding: EdgeInsets.all(6),
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Name : test",
+                    "Name : ${item.custName}",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.blue,
@@ -45,7 +47,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                   padding: EdgeInsets.all(6),
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Date : 12 April 2021",
+                    "Date : ${item.createdDate}",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 12,
@@ -57,7 +59,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                   padding: EdgeInsets.all(6),
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Pending",
+                    "${item.status}",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.blue,
@@ -80,6 +82,38 @@ class _ApprovalPageState extends State<ApprovalPage> {
                               color: Colors.blue,
                             ),
                           ),
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ApprovalDetailPage(
+                                custName: item.custName,
+                                brandName: item.brandName,
+                                category: item.category,
+                                segment: item.segment,
+                                subSegment: item.subSegment,
+                                selectclass: item.selectclass,
+                                phoneNo: item.phoneNo,
+                                companyStatus: item.companyStatus,
+                                faxNo: item.faxNo,
+                                contactPerson: item.contactPerson,
+                                emailAddress: item.emailAddress,
+                                website: item.website,
+                                nPWP: item.nPWP,
+                                kTP: item.kTP,
+                                currency: item.currency,
+                                priceGroup: item.priceGroup,
+                                salesman: item.salesman,
+                                salesOffice: item.salesOffice,
+                                businessUnit: item.businessUnit,
+                                fotoNPWP: item.fotoNPWP,
+                                fotoKTP: item.fotoKTP,
+                                fotoSIUP: item.fotoSIUP,
+                                fotoGedung: item.fotoGedung,
+                                custSignature: item.custSignature,
+                                status: item.status,
+                              )),
+                            );
+                          }
                         ),
                       ),
                     ),
@@ -98,7 +132,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                         height: 30,
                         child: InkWell(
                           child: Text(
-                            "VIEW DETAILS",
+                            "ADJUSTMENT LEAVE",
                             style: TextStyle(
                               color: Colors.blue,
                             ),

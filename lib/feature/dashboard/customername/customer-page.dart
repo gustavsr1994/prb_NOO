@@ -267,7 +267,6 @@ class _CustomerPageState extends State<CustomerPage>{
     return false;
   }
 
-
   //Proses di submit button
   processSubmitCustomerForm(
       //Customer
