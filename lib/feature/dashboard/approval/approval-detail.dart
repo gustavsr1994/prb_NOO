@@ -85,426 +85,598 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
         padding: EdgeInsets.all(20),
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Customer Name"
+                  "Customer Name",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Text(
                   ":"
               ),
               ),
               Text(
-                "${widget.custName}"
+                "${widget.custName}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Brand Name"
+                  "Brand Name",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(50, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.brandName}"
+                  "${widget.brandName}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Category"
+                  "Category",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(75, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.category}"
+                  "${widget.category}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Segment"
+                  "Segment",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(76, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.segment}"
+                  "${widget.segment}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Sub Segment"
+                  "Sub Segment",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(43, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.subSegment}"
+                  "${widget.subSegment}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Class"
+                  "Class",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(102, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.selectclass}"
+                  "${widget.selectclass}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Phone No"
+                  "Phone No",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(69, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.phoneNo}"
+                  "${widget.phoneNo}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Company Status"
+                  "Company Status",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.companyStatus}"
+                  "${widget.companyStatus}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Fax No"
+                  "Fax No",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(92, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.faxNo}"
+                  "${widget.faxNo}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Contact Person"
+                  "Contact Person",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(28, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.contactPerson}"
+                  "${widget.contactPerson}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Email Address"
+                  "Email Address",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(36, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.emailAddress}"
+                  "${widget.emailAddress}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Website"
+                  "Website",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(84, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.website}"
+                  "${widget.website}",
+                style: TextStyle(
+                    fontSize: 17,
+                  color: Colors.black54
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "NPWP"
+                  "NPWP",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(96, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.nPWP}"
+                  "${widget.nPWP}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "KTP"
+                  "KTP",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(113, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.kTP}"
+                  "${widget.kTP}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
             children: [
               Text(
-                  "Currency"
+                  "Currency",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(77, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.currency}"
+                  "${widget.currency}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Price Group"
+                  "Price Group",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(56, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.priceGroup}"
+                  "${widget.priceGroup}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Salesman"
+                  "Salesman",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(70, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.salesman}"
+                  "${widget.salesman}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Sales Office"
+                  "Sales Office",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(55, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.salesOffice}"
+                  "${widget.salesOffice}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Business Unit"
+                  "Business Unit",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(41, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.businessUnit}"
+                  "${widget.businessUnit}",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Foto NPWP"
+                  "Foto NPWP",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(57, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
-              Text(
-                  "${widget.fotoNPWP}"
+              Container(
+                height: 100,
+                  child: Image.network(
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=no-image.png"
+                  )
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Foto KTP"
+                  "Foto KTP",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(74, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
-              Text(
-                  "${widget.fotoKTP}"
+              Container(
+                  height: 100,
+                  child: Image.network(
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=no-image.png"
+                  )
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Foto SIUP"
+                  "Foto SIUP",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(70, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
-              Text(
-                  "${widget.fotoSIUP}"
+              Container(
+                  height: 100,
+                  child: Image.network(
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=no-image.png"
+                  )
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Foto Gedung"
+                  "Foto Gedung",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(49, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
-              Text(
-                  "${widget.fotoGedung}"
+              Container(
+                  height: 100,
+                  child: Image.network(
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=no-image.png"
+                  )
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Customer Signature"
+                  "Customer\nSignature",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(72, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
-              Text(
-                  "${widget.custSignature}"
+              Container(
+                  height: 100,
+                  child: Image.network(
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=no-image.png"
+                  )
               ),
             ],
           ),
           SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                  "Status"
+                  "Status",
+                style: TextStyle(
+                   fontSize: 17,
+                ),
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.fromLTRB(98, 0, 20, 0),
                 child: Text(
                     ":"
                 ),
               ),
               Text(
-                  "${widget.status}"
+                  "${widget.status}",
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),

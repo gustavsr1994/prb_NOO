@@ -1,9 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:signature/signature.dart';
 
 
 class CustomerPage extends StatefulWidget {
@@ -69,7 +73,6 @@ class _CustomerPageState extends State<CustomerPage>{
   File _imageSIUP;
   File _imageBuilding;
 //  DateTime _date;
-
   final picker = ImagePicker();
 
   // getImageKTP
@@ -82,6 +85,23 @@ class _CustomerPageState extends State<CustomerPage>{
       } else {
         print('No image selected.');
       }
+    });
+  }
+
+  UploadKTP(File imageFile) async {
+    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var length = await imageFile.length();
+    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var request = new http.MultipartRequest("POST", uri);
+    var multipartFile = new http.MultipartFile(
+        'file', stream, length,
+        filename: basename(imageFile.path));
+    //contentType: new MediaType('image', 'png'));
+    request.files.add(multipartFile);
+    var response = await request.send();
+    print(response.statusCode);
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
     });
   }
 
@@ -98,6 +118,22 @@ class _CustomerPageState extends State<CustomerPage>{
     });
   }
 
+  UploadNPWP(File imageFile) async {
+    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var length = await imageFile.length();
+    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var request = new http.MultipartRequest("POST", uri);
+    var multipartFile = new http.MultipartFile('file', stream, length,
+        filename: basename(imageFile.path));
+    //contentType: new MediaType('image', 'png'));
+    request.files.add(multipartFile);
+    var response = await request.send();
+    print(response.statusCode);
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
+    });
+  }
+
   // getImageSIUP
   Future getImageSIUP() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
@@ -111,6 +147,22 @@ class _CustomerPageState extends State<CustomerPage>{
     });
   }
 
+  UploadSIUP(File imageFile) async {
+    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var length = await imageFile.length();
+    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var request = new http.MultipartRequest("POST", uri);
+    var multipartFile = new http.MultipartFile('file', stream, length,
+        filename: basename(imageFile.path));
+    //contentType: new MediaType('image', 'png'));
+    request.files.add(multipartFile);
+    var response = await request.send();
+    print(response.statusCode);
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
+    });
+  }
+
   // getImageBuilding
   Future getImageBuilding() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
@@ -121,6 +173,22 @@ class _CustomerPageState extends State<CustomerPage>{
       } else {
         print('No image selected.');
       }
+    });
+  }
+
+  UploadBuilding(File imageFile) async {
+    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var length = await imageFile.length();
+    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var request = new http.MultipartRequest("POST", uri);
+    var multipartFile = new http.MultipartFile('file', stream, length,
+        filename: basename(imageFile.path));
+    //contentType: new MediaType('image', 'png'));
+    request.files.add(multipartFile);
+    var response = await request.send();
+    print(response.statusCode);
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
     });
   }
 
@@ -318,7 +386,7 @@ class _CustomerPageState extends State<CustomerPage>{
         "Notes" : "Rachmat Notes",
         "Website" : "$websiteCustomer",
         "FotoNPWP" : "Rachmat FotoNPWP",
-        "FotoKTP" : "Rachmat FotoKTP",
+        "FotoKTP" : "testingZulfa.png",
         "FotoSIUP" : "Rachmat FotoSIUP",
         "FotoGedung" : "Rachmat FotoGedung",
         "CustSignature" : "Rachmat CustSignature",
@@ -357,6 +425,34 @@ class _CustomerPageState extends State<CustomerPage>{
   }
 
 
+  //SignatureController Sales
+  final SignatureController _signaturecontrollersales = SignatureController(
+    penStrokeWidth: 1,
+    penColor: Colors.black,
+    exportBackgroundColor: Colors.white,
+  );
+
+  //SignatureController Customer
+  final SignatureController _signaturecontrollercustomer = SignatureController(
+    penStrokeWidth: 1,
+    penColor: Colors.black,
+    exportBackgroundColor: Colors.white,
+  );
+
+  //SignatureController ASM
+  final SignatureController _signaturecontrollerasm = SignatureController(
+    penStrokeWidth: 1,
+    penColor: Colors.red,
+    exportBackgroundColor: Colors.blue,
+  );
+
+  //SignatureController BMACA
+  final SignatureController _signaturecontrollerbmaca = SignatureController(
+    penStrokeWidth: 1,
+    penColor: Colors.red,
+    exportBackgroundColor: Colors.blue,
+  );
+
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -365,6 +461,10 @@ class _CustomerPageState extends State<CustomerPage>{
     getClass();
     getPriceGroup();
     getCompanyStatus();
+    _signaturecontrollersales.addListener(() => print('Value changed'));
+    _signaturecontrollercustomer.addListener(() => print('Value changed'));
+    // _signaturecontrollerasm.addListener(() => print('Value changed'));
+    // _signaturecontrollerbmaca.addListener(() => print('Value changed'));
 //    getDataFromPerf();
   }
 
@@ -427,7 +527,7 @@ class _CustomerPageState extends State<CustomerPage>{
 //                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
                       ),
                     ),
-                  ),
+                  )
                 )
               ],
             ),
@@ -1757,6 +1857,157 @@ class _CustomerPageState extends State<CustomerPage>{
               ],
             ),
 
+            SizedBox(height: 10,),
+
+            Divider(
+              color: Colors.black,
+              height:0,
+              thickness: 1,
+              indent: 10,
+              endIndent: 10,
+            ),
+
+            SizedBox(height: 20,),
+
+            //Label Signature Form
+            Center(
+              child: Text(
+                "Signature Form",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.blue,
+                ),
+              ),
+            ),
+
+            SizedBox(height: 20,),
+
+            //Signature Canvas Sales
+            Container(
+              child: Column(
+                children: [
+                  Text("Sales"),
+                  SizedBox(height: 10,),
+                  Card(
+                    child: Signature(
+                      controller: _signaturecontrollersales,
+                      height: 300,
+                      backgroundColor: Colors.white,
+                    ),
+                  ),
+                  //Oke dan button clear
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.black,
+                    ),
+                    child: Container(
+                      width: 355,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          IconButton(
+                              icon: const Icon(Icons.check),
+                              color: Colors.blue,
+                              onPressed: () async {
+                                if (_signaturecontrollersales.isNotEmpty){
+                                  final Uint8List data = await _signaturecontrollersales.toPngBytes();
+                                  if (data != null) {
+                                    await Navigator.of(context).push(
+                                        MaterialPageRoute<void>(
+                                            builder: (BuildContext context){
+                                              return Center(
+                                                child: Container(
+                                                  color: Colors.grey[300],
+                                                  child: Image.memory(data),
+                                                ),
+                                              );
+                                            }
+                                        )
+                                    );
+                                  }
+                                }
+                              }
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  //Clear Canvass
+                  IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: (){
+                        setState(() => _signaturecontrollersales.clear());
+                      }
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10,),
+
+            //Signature Canvas Customer
+            Container(
+              child: Column(
+                children: [
+                  Text("Customer"),
+                  SizedBox(height: 10,),
+                  Card(
+                    child: Signature(
+                      controller: _signaturecontrollercustomer,
+                      height: 300,
+                      backgroundColor: Colors.white,
+                    ),
+                  ),
+                  //Oke dan button clear
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.black,
+                    ),
+                    child: Container(
+                      width: 355,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          IconButton(
+                              icon: const Icon(Icons.check),
+                              color: Colors.blue,
+                              onPressed: () async {
+                                if (_signaturecontrollercustomer.isNotEmpty){
+                                  final Uint8List data = await _signaturecontrollercustomer.toPngBytes();
+                                  if (data != null) {
+                                    await Navigator.of(context).push(
+                                        MaterialPageRoute<void>(
+                                            builder: (BuildContext context){
+                                              return Center(
+                                                child: Container(
+                                                  color: Colors.grey[300],
+                                                  child: Image.memory(data),
+                                                ),
+                                              );
+                                            }
+                                        )
+                                    );
+                                  }
+                                }
+                              }
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  //Clear Canvass
+                  IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: (){
+                        setState(() => _signaturecontrollercustomer.clear());
+                      }
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10,),
+
             //Button Refresh
             Center(
               child: RaisedButton(
@@ -1803,6 +2054,7 @@ class _CustomerPageState extends State<CustomerPage>{
                       _nameControllerDelivery.text, _streetControllerDelivery.text, _cityControllerDelivery.text,
                       _countryControllerDelivery.text, _stateControllerDelivery.text, _zipCodeControllerDelivery.text,
                     );
+                    UploadKTP(_imageKTP); //UploadNPWP(_imageNPWP); UploadSIUP(_imageSIUP); UploadBuilding(_imageBuilding);
                   }
                 },
                 child: Text(
