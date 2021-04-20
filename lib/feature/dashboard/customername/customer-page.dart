@@ -5,6 +5,7 @@ import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
@@ -72,16 +73,28 @@ class _CustomerPageState extends State<CustomerPage>{
   File _imageNPWP;
   File _imageSIUP;
   File _imageBuilding;
-//  DateTime _date;
+  var nows = DateTime.now();
+  String ktpFromServer = "KTP_"+ DateFormat("ddMMyyyy_hhmm").format(DateTime.now())+ "_.jpg";
+  String npwpFromServer = "NPWP_"+ DateFormat("ddMMyyyy_hhmm").format(DateTime.now())+ "_.jpg";
+  String siupFromServer = "SIUP_"+ DateFormat("ddMMyyyy_hhmm").format(DateTime.now())+ "_.jpg";
+  String buildingFromServer = "BUILDING_"+ DateFormat("ddMMyyyy_hhmm").format(DateTime.now())+ "_.jpg";
   final picker = ImagePicker();
 
   // getImageKTP
   Future getImageKTP() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
+    var nows = DateTime.now();
+    String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
+    var renamedFile = await File (pickedFile.path).rename(
+        '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/KTP_' +
+        dateNow.toString() +
+        "_" +
+        ".jpg"
+    );
 
     setState(() {
       if (pickedFile != null) {
-        _imageKTP = File(pickedFile.path);
+        _imageKTP = renamedFile;
       } else {
         print('No image selected.');
       }
@@ -101,17 +114,25 @@ class _CustomerPageState extends State<CustomerPage>{
     var response = await request.send();
     print(response.statusCode);
     response.stream.transform(utf8.decoder).listen((value) {
-      print(value);
+      print("cb liat ini $value");
+      ktpFromServer = value.replaceAll("\"","");
     });
   }
 
   // getImageNPWP
   Future getImageNPWP() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
-
+    var nows = DateTime.now();
+    String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
+    var renamedFile = await File (pickedFile.path).rename(
+        '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/NPWP_' +
+            dateNow.toString() +
+            "_" +
+            ".jpg"
+    );
     setState(() {
       if (pickedFile != null) {
-        _imageNPWP = File(pickedFile.path);
+        _imageNPWP = renamedFile;
       } else {
         print('No image selected.');
       }
@@ -131,16 +152,24 @@ class _CustomerPageState extends State<CustomerPage>{
     print(response.statusCode);
     response.stream.transform(utf8.decoder).listen((value) {
       print(value);
+      npwpFromServer = value.replaceAll("\"","");
     });
   }
 
   // getImageSIUP
   Future getImageSIUP() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
-
+    var nows = DateTime.now();
+    String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
+    var renamedFile = await File (pickedFile.path).rename(
+        '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/SIUP_' +
+            dateNow.toString() +
+            "_" +
+            ".jpg"
+    );
     setState(() {
       if (pickedFile != null) {
-        _imageSIUP = File(pickedFile.path);
+        _imageSIUP = renamedFile;
       } else {
         print('No image selected.');
       }
@@ -160,16 +189,24 @@ class _CustomerPageState extends State<CustomerPage>{
     print(response.statusCode);
     response.stream.transform(utf8.decoder).listen((value) {
       print(value);
+      siupFromServer = value.replaceAll("\"","");
     });
   }
 
   // getImageBuilding
   Future getImageBuilding() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
-
+    var nows = DateTime.now();
+    String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
+    var renamedFile = await File (pickedFile.path).rename(
+        '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/BUILDING_' +
+            dateNow.toString() +
+            '_' +
+            '.jpg'
+    );
     setState(() {
       if (pickedFile != null) {
-        _imageBuilding = File(pickedFile.path);
+        _imageBuilding = renamedFile;
       } else {
         print('No image selected.');
       }
@@ -189,8 +226,10 @@ class _CustomerPageState extends State<CustomerPage>{
     print(response.statusCode);
     response.stream.transform(utf8.decoder).listen((value) {
       print(value);
+      buildingFromServer = value.replaceAll("\"","");
     });
   }
+
 
   //hit api Category
   var urlGetCategory = "http://119.18.157.236:8893/Api/CustCategory";
@@ -385,10 +424,10 @@ class _CustomerPageState extends State<CustomerPage>{
         "Salesman" : "$salesmanCustomer",
         "Notes" : "Rachmat Notes",
         "Website" : "$websiteCustomer",
-        "FotoNPWP" : "Rachmat FotoNPWP",
-        "FotoKTP" : "testingZulfa.png",
-        "FotoSIUP" : "Rachmat FotoSIUP",
-        "FotoGedung" : "Rachmat FotoGedung",
+        "FotoNPWP" : "$npwpFromServer",
+        "FotoKTP" : "$ktpFromServer",
+        "FotoSIUP" : "$siupFromServer",
+        "FotoGedung" : "$buildingFromServer",
         "CustSignature" : "Rachmat CustSignature",
         "CreatedBy" : 1,
         "CreatedDate" : "2021-04-05T14:56:48.57",
@@ -1912,6 +1951,9 @@ class _CustomerPageState extends State<CustomerPage>{
                               onPressed: () async {
                                 if (_signaturecontrollersales.isNotEmpty){
                                   final Uint8List data = await _signaturecontrollersales.toPngBytes();
+                                  File.fromRawPath(data);
+                                  File signatureFromUint8List = File.fromRawPath(data);
+                                  print(signatureFromUint8List.path);
                                   if (data != null) {
                                     await Navigator.of(context).push(
                                         MaterialPageRoute<void>(
@@ -1919,7 +1961,7 @@ class _CustomerPageState extends State<CustomerPage>{
                                               return Center(
                                                 child: Container(
                                                   color: Colors.grey[300],
-                                                  child: Image.memory(data),
+                                                  child: Image.file(signatureFromUint8List),
                                                 ),
                                               );
                                             }
@@ -2033,6 +2075,10 @@ class _CustomerPageState extends State<CustomerPage>{
                   print(_formkey.currentState.validate());
                   if (_formkey.currentState.validate()) {
                     print("Ini proses submit");
+                    await UploadKTP(_imageKTP);
+                    await UploadNPWP(_imageNPWP);
+                    await UploadSIUP(_imageSIUP);
+                    await UploadBuilding(_imageBuilding);
                     processSubmitCustomerForm(
                       //Customer
                       _customerNameControllerCustomer.text, _brandNameControllerCustomer.text,
@@ -2054,7 +2100,6 @@ class _CustomerPageState extends State<CustomerPage>{
                       _nameControllerDelivery.text, _streetControllerDelivery.text, _cityControllerDelivery.text,
                       _countryControllerDelivery.text, _stateControllerDelivery.text, _zipCodeControllerDelivery.text,
                     );
-                    UploadKTP(_imageKTP); //UploadNPWP(_imageNPWP); UploadSIUP(_imageSIUP); UploadBuilding(_imageBuilding);
                   }
                 },
                 child: Text(

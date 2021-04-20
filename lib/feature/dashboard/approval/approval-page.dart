@@ -151,9 +151,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
     print("Data Approval : $listData");
   }
 
-  List<Widget> listData =[
-
-  ];
+  List<Widget> listData =[];
 
   void initState() {
     // TODO: implement initState
@@ -163,6 +161,9 @@ class _ApprovalPageState extends State<ApprovalPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    print("Ini Approval Page");
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white60,

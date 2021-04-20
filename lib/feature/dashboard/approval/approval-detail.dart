@@ -558,7 +558,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               Container(
                 height: 100,
                   child: Image.network(
-                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=no-image.png"
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${widget.fotoNPWP}"
                   )
               ),
             ],
@@ -581,7 +581,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               Container(
                   height: 100,
                   child: Image.network(
-                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=no-image.png"
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${widget.fotoKTP}"
                   )
               ),
             ],
@@ -604,7 +604,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               Container(
                   height: 100,
                   child: Image.network(
-                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=no-image.png"
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${widget.fotoSIUP}"
                   )
               ),
             ],
@@ -627,7 +627,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               Container(
                   height: 100,
                   child: Image.network(
-                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=no-image.png"
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${widget.fotoGedung}"
                   )
               ),
             ],
@@ -680,7 +680,37 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(height: 30,),
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                // ignore: deprecated_member_use
+                RaisedButton(
+                  color: Colors.blue,
+                  onPressed: () {  },
+                  child: Text(
+                    "Approve",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20,),
+                // ignore: deprecated_member_use
+                RaisedButton(
+                  color: Colors.blue,
+                  onPressed: () {  },
+                  child: Text(
+                    "Reject",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
