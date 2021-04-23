@@ -1,12 +1,20 @@
 import 'dart:convert';
-
+import 'dart:typed_data';
+import 'package:commons/commons.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:prb_app/feature/dashboard/approval/approval-page.dart';
+import 'package:prb_app/feature/dashboard/dashboardmanager-page.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:signature/signature.dart';
 
 import '../../../model/approval.dart';
 
 class ApprovalDetailPage extends StatefulWidget {
 
+  int id;
   String custName;
   String brandName;
   String category;
@@ -37,12 +45,14 @@ class ApprovalDetailPage extends StatefulWidget {
   String status;
 
   ApprovalDetailPage({
-    Key key, this.custName, this.brandName, this.category, this.segment, this.subSegment,
+    Key key, this.id, this.custName, this.brandName, this.category, this.segment, this.subSegment,
     this.selectclass, this.phoneNo, this.companyStatus, this.faxNo, this.contactPerson,
     this.emailAddress, this.website, this.nPWP, this.kTP, this.currency, this.priceGroup,
     this.salesman, this.salesOffice, this.businessUnit, this.fotoNPWP, this.fotoKTP, this.fotoSIUP,
     this.fotoGedung, this.custSignature, this.status,
   });
+
+  int iduser;
 
   @override
   _ApprovalDetailPageState createState() => _ApprovalDetailPageState();
@@ -62,15 +72,95 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
     });
   }
 
+  UploadSignatureApproval(imageFile, String namaFile) async {
+    //var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    //var length = await imageFile.length();
+    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var request = new http.MultipartRequest("POST", uri);
+    //var multipartFile = new http.MultipartFile.fromBytes('file', imageFile,
+    //filename: namaFile);
+    //contentType: new MediaType('image', 'png'));
+    request.files.add(
+        http.MultipartFile.fromBytes('file', imageFile, filename: namaFile));
+    var response = await request.send();
+    print(response.statusCode);
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
+      signatureApprovalFromServer = value.replaceAll("\"", "");
+
+    });
+  }
+
+  void getSharedPrefs() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      widget.iduser = prefs.getInt("id");
+    });
+    // var id = this.widget.id;
+    // var approveBy = prefs.getInt("id");
+  }
+
+  processApprovalButton(int id, String value, int approveBy, String ApprovedSignature) async{
+    var urlPostApproval = "http://192.168.0.13:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy&ApprovedSignature=$ApprovedSignature";
+    print("Ini urlPostLogin okay : $urlPostApproval");
+    var jsonApprovalButton = await http.post(Uri.parse(urlPostApproval));
+    print(jsonApprovalButton.body.toString());
+    print(jsonApprovalButton.body.toString().isEmpty);
+    var dataApprovalButton = jsonDecode(jsonApprovalButton.body);
+    print(jsonApprovalButton.body.toString());
+    print(jsonApprovalButton.body.toString().isEmpty);
+    if (dataApprovalButton['id'] == id){
+      print("Ini button Approval");
+      if(dataApprovalButton['value'] == "1" ){
+        print("Ini value 1/Approve");
+        Alert(context: context, title: "RFlutter", desc: "Flutter awesome").show();
+      }
+    }
+  }
+
+  processRejectButton(String id, String value, String approveBy) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = this.widget.id;
+    var approveBy = prefs.getInt("id");
+    var urlPostReject = "http://192.168.0.13:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy";
+    print("Ini urlPostLogin okay : $urlPostReject");
+    var jsonApprovalButton = await http.post(Uri.parse(urlPostReject));
+    print(jsonApprovalButton.body.toString());
+    print(jsonApprovalButton.body.toString().isEmpty);
+    var dataApprovalButton = jsonDecode(jsonApprovalButton.body);
+    print(jsonApprovalButton.body.toString());
+    print(jsonApprovalButton.body.toString().isEmpty);
+    if (dataApprovalButton['id'] == id){
+      print("Ini button Reject");
+      if(dataApprovalButton['value'] == "0" ){
+        print("Ini value 0/Reject");
+        Alert(context: context, title: "RFlutter", desc: "Flutter awesome").show();
+      }
+    }
+  }
+
+  Uint8List DataSign;
+  String signatureApprovalFromServer = "SIGNATUREAPPROVAL_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  //SignatureController Sales
+  final SignatureController _signaturecontrollerapproval = SignatureController(
+    penStrokeWidth: 1,
+    penColor: Colors.black,
+    exportBackgroundColor: Colors.white,
+  );
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getApprovalDetail();
+    print(widget.id);
   }
 
   @override
   Widget build(BuildContext context) {
+
+    print("ini approval detail");
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white60,
@@ -82,6 +172,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
         ),
       ),
       body: ListView(
+        shrinkWrap: true,
         padding: EdgeInsets.all(20),
         children: [
           Row(
@@ -636,7 +727,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                  "Customer\nSignature",
+                  "Approval\nSignature",
                 style: TextStyle(
                   fontSize: 17,
                 ),
@@ -647,15 +738,59 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                     ":"
                 ),
               ),
-              Container(
-                  height: 100,
-                  child: Image.network(
-                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=no-image.png"
-                  )
-              ),
+
             ],
           ),
           SizedBox(height: 10,),
+          Container(
+            child: Column(
+              children: [
+                Text(""),
+                SizedBox(height: 10,),
+                Card(
+                  child: Signature(
+                    controller: _signaturecontrollerapproval,
+                    height: 300,
+                    backgroundColor: Colors.white,
+                  ),
+                ),
+                //Oke dan button clear
+                Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.black,
+                  ),
+                  child: Container(
+                    width: 355,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        // IconButton(
+                        //     icon: const Icon(Icons.check),
+                        //     color: Colors.blue,
+                        //     onPressed: () async {
+                        //       if (_signaturecontrollerapproval.isNotEmpty){
+                        //         DataSign = await _signaturecontrollerapproval.toPngBytes();
+                        //         if (DataSign != null){
+                        //           //await UploadSignatureSales(data, signatureSalesFromServer );
+                        //         }
+                        //       }
+                        //     }
+                        // ),
+                      ],
+                    ),
+                  ),
+                ),
+                //Clear Canvass
+                IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: (){
+                      setState(() => _signaturecontrollerapproval.clear());
+                    }
+                ),
+              ],
+            ),
+          ),
           Row(
             children: [
               Text(
@@ -688,7 +823,20 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 // ignore: deprecated_member_use
                 RaisedButton(
                   color: Colors.blue,
-                  onPressed: () {  },
+                  onPressed: () async {
+                    // successDialog(
+                    //     context,
+                    //     "Approval Succes",
+                    //   title: "Success",
+                    // );
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(builder: (context)=> DashboardManagerPage()));
+                    DataSign = await _signaturecontrollerapproval.toPngBytes();
+                    UploadSignatureApproval(DataSign, signatureApprovalFromServer);
+                    getSharedPrefs();
+                    processApprovalButton(widget.id, "1", widget.iduser,signatureApprovalFromServer );
+                  },
                   child: Text(
                     "Approve",
                     style: TextStyle(
@@ -697,10 +845,14 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   ),
                 ),
                 SizedBox(width: 20,),
+
+                //Button Reject
                 // ignore: deprecated_member_use
                 RaisedButton(
                   color: Colors.blue,
-                  onPressed: () {  },
+                  onPressed: () {
+                    processRejectButton("id", "0", "id");
+                  },
                   child: Text(
                     "Reject",
                     style: TextStyle(

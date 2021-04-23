@@ -4,6 +4,8 @@ import 'package:prb_app/feature/dashboard/approval/approval-page.dart';
 import 'package:prb_app/feature/dashboard/dashboardemployee-page.dart';
 import 'package:http/http.dart' as http;
 import 'package:prb_app/feature/dashboard/dashboardmanager-page.dart';
+import 'package:prb_app/model/user.dart';
+import 'package:progress_bars/circle_progress_bar/circle_progress_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -17,12 +19,15 @@ class _LoginPageState extends State<LoginPage> {
   String txtMsg = '';
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   processLogin(String username, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var urlPostLogin = "http://119.18.157.236:8893/Api/Login?username=$username&password=$password";
     print("Ini urlPostLogin okay : $urlPostLogin");
     var jsonLogin = await http.post(Uri.parse(urlPostLogin));
+    var user = User.fromJson(jsonDecode(jsonLogin.body));
+    print(user.id);
+    print(user.username);
+    print(user.name);
     print(jsonLogin.body.toString());
     print(jsonLogin.body.toString().isEmpty);
     if(jsonLogin.body.toString().isEmpty){
@@ -64,13 +69,17 @@ class _LoginPageState extends State<LoginPage> {
       print("ini button login");
       prefs.setString("username", dataLogin['Username']);
       prefs.setString("password", password);
+      prefs.setInt("id", user.id);
+      prefs.setString("name", user.name);
       //Buat login beda page
       if (dataLogin['Role'] == "0") {
         print("Ini role 0");
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => DashboardEmployeePage(),
+                builder: (context) => DashboardEmployeePage(
+                  username: user.name,
+                ),
             )
         );
       } else if (dataLogin['Role'] == "1") {
@@ -98,6 +107,8 @@ class _LoginPageState extends State<LoginPage> {
       _obscureText = !_obscureText;
     });
   }
+
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -130,6 +141,12 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 padding: EdgeInsets.fromLTRB(45, 0, 45, 0),
                 child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter Username!!';
+                    }
+                    return null;
+                  },
                   controller: _usernameController,
                   textAlign: TextAlign.center,
                   keyboardType: TextInputType.emailAddress,
@@ -146,6 +163,12 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 padding: EdgeInsets.fromLTRB(45, 0, 45, 0),
                 child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter Password!!';
+                    }
+                    return null;
+                  },
                   controller: _passController,
                   textAlign: TextAlign.center,
                   autofocus: false,
@@ -173,6 +196,7 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 10,),
               Container(
                 padding: EdgeInsets.fromLTRB(100, 0, 100, 0),
+                // ignore: deprecated_member_use
                 child: RaisedButton(
                   color: Colors.blue,
                   onPressed: () async{
@@ -181,14 +205,17 @@ class _LoginPageState extends State<LoginPage> {
                       processLogin(_usernameController.text, _passController.text);
                     }
                   },
-                  child: Text(
-                    'Next',
+                  child: isLoading ? CircleProgressBar(
+                    size: 20,
+                    progressColor: Colors.blue,
+                  ) : Text(
+                    'Enter',
                     style: TextStyle(
                         color: Colors.white
                     ),
                     textAlign: TextAlign.center,
                   ),
-                ),
+                )
               ),
               SizedBox(height: 30,),
             ],

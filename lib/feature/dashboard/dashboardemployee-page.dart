@@ -10,8 +10,8 @@ import 'deliveryaddress/deliveryaddress-page.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 class DashboardEmployeePage extends StatefulWidget {
-  String email;
-  DashboardEmployeePage({Key key, this.email}) : super(key: key);
+  String username;
+  DashboardEmployeePage({Key key, this.username}) : super(key: key);
 
   @override
   _DashboardEmployeePageState createState() => _DashboardEmployeePageState();
@@ -33,7 +33,7 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
   Widget build(BuildContext context) {
 
     final List pages = [
-      CustomerPage(),
+      CustomerPage(name: widget.username,),
     ];
 
     print("Ini bottom nav");

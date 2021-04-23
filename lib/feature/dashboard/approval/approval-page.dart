@@ -3,22 +3,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:prb_app/model/Approval.dart';
+import 'package:prb_app/model/user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'approval-detail.dart';
 import 'approval-detail.dart';
 
 class ApprovalPage extends StatefulWidget {
   @override
+
   _ApprovalPageState createState() => _ApprovalPageState();
 }
 
 class _ApprovalPageState extends State<ApprovalPage> {
 
-  var urlGetApproval = "http://119.18.157.236:8893/api/FindApproval/2";
+  var urlGetApproval = "http://119.18.157.236:8893/api/FindApproval/";
   String _valApproval;
   List<Approval> _dataApproval = [];
   void getApproval() async {
-    final response = await http.get(Uri.parse(urlGetApproval));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userId =  prefs.getInt("id").toString();
+    final response = await http.get(Uri.parse(urlGetApproval+userId));
     Iterable listData = json.decode(response.body);
     print(urlGetApproval);
     setState(() {
@@ -86,6 +91,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => ApprovalDetailPage(
+                                id: item.id,
                                 custName: item.custName,
                                 brandName: item.brandName,
                                 category: item.category,

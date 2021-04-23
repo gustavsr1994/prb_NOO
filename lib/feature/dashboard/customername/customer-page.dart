@@ -2,46 +2,57 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:async/async.dart';
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
+import 'package:prb_app/model/user.dart';
+import 'package:progress_bars/circle_progress_bar/circle_progress_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
 
-
 class CustomerPage extends StatefulWidget {
+
+  String name;
+  CustomerPage({Key key, this.name}) : super(key: key);
   @override
   _CustomerPageState createState() => _CustomerPageState();
 }
 
-class _CustomerPageState extends State<CustomerPage>{
-
+class _CustomerPageState extends State<CustomerPage> {
   //Customer Controller
-  TextEditingController _customerNameControllerCustomer = TextEditingController();
+  TextEditingController _customerNameControllerCustomer =
+      TextEditingController();
   TextEditingController _brandNameControllerCustomer = TextEditingController();
   TextEditingController _categoryControllerCustomer = TextEditingController();
   TextEditingController _segmenControllerCustomer = TextEditingController();
   TextEditingController _subSegmenControllerCustomer = TextEditingController();
   TextEditingController _classControllerCustomer = TextEditingController();
   TextEditingController _phoneControllerCustomer = TextEditingController();
-  TextEditingController _companyStausControllerCustomer = TextEditingController();
+  TextEditingController _companyStausControllerCustomer =
+      TextEditingController();
   TextEditingController _faxControllerCustomer = TextEditingController();
-  TextEditingController _contactPersonControllerCustomer = TextEditingController();
-  TextEditingController _emailAddressControllerCustomer = TextEditingController();
+  TextEditingController _contactPersonControllerCustomer =
+      TextEditingController();
+  TextEditingController _emailAddressControllerCustomer =
+      TextEditingController();
   TextEditingController _npwpControllerCustomer = TextEditingController();
   TextEditingController _ktpControllerCustomer = TextEditingController();
   TextEditingController _currencyControllerCustomer = TextEditingController();
-  TextEditingController _salesOfficeControllerCustomer = TextEditingController();
+  TextEditingController _salesOfficeControllerCustomer =
+      TextEditingController();
   TextEditingController _priceGroupControllerCustomer = TextEditingController();
-  TextEditingController _businessUnitControllerCustomer = TextEditingController();
+  TextEditingController _businessUnitControllerCustomer =
+      TextEditingController();
   TextEditingController _salesmanControllerCustomer = TextEditingController();
   TextEditingController _websiteControllerCustomer = TextEditingController();
   TextEditingController _fotoktpControllerCustomer = TextEditingController();
   TextEditingController _fotonpwpControllerCustomer = TextEditingController();
   TextEditingController _fotosiupControllerCustomer = TextEditingController();
-  TextEditingController _fotobuildingControllerCustomer = TextEditingController();
+  TextEditingController _fotobuildingControllerCustomer =
+      TextEditingController();
 
   //Company Controller
   TextEditingController _nameControllerCompany = TextEditingController();
@@ -73,11 +84,19 @@ class _CustomerPageState extends State<CustomerPage>{
   File _imageNPWP;
   File _imageSIUP;
   File _imageBuilding;
+  File _imageSignatureSales;
+  Uint8List DataSignSales;
+  Uint8List DataSignCustomer;
   var nows = DateTime.now();
-  String ktpFromServer = "KTP_"+ DateFormat("ddMMyyyy_hhmm").format(DateTime.now())+ "_.jpg";
-  String npwpFromServer = "NPWP_"+ DateFormat("ddMMyyyy_hhmm").format(DateTime.now())+ "_.jpg";
-  String siupFromServer = "SIUP_"+ DateFormat("ddMMyyyy_hhmm").format(DateTime.now())+ "_.jpg";
-  String buildingFromServer = "BUILDING_"+ DateFormat("ddMMyyyy_hhmm").format(DateTime.now())+ "_.jpg";
+  String ktpFromServer =
+      "KTP_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  String npwpFromServer =
+      "NPWP_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  String siupFromServer =
+      "SIUP_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  String buildingFromServer = "BUILDING_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  String signatureSalesFromServer = "SIGNATURESALES_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  String signatureCustomerFromServer = "SIGNATURECUSTOMER_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
   final picker = ImagePicker();
 
   // getImageKTP
@@ -85,13 +104,11 @@ class _CustomerPageState extends State<CustomerPage>{
     final pickedFile = await picker.getImage(source: ImageSource.camera);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
-    var renamedFile = await File (pickedFile.path).rename(
+    var renamedFile = await File(pickedFile.path).rename(
         '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/KTP_' +
-        dateNow.toString() +
-        "_" +
-        ".jpg"
-    );
-
+            dateNow.toString() +
+            "_" +
+            ".jpg");
     setState(() {
       if (pickedFile != null) {
         _imageKTP = renamedFile;
@@ -102,12 +119,12 @@ class _CustomerPageState extends State<CustomerPage>{
   }
 
   UploadKTP(File imageFile) async {
-    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var stream =
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
     var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
     var request = new http.MultipartRequest("POST", uri);
-    var multipartFile = new http.MultipartFile(
-        'file', stream, length,
+    var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
     //contentType: new MediaType('image', 'png'));
     request.files.add(multipartFile);
@@ -115,7 +132,7 @@ class _CustomerPageState extends State<CustomerPage>{
     print(response.statusCode);
     response.stream.transform(utf8.decoder).listen((value) {
       print("cb liat ini $value");
-      ktpFromServer = value.replaceAll("\"","");
+      ktpFromServer = value.replaceAll("\"", "");
     });
   }
 
@@ -124,12 +141,11 @@ class _CustomerPageState extends State<CustomerPage>{
     final pickedFile = await picker.getImage(source: ImageSource.camera);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
-    var renamedFile = await File (pickedFile.path).rename(
+    var renamedFile = await File(pickedFile.path).rename(
         '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/NPWP_' +
             dateNow.toString() +
             "_" +
-            ".jpg"
-    );
+            ".jpg");
     setState(() {
       if (pickedFile != null) {
         _imageNPWP = renamedFile;
@@ -140,7 +156,8 @@ class _CustomerPageState extends State<CustomerPage>{
   }
 
   UploadNPWP(File imageFile) async {
-    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var stream =
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
     var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
     var request = new http.MultipartRequest("POST", uri);
@@ -152,7 +169,7 @@ class _CustomerPageState extends State<CustomerPage>{
     print(response.statusCode);
     response.stream.transform(utf8.decoder).listen((value) {
       print(value);
-      npwpFromServer = value.replaceAll("\"","");
+      npwpFromServer = value.replaceAll("\"", "");
     });
   }
 
@@ -161,12 +178,11 @@ class _CustomerPageState extends State<CustomerPage>{
     final pickedFile = await picker.getImage(source: ImageSource.camera);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
-    var renamedFile = await File (pickedFile.path).rename(
+    var renamedFile = await File(pickedFile.path).rename(
         '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/SIUP_' +
             dateNow.toString() +
             "_" +
-            ".jpg"
-    );
+            ".jpg");
     setState(() {
       if (pickedFile != null) {
         _imageSIUP = renamedFile;
@@ -177,7 +193,8 @@ class _CustomerPageState extends State<CustomerPage>{
   }
 
   UploadSIUP(File imageFile) async {
-    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var stream =
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
     var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
     var request = new http.MultipartRequest("POST", uri);
@@ -189,7 +206,7 @@ class _CustomerPageState extends State<CustomerPage>{
     print(response.statusCode);
     response.stream.transform(utf8.decoder).listen((value) {
       print(value);
-      siupFromServer = value.replaceAll("\"","");
+      siupFromServer = value.replaceAll("\"", "");
     });
   }
 
@@ -198,12 +215,11 @@ class _CustomerPageState extends State<CustomerPage>{
     final pickedFile = await picker.getImage(source: ImageSource.camera);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
-    var renamedFile = await File (pickedFile.path).rename(
+    var renamedFile = await File(pickedFile.path).rename(
         '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/BUILDING_' +
             dateNow.toString() +
             '_' +
-            '.jpg'
-    );
+            '.jpg');
     setState(() {
       if (pickedFile != null) {
         _imageBuilding = renamedFile;
@@ -214,7 +230,8 @@ class _CustomerPageState extends State<CustomerPage>{
   }
 
   UploadBuilding(File imageFile) async {
-    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var stream =
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
     var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
     var request = new http.MultipartRequest("POST", uri);
@@ -226,31 +243,69 @@ class _CustomerPageState extends State<CustomerPage>{
     print(response.statusCode);
     response.stream.transform(utf8.decoder).listen((value) {
       print(value);
-      buildingFromServer = value.replaceAll("\"","");
+      buildingFromServer = value.replaceAll("\"", "");
     });
   }
 
+  UploadSignatureSales(imageFile, String namaFile) async {
+    //var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    //var length = await imageFile.length();
+    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var request = new http.MultipartRequest("POST", uri);
+    //var multipartFile = new http.MultipartFile.fromBytes('file', imageFile,
+    //filename: namaFile);
+    //contentType: new MediaType('image', 'png'));
+    request.files.add(
+        http.MultipartFile.fromBytes('file', imageFile, filename: namaFile));
+    var response = await request.send();
+    print(response.statusCode);
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
+      signatureSalesFromServer = value.replaceAll("\"", "");
+    });
+  }
+
+  UploadSignatureCustomer(imageFile, String namaFile) async {
+    //var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    //var length = await imageFile.length();
+    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var request = new http.MultipartRequest("POST", uri);
+    //var multipartFile = new http.MultipartFile.fromBytes('file', imageFile,
+    //filename: namaFile);
+    //contentType: new MediaType('image', 'png'));
+    request.files.add(
+        http.MultipartFile.fromBytes('file', imageFile, filename: namaFile));
+    var response = await request.send();
+    print(response.statusCode);
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
+      signatureCustomerFromServer = value.replaceAll("\"", "");
+    });
+  }
 
   //hit api Category
   var urlGetCategory = "http://119.18.157.236:8893/Api/CustCategory";
   String _valCategory;
+
   // ignore: deprecated_member_use
   List<dynamic> _dataCategory = List();
+
   void getCategory() async {
     final response = await http.get(Uri.parse(urlGetCategory));
     var listData = jsonDecode(response.body);
     print(urlGetCategory);
-    setState((){
+    setState(() {
       _dataCategory = listData;
-      if(!categoryContains(_valCategory)) {
+      if (!categoryContains(_valCategory)) {
         _valCategory = null;
       }
     });
     print("Data Category : $listData");
   }
-  bool categoryContains(String category)  {
-    for(int i=0; i<_dataCategory.length; i++){
-      if(category==_dataCategory[i]["MASTER_SETUP"]) return true;
+
+  bool categoryContains(String category) {
+    for (int i = 0; i < _dataCategory.length; i++) {
+      if (category == _dataCategory[i]["MASTER_SETUP"]) return true;
     }
     return false;
   }
@@ -259,44 +314,52 @@ class _CustomerPageState extends State<CustomerPage>{
   var urlGetSegment = "http://119.18.157.236:8893/Api/CustSegment";
   var urlGetSubSegment = "http://119.18.157.236:8893/Api/CustSubSegment";
   String _valSegment, _valSubSegment;
+
   // ignore: deprecated_member_use
   List<dynamic> _dataSegment = List(), _dataSubSegment = List();
+
   void getSegment() async {
-   final response = await http.get(Uri.parse(urlGetSegment)); //untuk melakukan request ke webservice
+    final response = await http
+        .get(Uri.parse(urlGetSegment)); //untuk melakukan request ke webservice
     var listData = jsonDecode(response.body); //lalu kita decode hasil datanya
-   print(urlGetSegment);
-   setState(() {
+    print(urlGetSegment);
+    setState(() {
       _dataSegment = listData; // dan kita set kedalam variable _dataProvince
-     if(!segmenContains(_valSegment)){
-       _valSegment = null;
-     }
+      if (!segmenContains(_valSegment)) {
+        _valSegment = null;
+      }
     });
     print("Data Segment : $listData");
   }
-  bool segmenContains(String segmen){
-    for (int i=0; i<_dataSegment.length; i++){
-      if(segmen==_dataSegment[i]["SEGMENTID"]) return true;
+
+  bool segmenContains(String segmen) {
+    for (int i = 0; i < _dataSegment.length; i++) {
+      if (segmen == _dataSegment[i]["SEGMENTID"]) return true;
     }
     return false;
   }
+
   void getSubSegment(String SelectedSegment) async {
     final response = await http.get(Uri.parse(urlGetSubSegment));
     var listData = jsonDecode(response.body);
     print(SelectedSegment);
     setState(() {
-      listData = listData.where((element) => element["SEGMENTID"] == SelectedSegment).toList();
+      listData = listData
+          .where((element) => element["SEGMENTID"] == SelectedSegment)
+          .toList();
       _dataSubSegment = listData;
       print("test $_dataSubSegment");
       print("test $_dataSubSegment filter by $SelectedSegment");
-      if(!subsegmenContains(_valSubSegment)){
+      if (!subsegmenContains(_valSubSegment)) {
         _valSubSegment = null;
       }
     });
     print("Data SubSegment : $listData");
   }
-  bool subsegmenContains(String subSegmen){
-    for (int i=0; i<_dataSubSegment.length; i++){
-      if(subSegmen==_dataSubSegment[i]["SUBSEGMENTID"]) return true;
+
+  bool subsegmenContains(String subSegmen) {
+    for (int i = 0; i < _dataSubSegment.length; i++) {
+      if (subSegmen == _dataSubSegment[i]["SUBSEGMENTID"]) return true;
     }
     return false;
   }
@@ -306,21 +369,23 @@ class _CustomerPageState extends State<CustomerPage>{
   String _valClass;
   bool _selectedClass = false;
   List<dynamic> _dataClass = List();
+
   void getClass() async {
     final response = await http.get(Uri.parse(urlGetClass));
     var listData = jsonDecode(response.body);
     print(urlGetClass);
-    setState((){
+    setState(() {
       _dataClass = listData;
-      if(!classContains(_valClass)){
+      if (!classContains(_valClass)) {
         _valClass = null;
       }
     });
     print("Data Class : $listData");
   }
-  bool classContains(String classs){
-    for (int i=0; i<_dataClass.length; i++){
-      if(classs==_dataClass[i]["CLASS"]) return true;
+
+  bool classContains(String classs) {
+    for (int i = 0; i < _dataClass.length; i++) {
+      if (classs == _dataClass[i]["CLASS"]) return true;
     }
     return false;
   }
@@ -335,17 +400,18 @@ class _CustomerPageState extends State<CustomerPage>{
     final response = await http.get(Uri.parse(urlGetCompanyStatus));
     var listData = jsonDecode(response.body);
     print(urlGetCompanyStatus);
-    setState((){
+    setState(() {
       _dataCompanyStatus = listData;
-      if(!companyContains(_valCompanyStatus)){
+      if (!companyContains(_valCompanyStatus)) {
         _valCompanyStatus = null;
       }
     });
     print("Data CompanyStatus : $listData");
   }
-  bool companyContains(String company){
-    for (int i=0; i<_dataCompanyStatus.length; i++){
-      if(company==_dataCompanyStatus[i]["CHAINID"]) return true;
+
+  bool companyContains(String company) {
+    for (int i = 0; i < _dataCompanyStatus.length; i++) {
+      if (company == _dataCompanyStatus[i]["CHAINID"]) return true;
     }
     return false;
   }
@@ -353,108 +419,147 @@ class _CustomerPageState extends State<CustomerPage>{
   //hit api PriceGroup
   var urlGetPriceGroup = "http://119.18.157.236:8893/Api/CustPriceGroup";
   String _valPriceGroup;
+
   // ignore: deprecated_member_use
   List<dynamic> _dataPriceGroup = List();
+
   void getPriceGroup() async {
     final response = await http.get(Uri.parse(urlGetPriceGroup));
     var listData = jsonDecode(response.body);
     print(urlGetPriceGroup);
-    setState((){
+    setState(() {
       _dataPriceGroup = listData;
-      if(!pricegroupContains(_valPriceGroup)){
+      if (!pricegroupContains(_valPriceGroup)) {
         _valPriceGroup = null;
       }
     });
     print("Data CompanyStatus : $listData");
   }
-  bool pricegroupContains(String pricegroup){
-    for(int i = 0; i<_dataPriceGroup.length; i++){
-      if(pricegroup==_dataPriceGroup[i]["NAME"]) return true;
+
+  bool pricegroupContains(String pricegroup) {
+    for (int i = 0; i < _dataPriceGroup.length; i++) {
+      if (pricegroup == _dataPriceGroup[i]["NAME"]) return true;
     }
     return false;
   }
 
   //Proses di submit button
   processSubmitCustomerForm(
-      //Customer
-      String customerNameCustomer, String brandNameCustomer, String categoryCustomer,
-      String segmenCustomer, String subSegmenCustomer, String selectClassCustomer, String phoneCustomer,
-      String companyStatusCustomer, String faxCustomer, String contactPersonCustomer, String emailAddressCustomer,
-      String npwpCustomer, String ktpCustomer, String currencyCustomer, String salesofficeCustomer, String pricegroupCustomer,
-      String businessunitCustomer, String salesmanCustomer, String websiteCustomer,
+    //Customer
+    String customerNameCustomer,
+    String brandNameCustomer,
+    String categoryCustomer,
+    String segmenCustomer,
+    String subSegmenCustomer,
+    String selectClassCustomer,
+    String phoneCustomer,
+    String companyStatusCustomer,
+    String faxCustomer,
+    String contactPersonCustomer,
+    String emailAddressCustomer,
+    String npwpCustomer,
+    String ktpCustomer,
+    String currencyCustomer,
+    String salesofficeCustomer,
+    String pricegroupCustomer,
+    String businessunitCustomer,
+    String salesmanCustomer,
+    String websiteCustomer,
 
-      //Company
-      String nameCompany, String streetnameCompany, String cityCompany, String countryCompany,
-      String stateCompany, String zipcodeCompany,
+    //Company
+    String nameCompany,
+    String streetnameCompany,
+    String cityCompany,
+    String countryCompany,
+    String stateCompany,
+    String zipcodeCompany,
 
-      //Tax
-      String nameTax, String streetNameTax, String cityTax, String countryTax,
-      String stateTax, String zipcodeTax,
+    //Tax
+    String nameTax,
+    String streetNameTax,
+    String cityTax,
+    String countryTax,
+    String stateTax,
+    String zipcodeTax,
 
-      //Delivery
-      String nameDelivery, String streetNameDelivery, String cityDelivery, String countryDelivery,
-      String stateDelivery, String zipcodeDelivery,
-
-      ) async {
-    var urlPostSubmitCustomerForm = "http://192.168.0.13:8893/Api/NOOCustTables";
+    //Delivery
+    String nameDelivery,
+    String streetNameDelivery,
+    String cityDelivery,
+    String countryDelivery,
+    String stateDelivery,
+    String zipcodeDelivery,
+  ) async {
+    var urlPostSubmitCustomerForm =
+        "http://192.168.0.13:8893/Api/NOOCustTables";
     print("Ini url Post Submit Customer : $urlPostSubmitCustomerForm");
-    var jsonSubmitCustomerForm = await http.post(Uri.parse(
-      "$urlPostSubmitCustomerForm",
-    ), headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-        body: jsonEncode(<String,dynamic>{
-        "CustName" : "$customerNameCustomer",
-        "BrandName" : "$brandNameCustomer",
-        "Category" : "$categoryCustomer",
-        "Segment" : "$segmenCustomer",
-        "SubSegment" : "$subSegmenCustomer",
-        "Class" : "$selectClassCustomer",
-        "PhoneNo" : "$phoneCustomer",
-        "CompanyStatus" : "$companyStatusCustomer",
-        "FaxNo" : "$faxCustomer",
-        "ContactPerson" : "$contactPersonCustomer",
-        "EmailAddress" : "$emailAddressCustomer",
-        "NPWP" : "$npwpCustomer",
-        "KTP" : "$ktpCustomer",
-        "Currency" : "$currencyCustomer",
-        "SalesOffice" : "$salesofficeCustomer",
-        "PriceGroup" : "$pricegroupCustomer",
-        "BusinessUnit" : "$businessunitCustomer",
-        "Salesman" : "$salesmanCustomer",
-        "Notes" : "Rachmat Notes",
-        "Website" : "$websiteCustomer",
-        "FotoNPWP" : "$npwpFromServer",
-        "FotoKTP" : "$ktpFromServer",
-        "FotoSIUP" : "$siupFromServer",
-        "FotoGedung" : "$buildingFromServer",
-        "CustSignature" : "Rachmat CustSignature",
-        "CreatedBy" : 1,
-        "CreatedDate" : "2021-04-05T14:56:48.57",
-        "TaxAddresses":[{
-        "Name" : "$nameTax",
-        "StreetName" : "$streetNameTax",
-        "City" : "$cityTax",
-        "Country" : "$countryTax",
-        "State" : "$stateTax",
-        "ZipCode" : "$zipcodeTax"
-        }],
-        "CompanyAddresses":[{
-        "Name" : "$nameCompany",
-        "StreetName" : "$streetnameCompany",
-        "City" : "$cityCompany",
-        "Country" : "$countryCompany",
-        "State" : "$stateCompany",
-        "ZipCode" : "$zipcodeCompany"
-        }],
-        "DeliveryAddresses":[{
-        "Name" : "$nameDelivery",
-        "StreetName" : "$streetNameDelivery",
-        "City" : "$cityDelivery",
-        "Country" : "$countryDelivery",
-        "State" : "$stateDelivery",
-        "ZipCode" : "$zipcodeDelivery"
-    }]}));
+    var jsonSubmitCustomerForm = await http.post(
+        Uri.parse(
+          "$urlPostSubmitCustomerForm",
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          "CustName": "$customerNameCustomer",
+          "BrandName": "$brandNameCustomer",
+          "Category": "$categoryCustomer",
+          "Segment": "$segmenCustomer",
+          "SubSegment": "$subSegmenCustomer",
+          "Class": "$selectClassCustomer",
+          "PhoneNo": "$phoneCustomer",
+          "CompanyStatus": "$companyStatusCustomer",
+          "FaxNo": "$faxCustomer",
+          "ContactPerson": "$contactPersonCustomer",
+          "EmailAddress": "$emailAddressCustomer",
+          "NPWP": "$npwpCustomer",
+          "KTP": "$ktpCustomer",
+          "Currency": "$currencyCustomer",
+          "SalesOffice": "$salesofficeCustomer",
+          "PriceGroup": "$pricegroupCustomer",
+          "BusinessUnit": "$businessunitCustomer",
+          "Salesman": "$salesmanCustomer",
+          "Notes": "Rachmat Notes",
+          "Website": "$websiteCustomer",
+          "FotoNPWP": "$npwpFromServer",
+          "FotoKTP": "$ktpFromServer",
+          "FotoSIUP": "$siupFromServer",
+          "FotoGedung": "$buildingFromServer",
+          "CustSignature": "$signatureCustomerFromServer",
+          "SalesSignature": "$signatureSalesFromServer",
+          "CreatedBy": 1,
+          "CreatedDate": "2021-04-05T14:56:48.57",
+          "TaxAddresses": [
+            {
+              "Name": "$nameTax",
+              "StreetName": "$streetNameTax",
+              "City": "$cityTax",
+              "Country": "$countryTax",
+              "State": "$stateTax",
+              "ZipCode": "$zipcodeTax"
+            }
+          ],
+          "CompanyAddresses": [
+            {
+              "Name": "$nameCompany",
+              "StreetName": "$streetnameCompany",
+              "City": "$cityCompany",
+              "Country": "$countryCompany",
+              "State": "$stateCompany",
+              "ZipCode": "$zipcodeCompany"
+            }
+          ],
+          "DeliveryAddresses": [
+            {
+              "Name": "$nameDelivery",
+              "StreetName": "$streetNameDelivery",
+              "City": "$cityDelivery",
+              "Country": "$countryDelivery",
+              "State": "$stateDelivery",
+              "ZipCode": "$zipcodeDelivery"
+            }
+          ]
+        }));
     print(jsonSubmitCustomerForm.body.toString());
     if (jsonSubmitCustomerForm.statusCode == 200) {
       return jsonDecode(jsonSubmitCustomerForm.body);
@@ -462,7 +567,6 @@ class _CustomerPageState extends State<CustomerPage>{
       throw Exception("Failed");
     }
   }
-
 
   //SignatureController Sales
   final SignatureController _signaturecontrollersales = SignatureController(
@@ -495,6 +599,7 @@ class _CustomerPageState extends State<CustomerPage>{
   void initState() {
     // TODO: implement initState
     super.initState();
+    print(widget.name);
     getSegment();
     getCategory();
     getClass();
@@ -506,6 +611,8 @@ class _CustomerPageState extends State<CustomerPage>{
     // _signaturecontrollerbmaca.addListener(() => print('Value changed'));
 //    getDataFromPerf();
   }
+
+  String text = 'Press To Load';
 
   @override
   Widget build(BuildContext context) {
@@ -522,6 +629,19 @@ class _CustomerPageState extends State<CustomerPage>{
             fontWeight: FontWeight.bold,
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Center(
+              child: Text(
+                widget.name,
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: Form(
         key: _formkey,
@@ -529,7 +649,6 @@ class _CustomerPageState extends State<CustomerPage>{
           shrinkWrap: true,
           padding: EdgeInsets.all(15),
           children: <Widget>[
-
             Center(
               child: Text(
                 "Customer Form",
@@ -540,7 +659,9 @@ class _CustomerPageState extends State<CustomerPage>{
               ),
             ),
 
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
 
             //Customer Name
             Row(
@@ -550,27 +671,30 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Customer Name :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Container(
-                  child: Expanded(
-                    child: TextFormField(
-                      textAlign: TextAlign.center,
-                      controller: _customerNameControllerCustomer,
-                      keyboardType: TextInputType.text,
-                      autofocus: false,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hintText: 'Customer Name',
-                        filled: true,
-                        contentPadding: EdgeInsets.all(5),
+                    child: Expanded(
+                  child: TextFormField(
+                    textAlign: TextAlign.center,
+                    controller: _customerNameControllerCustomer,
+                    keyboardType: TextInputType.text,
+                    autofocus: false,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      hintText: 'Customer Name',
+                      filled: true,
+                      contentPadding: EdgeInsets.all(5),
 //                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-                      ),
                     ),
-                  )
-                )
+                  ),
+                ))
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //Brand Name
             Row(
@@ -580,7 +704,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Brand Name        :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Container(
                   child: Expanded(
                     child: TextFormField(
@@ -600,7 +726,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 )
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //Category
             Row(
@@ -610,13 +738,15 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Category              :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 DropdownButton(
                   hint: Text("Select Category"),
                   value: _valCategory,
                   items: _dataCategory.map((item) {
                     return DropdownMenuItem(
-                      child: Text(item['MASTER_SETUP']??"loading.."),
+                      child: Text(item['MASTER_SETUP'] ?? "loading.."),
                       value: item['MASTER_SETUP'],
                     );
                   }).toList(),
@@ -628,7 +758,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 ),
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //Segmen
             Row(
@@ -638,13 +770,15 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Segmen               :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 DropdownButton(
                   hint: Text("Select Segment"),
-                  value:  _valSegment,
-                  items: _dataSegment.map((item){
+                  value: _valSegment,
+                  items: _dataSegment.map((item) {
                     return DropdownMenuItem(
-                      child: Text(item['SEGMENTID']??"loading.."),
+                      child: Text(item['SEGMENTID'] ?? "loading.."),
                       value: item['SEGMENTID'],
                     );
                   }).toList(),
@@ -661,7 +795,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 ),
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //Sub Segmen
             Row(
@@ -671,13 +807,15 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Sub Segmen       :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 DropdownButton(
                   hint: Text("Select SubSegment"),
                   value: _valSubSegment,
-                  items: _dataSubSegment.map((item){
+                  items: _dataSubSegment.map((item) {
                     return DropdownMenuItem(
-                      child: Text("${item['SUBSEGMENTID']??"loading.."}"),
+                      child: Text("${item['SUBSEGMENTID'] ?? "loading.."}"),
                       value: item['SUBSEGMENTID'],
                     );
                   }).toList(),
@@ -690,7 +828,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 ),
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //Class
             Row(
@@ -700,13 +840,15 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Class                    :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 DropdownButton(
                   hint: Text("Select Class"),
                   value: _valClass,
                   items: _dataClass.map((item) {
                     return DropdownMenuItem(
-                      child: Text(item['CLASS']??"loading.."),
+                      child: Text(item['CLASS'] ?? "loading.."),
                       value: item['CLASS'],
                     );
                   }).toList(),
@@ -718,7 +860,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 ),
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //Phone
             Row(
@@ -728,7 +872,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Phone                  :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Container(
                   child: Expanded(
                     child: TextFormField(
@@ -748,7 +894,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 )
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //Company Status
             Row(
@@ -758,13 +906,15 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Company \n Status                 :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 DropdownButton(
                   hint: Text("Select Company Status"),
                   value: _valCompanyStatus,
                   items: _dataCompanyStatus.map((item) {
                     return DropdownMenuItem(
-                      child: Text(item['CHAINID']??"loading.."),
+                      child: Text(item['CHAINID'] ?? "loading.."),
                       value: item['CHAINID'],
                     );
                   }).toList(),
@@ -776,7 +926,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 ),
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //Fax
             Row(
@@ -786,7 +938,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Fax                       :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Container(
                   child: Expanded(
                     child: TextFormField(
@@ -806,7 +960,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 )
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //Contact Person
             Row(
@@ -816,7 +972,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Contact Person  :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Container(
                   child: Expanded(
                     child: TextFormField(
@@ -836,7 +994,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 )
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //Email Address
             Row(
@@ -846,7 +1006,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Email Address    :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Container(
                   child: Expanded(
                     child: TextFormField(
@@ -866,7 +1028,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 )
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //NPWP
             Row(
@@ -876,7 +1040,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     "NPWP                   :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Container(
                   child: Expanded(
                     child: TextFormField(
@@ -896,7 +1062,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 )
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //KTP
             Row(
@@ -906,7 +1074,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     "KTP                       :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Container(
                   child: Expanded(
                     child: TextFormField(
@@ -926,7 +1096,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 )
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //Currency
             Row(
@@ -936,7 +1108,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Currency              :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Container(
                   child: Expanded(
                     child: TextFormField(
@@ -956,7 +1130,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 )
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //Sales Office
             Row(
@@ -966,7 +1142,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Sales Office         :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Container(
                   child: Expanded(
                     child: TextFormField(
@@ -986,7 +1164,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 )
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //Price Group
             Row(
@@ -996,13 +1176,15 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Price Group         :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 DropdownButton(
                   hint: Text("Select PriceGroup"),
                   value: _valPriceGroup,
                   items: _dataPriceGroup.map((item) {
                     return DropdownMenuItem(
-                      child: Text(item['NAME']??"loading.."),
+                      child: Text(item['NAME'] ?? "loading.."),
                       value: item['NAME'],
                     );
                   }).toList(),
@@ -1015,7 +1197,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 ),
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //Business Unit
             Row(
@@ -1025,7 +1209,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Business Unit      :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Container(
                   child: Expanded(
                     child: TextFormField(
@@ -1045,7 +1231,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 )
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //Salesman
             Row(
@@ -1055,7 +1243,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Salesman             :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Container(
                   child: Expanded(
                     child: TextFormField(
@@ -1075,7 +1265,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 )
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //Website
             Row(
@@ -1085,7 +1277,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Website                :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Container(
                   child: Expanded(
                     child: TextFormField(
@@ -1105,7 +1299,9 @@ class _CustomerPageState extends State<CustomerPage>{
                 )
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             //Attachment label
             Row(
@@ -1115,10 +1311,14 @@ class _CustomerPageState extends State<CustomerPage>{
                     "Attachment          :",
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
 
             //ScrollHorizontal ListView Upload KTP Alt dan Attachment Lainya
             Container(
@@ -1127,7 +1327,6 @@ class _CustomerPageState extends State<CustomerPage>{
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-
                   //Upload KTP
                   Card(
                     child: Container(
@@ -1137,18 +1336,22 @@ class _CustomerPageState extends State<CustomerPage>{
                         children: [
                           Column(
                             children: [
-                              SizedBox(height: 10,),
+                              SizedBox(
+                                height: 10,
+                              ),
                               Center(
-                                child: _imageKTP == null ? Text(
-                                    "KTP"
-                                ): Image.file(
-                                  _imageKTP,
-                                  fit: BoxFit.cover,
+                                child: _imageKTP == null
+                                    ? Text("KTP")
+                                    : Image.file(
+                                        _imageKTP,
+                                        fit: BoxFit.cover,
 //                                  width: 150,
 //                                  height: 80,
-                                ),
+                                      ),
                               ),
-                              SizedBox(height: 10,),
+                              SizedBox(
+                                height: 10,
+                              ),
                             ],
                           ),
                           FloatingActionButton(
@@ -1160,7 +1363,9 @@ class _CustomerPageState extends State<CustomerPage>{
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(
+                    width: 5,
+                  ),
 
                   //Upload NPWP
                   Card(
@@ -1171,18 +1376,22 @@ class _CustomerPageState extends State<CustomerPage>{
                         children: [
                           Column(
                             children: [
-                              SizedBox(height: 10,),
+                              SizedBox(
+                                height: 10,
+                              ),
                               Center(
-                                child: _imageNPWP == null ? Text(
-                                    "NPWP"
-                                ): Image.file(
-                                  _imageNPWP,
-                                  fit: BoxFit.cover,
+                                child: _imageNPWP == null
+                                    ? Text("NPWP")
+                                    : Image.file(
+                                        _imageNPWP,
+                                        fit: BoxFit.cover,
 //                                  width: 150,
 //                                  height: 80,
-                                ),
+                                      ),
                               ),
-                              SizedBox(height: 10,),
+                              SizedBox(
+                                height: 10,
+                              ),
                             ],
                           ),
                           FloatingActionButton(
@@ -1194,7 +1403,9 @@ class _CustomerPageState extends State<CustomerPage>{
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(
+                    width: 5,
+                  ),
 
                   //Upload SIUP
                   Card(
@@ -1205,18 +1416,22 @@ class _CustomerPageState extends State<CustomerPage>{
                         children: [
                           Column(
                             children: [
-                              SizedBox(height: 10,),
+                              SizedBox(
+                                height: 10,
+                              ),
                               Center(
-                                child: _imageSIUP == null ? Text(
-                                    "SIUP"
-                                ): Image.file(
-                                  _imageSIUP,
-                                  fit: BoxFit.cover,
+                                child: _imageSIUP == null
+                                    ? Text("SIUP")
+                                    : Image.file(
+                                        _imageSIUP,
+                                        fit: BoxFit.cover,
 //                                  width: 150,
 //                                  height: 80,
-                                ),
+                                      ),
                               ),
-                              SizedBox(height: 10,),
+                              SizedBox(
+                                height: 10,
+                              ),
                             ],
                           ),
                           FloatingActionButton(
@@ -1228,7 +1443,9 @@ class _CustomerPageState extends State<CustomerPage>{
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(
+                    width: 5,
+                  ),
 
                   //Upload BUILDING
                   Card(
@@ -1239,16 +1456,20 @@ class _CustomerPageState extends State<CustomerPage>{
                         children: [
                           Column(
                             children: [
-                              SizedBox(height: 10,),
-                              Center(
-                                child: _imageBuilding == null ? Text(
-                                    "Building"
-                                ): Image.file(
-                                  _imageBuilding,
-                                  fit: BoxFit.cover,
-                                ),
+                              SizedBox(
+                                height: 10,
                               ),
-                              SizedBox(height: 10,),
+                              Center(
+                                child: _imageBuilding == null
+                                    ? Text("Building")
+                                    : Image.file(
+                                        _imageBuilding,
+                                        fit: BoxFit.cover,
+                                      ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
                             ],
                           ),
                           FloatingActionButton(
@@ -1264,17 +1485,21 @@ class _CustomerPageState extends State<CustomerPage>{
               ),
             ),
 
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
 
             Divider(
               color: Colors.black,
-              height:0,
+              height: 0,
               thickness: 1,
               indent: 10,
               endIndent: 10,
             ),
 
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
 
             //Label Company Form
             Center(
@@ -1287,7 +1512,9 @@ class _CustomerPageState extends State<CustomerPage>{
               ),
             ),
 
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
 
             //Company Widget
             Column(
@@ -1299,7 +1526,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "Name                    :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1319,7 +1548,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 //Street Name
                 Row(
@@ -1329,7 +1560,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "Street Name        :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1349,7 +1582,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 //City
                 Row(
@@ -1359,7 +1594,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "City                        :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1379,7 +1616,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 //Country
                 Row(
@@ -1389,7 +1628,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "Country                :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1409,7 +1650,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 //State
                 Row(
@@ -1419,7 +1662,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "State                     :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1439,7 +1684,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 //ZIP Code
                 Row(
@@ -1449,7 +1696,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "ZIP Code              :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1469,22 +1718,27 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
-
+                SizedBox(
+                  height: 10,
+                ),
               ],
             ),
 
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
 
             Divider(
               color: Colors.black,
-              height:0,
+              height: 0,
               thickness: 1,
               indent: 10,
               endIndent: 10,
             ),
 
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
 
             //Label Tax Form
             Center(
@@ -1497,7 +1751,9 @@ class _CustomerPageState extends State<CustomerPage>{
               ),
             ),
 
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
 
             //Tax Widget
             Column(
@@ -1510,7 +1766,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "Name                    :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1530,7 +1788,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 //Street Name
                 Row(
@@ -1540,7 +1800,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "Street Name        :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1560,7 +1822,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 //City
                 Row(
@@ -1570,7 +1834,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "City                        :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1590,7 +1856,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 //Country
                 Row(
@@ -1600,7 +1868,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "Country                :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1620,7 +1890,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 //State
                 Row(
@@ -1630,7 +1902,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "State                     :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1650,7 +1924,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 //ZIP Code
                 Row(
@@ -1660,7 +1936,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "ZIP Code              :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1680,22 +1958,27 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
-
+                SizedBox(
+                  height: 10,
+                ),
               ],
             ),
 
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
 
             Divider(
               color: Colors.black,
-              height:0,
+              height: 0,
               thickness: 1,
               indent: 10,
               endIndent: 10,
             ),
 
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
 
             //Label Delivery Form
             Center(
@@ -1708,7 +1991,9 @@ class _CustomerPageState extends State<CustomerPage>{
               ),
             ),
 
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
 
             //Delivery Widget
             Column(
@@ -1721,7 +2006,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "Name                    :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1741,7 +2028,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 //Street Name
                 Row(
@@ -1751,7 +2040,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "Street Name        :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1771,7 +2062,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 //City
                 Row(
@@ -1781,7 +2074,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "City                        :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1801,7 +2096,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 //Country
                 Row(
@@ -1811,7 +2108,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "Country                :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1831,7 +2130,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 //State
                 Row(
@@ -1841,7 +2142,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "State                     :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1861,7 +2164,9 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 //ZIP Code
                 Row(
@@ -1871,7 +2176,9 @@ class _CustomerPageState extends State<CustomerPage>{
                         "ZIP Code              :",
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       child: Expanded(
                         child: TextFormField(
@@ -1891,22 +2198,27 @@ class _CustomerPageState extends State<CustomerPage>{
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
-
+                SizedBox(
+                  height: 10,
+                ),
               ],
             ),
 
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             Divider(
               color: Colors.black,
-              height:0,
+              height: 0,
               thickness: 1,
               indent: 10,
               endIndent: 10,
             ),
 
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
 
             //Label Signature Form
             Center(
@@ -1919,201 +2231,399 @@ class _CustomerPageState extends State<CustomerPage>{
               ),
             ),
 
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
+
+            //FlipCard
+            Card(
+              child: FlipCard(
+                direction: FlipDirection.HORIZONTAL,
+                speed: 1000,
+                onFlipDone: (status) {
+                  print(status);
+                },
+                front: Container(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Sales",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Card(
+                        child: Signature(
+                          controller: _signaturecontrollersales,
+                          height: 300,
+                          backgroundColor: Colors.white,
+                        ),
+                      ),
+                      //Oke dan button clear
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.black,
+                        ),
+                        child: Container(
+                          width: 355,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              //Icon check
+                              IconButton(
+                                  icon: const Icon(Icons.check),
+                                  color: Colors.blue,
+                                  onPressed: () async {
+                                    // showDialog(
+                                    //     context: context,
+                                    //     barrierDismissible: false,
+                                    //     builder: (context) {
+                                    //       return Center(
+                                    //         child: CircleProgressBar(
+                                    //           backgroundColor: Colors.black54,
+                                    //           progressColor: Colors.orange,
+                                    //           size: 20,
+                                    //           child: SizedBox(
+                                    //               child: Icon(
+                                    //             Icons.local_fire_department,
+                                    //           )),
+                                    //         ),
+                                    //       );
+                                    //     });
+                                    // Future.delayed(Duration(seconds: 2)).then(
+                                    //   (value) {
+                                    //     Navigator.pop(context);
+                                    //     setState(
+                                    //       () {
+                                    //         text = "LOADED";
+                                    //       },
+                                    //     );
+                                    //   },
+                                    // );
+                                  }
+                                  ),
+                              //Clear Canvass
+                              IconButton(
+                                  icon: const Icon(
+                                    Icons.clear,
+                                    color: Colors.blue,
+                                  ),
+                                  onPressed: () {
+                                    setState(() =>
+                                        _signaturecontrollersales.clear());
+                                  }),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                back: Container(
+                  child: Column(
+                    children: [
+                      // SizedBox(height: 10,),
+                      Text(
+                        "Customer",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Card(
+                        child: Signature(
+                          controller: _signaturecontrollercustomer,
+                          height: 300,
+                          backgroundColor: Colors.white,
+                        ),
+                      ),
+                      //Oke dan button clear
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.black,
+                        ),
+                        child: Container(
+                          width: 355,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              IconButton(
+                                  icon: const Icon(Icons.check),
+                                  color: Colors.blue,
+                                  onPressed: () async {
+                                    // if (_signaturecontrollercustomer
+                                    //     .isNotEmpty) {
+                                    //   final Uint8List data =
+                                    //       await _signaturecontrollercustomer
+                                    //           .toPngBytes();
+                                    //   if (data != null) {}
+                                    // }
+                                  }
+                                  ),
+                              //Clear Canvass
+                              IconButton(
+                                  icon: const Icon(
+                                    Icons.clear,
+                                    color: Colors.blue,
+                                  ),
+                                  onPressed: () {
+                                    setState(() =>
+                                        _signaturecontrollercustomer.clear());
+                                  }),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
 
             //Signature Canvas Sales
-            Container(
-              child: Column(
-                children: [
-                  Text("Sales"),
-                  SizedBox(height: 10,),
-                  Card(
-                    child: Signature(
-                      controller: _signaturecontrollersales,
-                      height: 300,
-                      backgroundColor: Colors.white,
-                    ),
-                  ),
-                  //Oke dan button clear
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.black,
-                    ),
-                    child: Container(
-                      width: 355,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          IconButton(
-                              icon: const Icon(Icons.check),
-                              color: Colors.blue,
-                              onPressed: () async {
-                                if (_signaturecontrollersales.isNotEmpty){
-                                  final Uint8List data = await _signaturecontrollersales.toPngBytes();
-                                  File.fromRawPath(data);
-                                  File signatureFromUint8List = File.fromRawPath(data);
-                                  print(signatureFromUint8List.path);
-                                  if (data != null) {
-                                    await Navigator.of(context).push(
-                                        MaterialPageRoute<void>(
-                                            builder: (BuildContext context){
-                                              return Center(
-                                                child: Container(
-                                                  color: Colors.grey[300],
-                                                  child: Image.file(signatureFromUint8List),
-                                                ),
-                                              );
-                                            }
-                                        )
-                                    );
-                                  }
-                                }
-                              }
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  //Clear Canvass
-                  IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: (){
-                        setState(() => _signaturecontrollersales.clear());
-                      }
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10,),
+            // Container(
+            //   child: Column(
+            //     children: [
+            //       Text("Sales"),
+            //       SizedBox(height: 10,),
+            //       Card(
+            //         child: Signature(
+            //           controller: _signaturecontrollersales,
+            //           height: 300,
+            //           backgroundColor: Colors.white,
+            //         ),
+            //       ),
+            //       //Oke dan button clear
+            //       Container(
+            //         decoration: const BoxDecoration(
+            //           color: Colors.black,
+            //         ),
+            //         child: Container(
+            //           width: 355,
+            //           child: Row(
+            //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //             mainAxisSize: MainAxisSize.max,
+            //             children: <Widget>[
+            //               IconButton(
+            //                   icon: const Icon(Icons.check),
+            //                   color: Colors.blue,
+            //                   onPressed: () async {
+            //                     showDialog(
+            //                         context: context,
+            //                         barrierDismissible: false,
+            //                         builder: (context) {
+            //                           return Center(
+            //                             child: CircleProgressBar(
+            //                               backgroundColor: Colors.black54,
+            //                               progressColor: Colors.orange,
+            //                               size: 20,
+            //                               child: SizedBox(
+            //                                 child: Icon(
+            //                                   Icons.local_fire_department,
+            //                                 )
+            //                               ),
+            //                             ),
+            //                           );
+            //                         });
+            //                     Future.delayed(Duration(seconds: 2)).then(
+            //                           (value) {
+            //                         Navigator.pop(context);
+            //                         setState(
+            //                               () {
+            //                             text = "LOADED";
+            //                           },
+            //                         );
+            //                       },
+            //                     );
+            //                   }
+            //               ),
+            //             ],
+            //           ),
+            //         ),
+            //       ),
+            //       //Clear Canvass
+            //       IconButton(
+            //           icon: const Icon(Icons.clear),
+            //           onPressed: (){
+            //             setState(() => _signaturecontrollersales.clear());
+            //           }
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // SizedBox(height: 10,),
 
             //Signature Canvas Customer
-            Container(
-              child: Column(
-                children: [
-                  Text("Customer"),
-                  SizedBox(height: 10,),
-                  Card(
-                    child: Signature(
-                      controller: _signaturecontrollercustomer,
-                      height: 300,
-                      backgroundColor: Colors.white,
-                    ),
-                  ),
-                  //Oke dan button clear
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.black,
-                    ),
-                    child: Container(
-                      width: 355,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          IconButton(
-                              icon: const Icon(Icons.check),
-                              color: Colors.blue,
-                              onPressed: () async {
-                                if (_signaturecontrollercustomer.isNotEmpty){
-                                  final Uint8List data = await _signaturecontrollercustomer.toPngBytes();
-                                  if (data != null) {
-                                    await Navigator.of(context).push(
-                                        MaterialPageRoute<void>(
-                                            builder: (BuildContext context){
-                                              return Center(
-                                                child: Container(
-                                                  color: Colors.grey[300],
-                                                  child: Image.memory(data),
-                                                ),
-                                              );
-                                            }
-                                        )
-                                    );
-                                  }
-                                }
-                              }
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  //Clear Canvass
-                  IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: (){
-                        setState(() => _signaturecontrollercustomer.clear());
-                      }
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10,),
+            // Container(
+            //   child: Column(
+            //     children: [
+            //       Text("Customer"),
+            //       SizedBox(height: 10,),
+            //       Card(
+            //         child: Signature(
+            //           controller: _signaturecontrollercustomer,
+            //           height: 300,
+            //           backgroundColor: Colors.white,
+            //         ),
+            //       ),
+            //       //Oke dan button clear
+            //       Container(
+            //         decoration: const BoxDecoration(
+            //           color: Colors.black,
+            //         ),
+            //         child: Container(
+            //           width: 355,
+            //           child: Row(
+            //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //             mainAxisSize: MainAxisSize.max,
+            //             children: <Widget>[
+            //               IconButton(
+            //                   icon: const Icon(Icons.check),
+            //                   color: Colors.blue,
+            //                   onPressed: () async {
+            //                     if (_signaturecontrollercustomer.isNotEmpty){
+            //                       final Uint8List data = await _signaturecontrollercustomer.toPngBytes();
+            //                       if (data != null) {
+            //                         await Navigator.of(context).push(
+            //                             MaterialPageRoute<void>(
+            //                                 builder: (BuildContext context){
+            //                                   return Center(
+            //                                     child: Container(
+            //                                       color: Colors.grey[300],
+            //                                       child: Image.memory(data),
+            //                                     ),
+            //                                   );
+            //                                 }
+            //                             )
+            //                         );
+            //                       }
+            //                     }
+            //                   }
+            //               ),
+            //             ],
+            //           ),
+            //         ),
+            //       ),
+            //       //Clear Canvass
+            //       IconButton(
+            //           icon: const Icon(Icons.clear),
+            //           onPressed: (){
+            //             setState(() => _signaturecontrollercustomer.clear());
+            //           }
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // SizedBox(height: 10,),
 
             //Button Refresh
-            Center(
-              child: RaisedButton(
-                color: Colors.blue,
-                onPressed: () async {
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                    prefs.remove("customer");
-                },
-                child: Text(
-                  "Refresh",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
+            // Center(
+            //   child: RaisedButton(
+            //     color: Colors.blue,
+            //     onPressed: () async {
+            //         SharedPreferences prefs = await SharedPreferences.getInstance();
+            //         prefs.remove("customer");
+            //     },
+            //     child: Text(
+            //       "Refresh",
+            //       style: TextStyle(
+            //         color: Colors.white,
+            //       ),
+            //     ),
+            //   ),
+            // ),
 
             //Button Submit
-            Center(
-              child: RaisedButton(
-                color: Colors.blue,
-                onPressed: () async {
-                  print(_formkey.currentState.validate());
-                  if (_formkey.currentState.validate()) {
-                    print("Ini proses submit");
-                    await UploadKTP(_imageKTP);
-                    await UploadNPWP(_imageNPWP);
-                    await UploadSIUP(_imageSIUP);
-                    await UploadBuilding(_imageBuilding);
-                    processSubmitCustomerForm(
-                      //Customer
-                      _customerNameControllerCustomer.text, _brandNameControllerCustomer.text,
-                      _valCategory, _valSegment, _valSubSegment, _valClass, _phoneControllerCustomer.text,
-                      _valCompanyStatus, _faxControllerCustomer.text, _contactPersonControllerCustomer.text,
-                      _emailAddressControllerCustomer.text, _npwpControllerCustomer.text, _ktpControllerCustomer.text,
-                      _currencyControllerCustomer.text, _salesOfficeControllerCustomer.text, _valPriceGroup,
-                      _businessUnitControllerCustomer.text, _salesmanControllerCustomer.text, _websiteControllerCustomer.text,
-                      
-                      //Company
-                      _nameControllerCompany.text, _streetControllerCompany.text, _cityControllerCompany.text,
-                      _countryControllerCompany.text, _stateControllerCompany.text, _zipCodeControllerCompany.text,
+            // ignore: deprecated_member_use
+            RaisedButton(
+              color: Colors.blue,
+              onPressed: () async {
+                print(_formkey.currentState.validate());
+                if (_formkey.currentState.validate()) {
+                  print("Ini proses submit");
+                  await UploadKTP(_imageKTP);
+                  await UploadNPWP(_imageNPWP);
+                  await UploadSIUP(_imageSIUP);
+                  await UploadBuilding(_imageBuilding);
+                  DataSignSales = await _signaturecontrollersales.toPngBytes();
+                  await UploadSignatureSales(
+                      DataSignSales, signatureSalesFromServer);
+                  DataSignCustomer = await _signaturecontrollercustomer.toPngBytes();
+                  await UploadSignatureCustomer(
+                      DataSignCustomer, signatureCustomerFromServer);
+                  processSubmitCustomerForm(
+                    //Customer
+                    _customerNameControllerCustomer.text,
+                    _brandNameControllerCustomer.text,
+                    _valCategory,
+                    _valSegment,
+                    _valSubSegment,
+                    _valClass,
+                    _phoneControllerCustomer.text,
+                    _valCompanyStatus,
+                    _faxControllerCustomer.text,
+                    _contactPersonControllerCustomer.text,
+                    _emailAddressControllerCustomer.text,
+                    _npwpControllerCustomer.text,
+                    _ktpControllerCustomer.text,
+                    _currencyControllerCustomer.text,
+                    _salesOfficeControllerCustomer.text,
+                    _valPriceGroup,
+                    _businessUnitControllerCustomer.text,
+                    _salesmanControllerCustomer.text,
+                    _websiteControllerCustomer.text,
 
-                      //Tax
-                      _nameControllerTax.text, _streetControllerTax.text, _cityControllerTax.text,
-                      _countryControllerTax.text, _stateControllerTax.text, _zipCodeControllerTax.text,
+                    //Company
+                    _nameControllerCompany.text,
+                    _streetControllerCompany.text,
+                    _cityControllerCompany.text,
+                    _countryControllerCompany.text,
+                    _stateControllerCompany.text,
+                    _zipCodeControllerCompany.text,
 
-                      //Delivery
-                      _nameControllerDelivery.text, _streetControllerDelivery.text, _cityControllerDelivery.text,
-                      _countryControllerDelivery.text, _stateControllerDelivery.text, _zipCodeControllerDelivery.text,
-                    );
-                  }
-                },
-                child: Text(
-                  "Submit",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
+                    //Tax
+                    _nameControllerTax.text,
+                    _streetControllerTax.text,
+                    _cityControllerTax.text,
+                    _countryControllerTax.text,
+                    _stateControllerTax.text,
+                    _zipCodeControllerTax.text,
+
+                    //Delivery
+                    _nameControllerDelivery.text,
+                    _streetControllerDelivery.text,
+                    _cityControllerDelivery.text,
+                    _countryControllerDelivery.text,
+                    _stateControllerDelivery.text,
+                    _zipCodeControllerDelivery.text,
+                  );
+                  return Center(
+                    child: CircleProgressBar(
+                      size: 20,
+                    ),
+                  );
+                }
+              },
+              child: Text(
+                "Submit",
+                style: TextStyle(
+                  color: Colors.white,
                 ),
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
           ],
         ),
-    ),
+      ),
     );
   }
 }

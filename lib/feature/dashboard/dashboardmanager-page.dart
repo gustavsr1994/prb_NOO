@@ -38,9 +38,7 @@ class _DashboardManagerPageState extends State<DashboardManagerPage> {
     ];
 
     print("Ini bottom nav");
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
           bottomNavigationBar: BottomNavigationBar(
             elevation: 50,
             backgroundColor: Color(0xFFF0F0F0),
@@ -82,8 +80,8 @@ class _DashboardManagerPageState extends State<DashboardManagerPage> {
               ),
             ],
           ),
+          // body: ApprovalPage(),
           body: pages[_selectedItemIndex]
-      ),
-    );
+      );
   }
 }
