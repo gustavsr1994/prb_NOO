@@ -33,11 +33,8 @@ class _DashboardManagerPageState extends State<DashboardManagerPage> {
   @override
   Widget build(BuildContext context) {
 
-    final List pages = [
-      ApprovalPage(),
-    ];
-
     print("Ini bottom nav");
+    _selectedItemIndex = 0;
     return Scaffold(
           bottomNavigationBar: BottomNavigationBar(
             elevation: 50,
@@ -80,8 +77,7 @@ class _DashboardManagerPageState extends State<DashboardManagerPage> {
               ),
             ],
           ),
-          // body: ApprovalPage(),
-          body: pages[_selectedItemIndex]
+          body: ApprovalPage(),
       );
   }
 }

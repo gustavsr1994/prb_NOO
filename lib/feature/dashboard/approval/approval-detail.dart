@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:commons/commons.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -43,13 +44,8 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
   }
 
   UploadSignatureApproval(imageFile, String namaFile) async {
-    //var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-    //var length = await imageFile.length();
     var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
     var request = new http.MultipartRequest("POST", uri);
-    //var multipartFile = new http.MultipartFile.fromBytes('file', imageFile,
-    //filename: namaFile);
-    //contentType: new MediaType('image', 'png'));
     request.files.add(
         http.MultipartFile.fromBytes('file', imageFile, filename: namaFile));
     var response = await request.send();
@@ -57,7 +53,6 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
     response.stream.transform(utf8.decoder).listen((value) {
       print(value);
       signatureApprovalFromServer = value.replaceAll("\"", "");
-
     });
   }
   var iduser = 0;
@@ -77,20 +72,20 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
     var urlPostApproval = "http://192.168.0.13:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy&ApprovedSignature=$ApprovedSignature";
     print("Ini urlPost Approval : $urlPostApproval");
     var jsonApprovalButton = await http.post(Uri.parse(urlPostApproval));
-    var user = User.fromJson(jsonDecode(jsonApprovalButton.body));
-    approveBy = user.id;
+    // var user = User.fromJson(json.decode(jsonApprovalButton.body)); //maaf ngga kepake
+    // approveBy = user.id;
     print(jsonApprovalButton.body.toString());
     print(jsonApprovalButton.body.toString().isEmpty);
-    var dataApprovalButton = jsonDecode(jsonApprovalButton.body);
+    // var dataApprovalButton = jsonDecode(jsonApprovalButton.body); //maaf ngga kepake
     print(jsonApprovalButton.body.toString());
     print(jsonApprovalButton.body.toString().isEmpty);
-    if (dataApprovalButton['id'] == id){
-      print("Ini button Approval");
-      if(dataApprovalButton['value'] == "1" ){
-        print("Ini value 1/Approve");
-        Alert(context: context, title: "RFlutter", desc: "Flutter awesome").show();
-      }
-    }
+    // if (dataApprovalButton['id'] == id){
+    //   print("Ini button Approval");
+    //   if(dataApprovalButton['value'] == "1" ){
+    //     print("Ini value 1/Approve");
+    //     Alert(context: context, title: "RFlutter", desc: "Flutter awesome").show();
+    //   }
+    // }
   }
 
   processRejectButton(String id, String value, String approveBy) async {
@@ -165,7 +160,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
               ),
               Text(
-                data.custName,
+                data.custName??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -189,7 +184,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.brandName,
+                  data.brandName??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -213,7 +208,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.category,
+                  data.category??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -237,7 +232,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.segment,
+                  data.segment??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -261,7 +256,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.subSegment,
+                  data.subSegment??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -285,7 +280,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.selectclass,
+                  data.selectclass??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -309,7 +304,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.phoneNo,
+                  data.phoneNo??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -333,7 +328,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.companyStatus,
+                  data.companyStatus??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -357,7 +352,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.faxNo,
+                  data.faxNo??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -381,7 +376,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.contactPerson,
+                  data.contactPerson??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -405,7 +400,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.emailAddress,
+                  data.emailAddress??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -429,7 +424,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.website,
+                  data.website??"",
                 style: TextStyle(
                     fontSize: 17,
                   color: Colors.black54
@@ -453,7 +448,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.nPWP,
+                  data.nPWP??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -477,7 +472,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.kTP,
+                  data.kTP??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54
@@ -502,7 +497,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.currency,
+                  data.currency??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -526,7 +521,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.priceGroup,
+                  data.priceGroup??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -550,7 +545,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.salesman,
+                  data.salesman??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -574,7 +569,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.salesOffice,
+                  data.salesOffice??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -598,7 +593,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.businessUnit,
+                  data.businessUnit??"",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -623,8 +618,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
               Container(
                 height: 100,
-                  child: Image.network(
-                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName="+data.fotoNPWP
+                  // child: data.fotoNPWP != null ? Container() : "null" == data.fotoNPWP ? Container():
+                  child:
+                  Image.network(
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}"
                   )
               ),
             ],
@@ -646,8 +643,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
               Container(
                   height: 100,
-                  child: Image.network(
-                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName="+data.fotoKTP
+                  child:
+                  // data.fotoKTP != null ? Container():
+                  Image.network(
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoKTP}"
                   )
               ),
             ],
@@ -669,8 +668,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
               Container(
                   height: 100,
-                  child: Image.network(
-                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName="+data.fotoSIUP
+                  child:
+                  // data.fotoSIUP != null ? Container():
+                  Image.network(
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoSIUP}"
                   )
               ),
             ],
@@ -692,8 +693,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
               Container(
                   height: 100,
-                  child: Image.network(
-                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName="+data.fotoGedung
+                  child:
+                  // data.fotoGedung != null ? Container():
+                  Image.network(
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoGedung}"
                   )
               ),
             ],
@@ -781,7 +784,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  data.status,
+                  data.status??"",
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.bold,
@@ -802,11 +805,16 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                     print("Ini proses approval");
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context)=> DashboardManagerPage()));
+                        MaterialPageRoute(builder: (context)=> ApprovalPage())).then((value){
+                          setState(() {
+                           ApprovalPage() == value;
+                          });
+                    });
                     DataSign = await _signaturecontrollerapproval.toPngBytes();
                     UploadSignatureApproval(DataSign, signatureApprovalFromServer);
                     await getSharedPrefs();
                     processApprovalButton(widget.id, "1", iduser,signatureApprovalFromServer );
+                    // Navigator.pop(context);
                   },
                   child: Text(
                     "Approve",

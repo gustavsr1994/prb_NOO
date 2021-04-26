@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               // SizedBox(height: 20,),
               Text(
-                "LOGIN",
+                "",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 30,
@@ -211,7 +211,7 @@ class _LoginPageState extends State<LoginPage> {
                     size: 20,
                     progressColor: Colors.blue,
                   ) : Text(
-                    'Enter',
+                    'Login',
                     style: TextStyle(
                         color: Colors.white
                     ),
