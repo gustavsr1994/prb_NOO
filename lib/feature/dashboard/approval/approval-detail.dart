@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:prb_app/feature/dashboard/approval/approval-page.dart';
 import 'package:prb_app/feature/dashboard/dashboardmanager-page.dart';
+import 'package:prb_app/model/user.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
@@ -15,44 +16,11 @@ import '../../../model/approval.dart';
 class ApprovalDetailPage extends StatefulWidget {
 
   int id;
-  String custName;
-  String brandName;
-  String category;
-  String segment;
-  String subSegment;
-  String selectclass;
-  String phoneNo;
-  String companyStatus;
-  String faxNo;
-  String contactPerson;
-  String emailAddress;
-  String website;
-  String nPWP;
-  String kTP;
-  String currency;
-  String priceGroup;
-  String salesman;
-  String salesOffice;
-  String businessUnit;
-  String notes;
-  String fotoNPWP;
-  String fotoKTP;
-  String fotoSIUP;
-  String fotoGedung;
-  String custSignature;
-  String approval1;
-  String approval2;
-  String status;
 
   ApprovalDetailPage({
-    Key key, this.id, this.custName, this.brandName, this.category, this.segment, this.subSegment,
-    this.selectclass, this.phoneNo, this.companyStatus, this.faxNo, this.contactPerson,
-    this.emailAddress, this.website, this.nPWP, this.kTP, this.currency, this.priceGroup,
-    this.salesman, this.salesOffice, this.businessUnit, this.fotoNPWP, this.fotoKTP, this.fotoSIUP,
-    this.fotoGedung, this.custSignature, this.status,
+    Key key, this.id,
   });
 
-  int iduser;
 
   @override
   _ApprovalDetailPageState createState() => _ApprovalDetailPageState();
@@ -60,15 +28,17 @@ class ApprovalDetailPage extends StatefulWidget {
 
 class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
 
-  var urlGetApprovalDetail = "http://119.18.157.236:8893/api/FindApproval/2";
+  Approval data = new Approval();
+
   List<Approval> _dataApprovalDetail = [];
   void getApprovalDetail() async{
+    var urlGetApprovalDetail = "http://119.18.157.236:8893/api/NOOCustTables/"+widget.id.toString();
     final response = await http.get(Uri.parse(urlGetApprovalDetail));
-    Iterable lisData = json.decode(response.body);
+    final listData = json.decode(response.body);
     print(urlGetApprovalDetail);
     setState(() {
-      _dataApprovalDetail =
-          lisData.map((item) => Approval.fromJson(item)).toList();
+      data = Approval.fromJson(listData);
+      // _dataApprovalDetail = lisData.map((item) => Approval.fromJson(item)).toList();
     });
   }
 
@@ -90,11 +60,14 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
 
     });
   }
+  var iduser = 0;
 
   void getSharedPrefs() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      widget.iduser = prefs.getInt("id");
+      print("ini printan line 99 & 100");
+      print(prefs.getInt("iduser"));
+      iduser = prefs.getInt("iduser");
     });
     // var id = this.widget.id;
     // var approveBy = prefs.getInt("id");
@@ -102,8 +75,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
 
   processApprovalButton(int id, String value, int approveBy, String ApprovedSignature) async{
     var urlPostApproval = "http://192.168.0.13:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy&ApprovedSignature=$ApprovedSignature";
-    print("Ini urlPostLogin okay : $urlPostApproval");
+    print("Ini urlPost Approval : $urlPostApproval");
     var jsonApprovalButton = await http.post(Uri.parse(urlPostApproval));
+    var user = User.fromJson(jsonDecode(jsonApprovalButton.body));
+    approveBy = user.id;
     print(jsonApprovalButton.body.toString());
     print(jsonApprovalButton.body.toString().isEmpty);
     var dataApprovalButton = jsonDecode(jsonApprovalButton.body);
@@ -121,7 +96,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
   processRejectButton(String id, String value, String approveBy) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var id = this.widget.id;
-    var approveBy = prefs.getInt("id");
+    var approveBy = prefs.getInt("iduser");
     var urlPostReject = "http://192.168.0.13:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy";
     print("Ini urlPostLogin okay : $urlPostReject");
     var jsonApprovalButton = await http.post(Uri.parse(urlPostReject));
@@ -190,7 +165,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
               ),
               Text(
-                "${widget.custName}",
+                data.custName,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -214,7 +189,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.brandName}",
+                  data.brandName,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -238,7 +213,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.category}",
+                  data.category,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -262,7 +237,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.segment}",
+                  data.segment,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -286,7 +261,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.subSegment}",
+                  data.subSegment,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -310,7 +285,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.selectclass}",
+                  data.selectclass,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -334,7 +309,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.phoneNo}",
+                  data.phoneNo,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -358,7 +333,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.companyStatus}",
+                  data.companyStatus,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -382,7 +357,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.faxNo}",
+                  data.faxNo,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -406,7 +381,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.contactPerson}",
+                  data.contactPerson,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -430,7 +405,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.emailAddress}",
+                  data.emailAddress,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -454,7 +429,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.website}",
+                  data.website,
                 style: TextStyle(
                     fontSize: 17,
                   color: Colors.black54
@@ -478,7 +453,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.nPWP}",
+                  data.nPWP,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -502,7 +477,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.kTP}",
+                  data.kTP,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54
@@ -527,7 +502,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.currency}",
+                  data.currency,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -551,7 +526,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.priceGroup}",
+                  data.priceGroup,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -575,7 +550,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.salesman}",
+                  data.salesman,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -599,7 +574,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.salesOffice}",
+                  data.salesOffice,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -623,7 +598,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.businessUnit}",
+                  data.businessUnit,
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -649,7 +624,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               Container(
                 height: 100,
                   child: Image.network(
-                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${widget.fotoNPWP}"
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName="+data.fotoNPWP
                   )
               ),
             ],
@@ -672,7 +647,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               Container(
                   height: 100,
                   child: Image.network(
-                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${widget.fotoKTP}"
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName="+data.fotoKTP
                   )
               ),
             ],
@@ -695,7 +670,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               Container(
                   height: 100,
                   child: Image.network(
-                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${widget.fotoSIUP}"
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName="+data.fotoSIUP
                   )
               ),
             ],
@@ -718,7 +693,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               Container(
                   height: 100,
                   child: Image.network(
-                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${widget.fotoGedung}"
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName="+data.fotoGedung
                   )
               ),
             ],
@@ -806,7 +781,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ),
               Text(
-                  "${widget.status}",
+                  data.status,
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.bold,
@@ -824,18 +799,14 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 RaisedButton(
                   color: Colors.blue,
                   onPressed: () async {
-                    // successDialog(
-                    //     context,
-                    //     "Approval Succes",
-                    //   title: "Success",
-                    // );
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(builder: (context)=> DashboardManagerPage()));
+                    print("Ini proses approval");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context)=> DashboardManagerPage()));
                     DataSign = await _signaturecontrollerapproval.toPngBytes();
                     UploadSignatureApproval(DataSign, signatureApprovalFromServer);
-                    getSharedPrefs();
-                    processApprovalButton(widget.id, "1", widget.iduser,signatureApprovalFromServer );
+                    await getSharedPrefs();
+                    processApprovalButton(widget.id, "1", iduser,signatureApprovalFromServer );
                   },
                   child: Text(
                     "Approve",

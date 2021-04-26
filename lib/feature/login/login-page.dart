@@ -25,7 +25,9 @@ class _LoginPageState extends State<LoginPage> {
     print("Ini urlPostLogin okay : $urlPostLogin");
     var jsonLogin = await http.post(Uri.parse(urlPostLogin));
     var user = User.fromJson(jsonDecode(jsonLogin.body));
+    print("cek ini");
     print(user.id);
+    prefs.setInt("iduser", user.id);
     print(user.username);
     print(user.name);
     print(jsonLogin.body.toString());
@@ -69,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
       print("ini button login");
       prefs.setString("username", dataLogin['Username']);
       prefs.setString("password", password);
-      prefs.setInt("id", user.id);
+      // prefs.setInt("iduser", user.id); //tidak digunkan karena sudah di llne 30
       prefs.setString("name", user.name);
       //Buat login beda page
       if (dataLogin['Role'] == "0") {
