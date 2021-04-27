@@ -33,11 +33,14 @@ dependencies:
   delayed_display: ^2.0.0
   flip_card: ^0.5.0
   flutter_icons: ^1.1.0
+  geocoding: ^1.0.5
+  geolocator: ^6.1.1
   http:
   image_picker:
   intl: ^0.16.0
   path:
   progress_bars: ^0.0.3
+  progress_indicator_button: ^0.0.3
   rflutter_alert: ^1.0.3
   shared_preferences: ^0.5.12+4
   signature:

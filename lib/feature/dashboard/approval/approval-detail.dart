@@ -88,21 +88,17 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
     // }
   }
 
-  processRejectButton(String id, String value, String approveBy) async {
+  processRejectButton(int id, int value, int approveBy) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var id = this.widget.id;
     var approveBy = prefs.getInt("iduser");
     var urlPostReject = "http://192.168.0.13:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy";
     print("Ini urlPostLogin okay : $urlPostReject");
-    var jsonApprovalButton = await http.post(Uri.parse(urlPostReject));
-    print(jsonApprovalButton.body.toString());
-    print(jsonApprovalButton.body.toString().isEmpty);
-    var dataApprovalButton = jsonDecode(jsonApprovalButton.body);
-    print(jsonApprovalButton.body.toString());
-    print(jsonApprovalButton.body.toString().isEmpty);
-    if (dataApprovalButton['id'] == id){
+    var jsonRejectButton = await http.post(Uri.parse(urlPostReject));
+    var dataRejectButton = jsonDecode(jsonRejectButton.body);
+    if (dataRejectButton['id'] == id){
       print("Ini button Reject");
-      if(dataApprovalButton['value'] == "0" ){
+      if(dataRejectButton['value'] == "0" ){
         print("Ini value 0/Reject");
         Alert(context: context, title: "RFlutter", desc: "Flutter awesome").show();
       }
@@ -621,7 +617,17 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   // child: data.fotoNPWP != null ? Container() : "null" == data.fotoNPWP ? Container():
                   child:
                   Image.network(
-                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}"
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
+                    loadingBuilder:(BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null ?
+                                   loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                                   : null,
+                          ),
+                        );
+                    },
                   )
               ),
             ],
@@ -646,8 +652,18 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   child:
                   // data.fotoKTP != null ? Container():
                   Image.network(
-                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoKTP}"
-                  )
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
+                    loadingBuilder:(BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null ?
+                          loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                              : null,
+                        ),
+                      );
+                    },
+                  ),
               ),
             ],
           ),
@@ -671,8 +687,18 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   child:
                   // data.fotoSIUP != null ? Container():
                   Image.network(
-                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoSIUP}"
-                  )
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoSIUP}",
+                    loadingBuilder:(BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null ?
+                          loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                              : null,
+                        ),
+                      );
+                    },
+                  ),
               ),
             ],
           ),
@@ -696,8 +722,18 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   child:
                   // data.fotoGedung != null ? Container():
                   Image.network(
-                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoGedung}"
-                  )
+                      "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoGedung}",
+                    loadingBuilder:(BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null ?
+                          loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                              : null,
+                        ),
+                      );
+                    },
+                  ),
               ),
             ],
           ),
@@ -805,16 +841,16 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                     print("Ini proses approval");
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context)=> ApprovalPage())).then((value){
-                          setState(() {
-                           ApprovalPage() == value;
-                          });
-                    });
+                        MaterialPageRoute(builder: (context)=> DashboardManagerPage()));
                     DataSign = await _signaturecontrollerapproval.toPngBytes();
                     UploadSignatureApproval(DataSign, signatureApprovalFromServer);
                     await getSharedPrefs();
                     processApprovalButton(widget.id, "1", iduser,signatureApprovalFromServer );
                     // Navigator.pop(context);
+                    successDialog(
+                      context,
+                      "Success",
+                    );
                   },
                   child: Text(
                     "Approve",
@@ -830,7 +866,9 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 RaisedButton(
                   color: Colors.blue,
                   onPressed: () {
-                    processRejectButton("id", "0", "id");
+                    getSharedPrefs();
+                    processRejectButton(widget.id, 0, iduser);
+                    infoDialog(context, "Rejected");
                   },
                   child: Text(
                     "Reject",

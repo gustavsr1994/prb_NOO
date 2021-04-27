@@ -31,124 +31,77 @@ class _ApprovalPageState extends State<ApprovalPage> {
   var urlGetApproval = "http://119.18.157.236:8893/api/FindApproval/";
 
   List<Approval> _dataApproval = [];
-  void getApproval() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String userId =  prefs.getInt("iduser").toString();
-    print(urlGetApproval+userId);
-    final response = await http.get(Uri.parse(urlGetApproval+userId));
-    print("response="+response.body);
-    Iterable listData = jsonDecode(response.body);
-    print("--");
-    print(listData.runtimeType.toString());
-    if(mounted)setState(() {
-      _dataApproval =
-          listData.map((item) {print(item.runtimeType.toString());
-          return Approval.fromJson(item);}).toList();
-      for(Approval item in _dataApproval) {
-        print(item.toString());
-        print("test nama ${item.custName}");
-        print("test date ${item.createdDate}");
-        print("test date ${item.status}");
-        this.listData.add(Container(
-          child: Card(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(6),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Name : ${item.custName}",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(6),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Date : ${item.createdDate}",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.blue,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(6),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "${item.status}",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 5,),
-                //Ini row button
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Center(
-                      child: Container(
-                        height: 30,
-                        child: InkWell(
-                          child: Text(
-                            "VIEW DETAILS",
-                            style: TextStyle(
-                              color: Colors.blue,
-                            ),
-                          ),
-                          onTap: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => ApprovalDetailPage(
-                                id: item.id,
-                              )),
-                            );
-                          }
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: Container(
-                        height: 60,
-                        child: VerticalDivider(
-                          thickness: 2,
-                          color: Colors.orange,
-                          endIndent: 15,
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: Container(
-                        height: 30,
-                        child: InkWell(
-                          child: Text(
-                            "ADJUSTMENT LEAVE",
-                            style: TextStyle(
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ));
-      }
-    });
-    print("Data Approval : $listData");
-  }
+  // void getApproval() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String userId =  prefs.getInt("iduser").toString();
+  //   print(urlGetApproval+userId);
+  //   final response = await http.get(Uri.parse(urlGetApproval+userId));
+  //   print("response="+response.body);
+  //   Iterable listData = jsonDecode(response.body);
+  //   print("--");
+  //   print(listData.runtimeType.toString());
+  //   if(mounted)setState(() {
+  //     _dataApproval =
+  //         listData.map((item) {print(item.runtimeType.toString());
+  //         return Approval.fromJson(item);}).toList();
+  //     for(Approval item in _dataApproval) {
+  //       print(item.toString());
+  //       print("test nama ${item.custName}");
+  //       print("test date ${item.createdDate}");
+  //       print("test date ${item.status}");
+  //       this.listData.add(Container(
+  //         child: Card(
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.stretch,
+  //             children: [
+  //               Container(
+  //                 padding: EdgeInsets.all(6),
+  //                 alignment: Alignment.centerLeft,
+  //                 child: Text(
+  //                   "Name : ${item.custName}",
+  //                   textAlign: TextAlign.left,
+  //                   style: TextStyle(
+  //                     color: Colors.blue,
+  //                     fontSize: 12,
+  //                   ),
+  //                 ),
+  //               ),
+  //               Container(
+  //                 padding: EdgeInsets.all(6),
+  //                 alignment: Alignment.centerLeft,
+  //                 child: Text(
+  //                   "Date : ${item.createdDate}",
+  //                   textAlign: TextAlign.left,
+  //                   style: TextStyle(
+  //                     fontSize: 12,
+  //                     color: Colors.blue,
+  //                   ),
+  //                 ),
+  //               ),
+  //               Container(
+  //                 padding: EdgeInsets.all(6),
+  //                 alignment: Alignment.centerLeft,
+  //                 child: Text(
+  //                   "${item.status}",
+  //                   textAlign: TextAlign.left,
+  //                   style: TextStyle(
+  //                     color: Colors.blue,
+  //                     fontWeight: FontWeight.bold,
+  //                   ),
+  //                 ),
+  //               ),
+  //               SizedBox(height: 5,),
+  //
+  //               //Ini row button
+  //
+  //             ],
+  //           ),
+  //         ),
+  //       ));
+  //     }
+  //   });
+  //   print("Data Approval : $listData");
+  // }
 
   List<Widget> listData =[
 
@@ -186,7 +139,9 @@ class _ApprovalPageState extends State<ApprovalPage> {
             itemCount: data == null ? 0 : data.length,
             itemBuilder: (BuildContext context, int index) {
               return new Container(
+                padding: EdgeInsets.all(7),
                 child: Card(
+                  elevation: 3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -226,6 +181,17 @@ class _ApprovalPageState extends State<ApprovalPage> {
                           ),
                         ),
                       ),
+                      Center(
+                        child: Container(
+                          height: 5,
+                          child: Divider(
+                            thickness: 1,
+                            color: Colors.orange,
+                            indent: 5,
+                            endIndent: 5,
+                          ),
+                        ),
+                      ),
                       SizedBox(
                         height: 5,
                       ),
@@ -233,6 +199,17 @@ class _ApprovalPageState extends State<ApprovalPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          Center(
+                            child: Container(
+                              height: 60,
+                              child: VerticalDivider(
+                                thickness: 2,
+                                color: Colors.orange,
+                                endIndent: 20,
+                                indent: 5,
+                              ),
+                            ),
+                          ),
                           Center(
                             child: Container(
                               height: 30,
@@ -261,23 +238,24 @@ class _ApprovalPageState extends State<ApprovalPage> {
                               child: VerticalDivider(
                                 thickness: 2,
                                 color: Colors.orange,
-                                endIndent: 15,
+                                endIndent: 20,
+                                indent: 5,
                               ),
                             ),
                           ),
-                          Center(
-                            child: Container(
-                              height: 30,
-                              child: InkWell(
-                                child: Text(
-                                  "ADJUSTMENT LEAVE",
-                                  style: TextStyle(
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                          // Center(
+                          //   child: Container(
+                          //     height: 30,
+                          //     child: InkWell(
+                          //       child: Text(
+                          //         "ADJUSTMENT LEAVE",
+                          //         style: TextStyle(
+                          //           color: Colors.blue,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ],

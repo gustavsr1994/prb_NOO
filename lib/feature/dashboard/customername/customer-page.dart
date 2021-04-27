@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:async/async.dart';
+import 'package:commons/commons.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -12,6 +14,8 @@ import 'package:prb_app/model/user.dart';
 import 'package:progress_bars/circle_progress_bar/circle_progress_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
+
+
 
 class CustomerPage extends StatefulWidget {
 
@@ -443,6 +447,48 @@ class _CustomerPageState extends State<CustomerPage> {
     return false;
   }
 
+  //SignatureController Sales
+  final SignatureController _signaturecontrollersales = SignatureController(
+    penStrokeWidth: 1,
+    penColor: Colors.black,
+    exportBackgroundColor: Colors.white,
+  );
+
+  //SignatureController Customer
+  final SignatureController _signaturecontrollercustomer = SignatureController(
+    penStrokeWidth: 1,
+    penColor: Colors.black,
+    exportBackgroundColor: Colors.white,
+  );
+
+  //SignatureController ASM
+  final SignatureController _signaturecontrollerasm = SignatureController(
+    penStrokeWidth: 1,
+    penColor: Colors.red,
+    exportBackgroundColor: Colors.blue,
+  );
+
+  //SignatureController BMACA
+  final SignatureController _signaturecontrollerbmaca = SignatureController(
+    penStrokeWidth: 1,
+    penColor: Colors.red,
+    exportBackgroundColor: Colors.blue,
+  );
+
+  Position _currentPosition;
+
+  _getCurrentLocation() {
+    Geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best, forceAndroidLocationManager: true)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+      });
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
   //Proses di submit button
   processSubmitCustomerForm(
     //Customer
@@ -568,34 +614,6 @@ class _CustomerPageState extends State<CustomerPage> {
     }
   }
 
-  //SignatureController Sales
-  final SignatureController _signaturecontrollersales = SignatureController(
-    penStrokeWidth: 1,
-    penColor: Colors.black,
-    exportBackgroundColor: Colors.white,
-  );
-
-  //SignatureController Customer
-  final SignatureController _signaturecontrollercustomer = SignatureController(
-    penStrokeWidth: 1,
-    penColor: Colors.black,
-    exportBackgroundColor: Colors.white,
-  );
-
-  //SignatureController ASM
-  final SignatureController _signaturecontrollerasm = SignatureController(
-    penStrokeWidth: 1,
-    penColor: Colors.red,
-    exportBackgroundColor: Colors.blue,
-  );
-
-  //SignatureController BMACA
-  final SignatureController _signaturecontrollerbmaca = SignatureController(
-    penStrokeWidth: 1,
-    penColor: Colors.red,
-    exportBackgroundColor: Colors.blue,
-  );
-
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -676,20 +694,26 @@ class _CustomerPageState extends State<CustomerPage> {
                 ),
                 Container(
                     child: Expanded(
-                  child: TextFormField(
-                    textAlign: TextAlign.center,
-                    controller: _customerNameControllerCustomer,
-                    keyboardType: TextInputType.text,
-                    autofocus: false,
-                    decoration: InputDecoration(
-                      isDense: true,
-                      hintText: 'Customer Name',
-                      filled: true,
-                      contentPadding: EdgeInsets.all(5),
-//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-                    ),
-                  ),
-                ))
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter Customer Name!!';
+                          }
+                          return null;
+                        },
+                        textAlign: TextAlign.center,
+                        controller: _customerNameControllerCustomer,
+                        keyboardType: TextInputType.text,
+                        autofocus: false,
+                        decoration: InputDecoration(
+                          isDense: true,
+                          hintText: 'Customer Name',
+                          filled: true,
+                          contentPadding: EdgeInsets.all(5),
+                        ),
+                      ),
+                    )
+                )
               ],
             ),
             SizedBox(
@@ -710,6 +734,12 @@ class _CustomerPageState extends State<CustomerPage> {
                 Container(
                   child: Expanded(
                     child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Brand Name';
+                        }
+                        return null;
+                      },
                       textAlign: TextAlign.center,
                       controller: _brandNameControllerCustomer,
                       keyboardType: TextInputType.text,
@@ -878,6 +908,12 @@ class _CustomerPageState extends State<CustomerPage> {
                 Container(
                   child: Expanded(
                     child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Phone Number!!';
+                        }
+                        return null;
+                      },
                       textAlign: TextAlign.center,
                       controller: _phoneControllerCustomer,
                       keyboardType: TextInputType.phone,
@@ -944,6 +980,12 @@ class _CustomerPageState extends State<CustomerPage> {
                 Container(
                   child: Expanded(
                     child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter FAX Number!!';
+                        }
+                        return null;
+                      },
                       textAlign: TextAlign.center,
                       controller: _faxControllerCustomer,
                       keyboardType: TextInputType.number,
@@ -978,6 +1020,12 @@ class _CustomerPageState extends State<CustomerPage> {
                 Container(
                   child: Expanded(
                     child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Contact Person!!';
+                        }
+                        return null;
+                      },
                       textAlign: TextAlign.center,
                       controller: _contactPersonControllerCustomer,
                       keyboardType: TextInputType.text,
@@ -1012,6 +1060,12 @@ class _CustomerPageState extends State<CustomerPage> {
                 Container(
                   child: Expanded(
                     child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Email Address!!';
+                        }
+                        return null;
+                      },
                       textAlign: TextAlign.center,
                       controller: _emailAddressControllerCustomer,
                       keyboardType: TextInputType.emailAddress,
@@ -1046,6 +1100,12 @@ class _CustomerPageState extends State<CustomerPage> {
                 Container(
                   child: Expanded(
                     child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter NPWP!!';
+                        }
+                        return null;
+                      },
                       textAlign: TextAlign.center,
                       controller: _npwpControllerCustomer,
                       keyboardType: TextInputType.number,
@@ -1080,6 +1140,12 @@ class _CustomerPageState extends State<CustomerPage> {
                 Container(
                   child: Expanded(
                     child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter KTP!!';
+                        }
+                        return null;
+                      },
                       textAlign: TextAlign.center,
                       controller: _ktpControllerCustomer,
                       keyboardType: TextInputType.number,
@@ -1114,6 +1180,12 @@ class _CustomerPageState extends State<CustomerPage> {
                 Container(
                   child: Expanded(
                     child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Currency!!';
+                        }
+                        return null;
+                      },
                       textAlign: TextAlign.center,
                       controller: _currencyControllerCustomer,
                       keyboardType: TextInputType.text,
@@ -1148,6 +1220,12 @@ class _CustomerPageState extends State<CustomerPage> {
                 Container(
                   child: Expanded(
                     child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Sales Office!!';
+                        }
+                        return null;
+                      },
                       textAlign: TextAlign.center,
                       controller: _salesOfficeControllerCustomer,
                       keyboardType: TextInputType.text,
@@ -1215,6 +1293,12 @@ class _CustomerPageState extends State<CustomerPage> {
                 Container(
                   child: Expanded(
                     child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Business Unit!!';
+                        }
+                        return null;
+                      },
                       textAlign: TextAlign.center,
                       controller: _businessUnitControllerCustomer,
                       keyboardType: TextInputType.text,
@@ -1249,6 +1333,12 @@ class _CustomerPageState extends State<CustomerPage> {
                 Container(
                   child: Expanded(
                     child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Salesman!!';
+                        }
+                        return null;
+                      },
                       textAlign: TextAlign.center,
                       controller: _salesmanControllerCustomer,
                       keyboardType: TextInputType.text,
@@ -1283,6 +1373,12 @@ class _CustomerPageState extends State<CustomerPage> {
                 Container(
                   child: Expanded(
                     child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Website!!';
+                        }
+                        return null;
+                      },
                       textAlign: TextAlign.center,
                       controller: _websiteControllerCustomer,
                       keyboardType: TextInputType.url,
@@ -1532,6 +1628,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Company Name!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _nameControllerCompany,
                           keyboardType: TextInputType.text,
@@ -1566,6 +1668,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Company Street Name!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _streetControllerCompany,
                           keyboardType: TextInputType.text,
@@ -1600,6 +1708,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Company City!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _cityControllerCompany,
                           keyboardType: TextInputType.text,
@@ -1634,6 +1748,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Company Country!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _countryControllerCompany,
                           keyboardType: TextInputType.text,
@@ -1668,6 +1788,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Company State!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _stateControllerCompany,
                           keyboardType: TextInputType.text,
@@ -1702,6 +1828,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Company ZIP Code!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _zipCodeControllerCompany,
                           keyboardType: TextInputType.number,
@@ -1743,7 +1875,7 @@ class _CustomerPageState extends State<CustomerPage> {
             //Label Tax Form
             Center(
               child: Text(
-                "Tax Address",
+                "TAX Address",
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.blue,
@@ -1772,6 +1904,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter TAX Name!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _nameControllerTax,
                           keyboardType: TextInputType.text,
@@ -1806,6 +1944,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter TAX Street!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _streetControllerTax,
                           keyboardType: TextInputType.text,
@@ -1840,6 +1984,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter TAX City!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _cityControllerTax,
                           keyboardType: TextInputType.text,
@@ -1874,6 +2024,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter TAX Country!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _countryControllerTax,
                           keyboardType: TextInputType.text,
@@ -1908,6 +2064,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter State!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _stateControllerTax,
                           keyboardType: TextInputType.text,
@@ -1942,6 +2104,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter TAX ZIP Code!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _zipCodeControllerTax,
                           keyboardType: TextInputType.number,
@@ -2012,6 +2180,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Delivery Name!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _nameControllerDelivery,
                           keyboardType: TextInputType.text,
@@ -2046,6 +2220,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Delivery Street!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _streetControllerDelivery,
                           keyboardType: TextInputType.text,
@@ -2080,6 +2260,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Delivery City!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _cityControllerDelivery,
                           keyboardType: TextInputType.text,
@@ -2114,6 +2300,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Delivery Country!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _countryControllerDelivery,
                           keyboardType: TextInputType.text,
@@ -2148,6 +2340,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Delivery State!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _stateControllerDelivery,
                           keyboardType: TextInputType.text,
@@ -2182,6 +2380,12 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Delivery ZIP Code!!';
+                            }
+                            return null;
+                          },
                           textAlign: TextAlign.center,
                           controller: _zipCodeControllerDelivery,
                           keyboardType: TextInputType.number,

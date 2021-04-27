@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'package:commons/commons.dart';
 import 'package:flutter/material.dart';
 import 'package:prb_app/feature/dashboard/approval/approval-page.dart';
+import 'package:prb_app/feature/dashboard/customername/customer-page.dart';
 import 'package:prb_app/feature/dashboard/dashboardemployee-page.dart';
 import 'package:http/http.dart' as http;
 import 'package:prb_app/feature/dashboard/dashboardmanager-page.dart';
 import 'package:prb_app/model/user.dart';
 import 'package:progress_bars/circle_progress_bar/circle_progress_bar.dart';
+import 'package:progress_indicator_button/progress_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -71,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
       print("ini button login");
       prefs.setString("username", dataLogin['Username']);
       prefs.setString("password", password);
-      // prefs.setInt("iduser", user.id); //tidak digunkan karena sudah di llne 30
+      prefs.setInt("iduser", user.id); //tidak digunkan karena sudah di llne 30
       prefs.setString("name", user.name);
       //Buat login beda page
       if (dataLogin['Role'] == "0") {
@@ -198,28 +201,31 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 10,),
               Container(
                 padding: EdgeInsets.fromLTRB(100, 0, 100, 0),
+                height: 45,
                 // ignore: deprecated_member_use
-                child: RaisedButton(
-                  color: Colors.blue,
-                  onPressed: () async{
-                    if (_formKey.currentState.validate()) {
-                      print("Ini proses login");
-                      processLogin(_usernameController.text, _passController.text);
+                child: ProgressButton(
+                  animationDuration: Duration(seconds: 3),
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  strokeWidth: 0,
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  onPressed: (AnimationController controller) {
+                    if (controller.isCompleted) {
+                      controller.reverse();
+                    } else {
+                      if (_formKey.currentState.validate()) {
+                        print("Ini proses login");
+                        processLogin(_usernameController.text, _passController.text);
+                      }
+                      controller.forward();
                     }
                   },
-                  child: isLoading ? CircleProgressBar(
-                    size: 20,
-                    progressColor: Colors.blue,
-                  ) : Text(
-                    'Login',
-                    style: TextStyle(
-                        color: Colors.white
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                )
+                ),
               ),
-              SizedBox(height: 30,),
             ],
           ),
         ),
