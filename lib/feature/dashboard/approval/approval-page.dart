@@ -10,12 +10,10 @@ import 'approval-detail.dart';
 
 class ApprovalPage extends StatefulWidget {
   @override
-
   _ApprovalPageState createState() => _ApprovalPageState();
 }
 
 class _ApprovalPageState extends State<ApprovalPage> {
-
   List data;
   Future<String> getData() async {
     var urlGetApproval = "http://119.18.157.236:8893/api/FindApproval/";
@@ -103,9 +101,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
   //   print("Data Approval : $listData");
   // }
 
-  List<Widget> listData =[
-
-  ];
+  List<Widget> listData = [];
 
   void initState() {
     // TODO: implement initState
@@ -115,12 +111,10 @@ class _ApprovalPageState extends State<ApprovalPage> {
     print(listData);
     listData;
     getData();
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     print("Ini Approval Page");
 
     return Scaffold(
