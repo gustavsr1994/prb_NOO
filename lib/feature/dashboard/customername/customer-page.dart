@@ -475,20 +475,6 @@ class _CustomerPageState extends State<CustomerPage> {
     exportBackgroundColor: Colors.blue,
   );
 
-  Position _currentPosition;
-
-  _getCurrentLocation() {
-    Geolocator
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best, forceAndroidLocationManager: true)
-        .then((Position position) {
-      setState(() {
-        _currentPosition = position;
-      });
-    }).catchError((e) {
-      print(e);
-    });
-  }
-
   //Proses di submit button
   processSubmitCustomerForm(
     //Customer
@@ -537,7 +523,7 @@ class _CustomerPageState extends State<CustomerPage> {
     String zipcodeDelivery,
   ) async {
     var urlPostSubmitCustomerForm =
-        "http://192.168.0.13:8893/Api/NOOCustTables";
+        "http://119.18.157.236:8893/Api/NOOCustTables";
     print("Ini url Post Submit Customer : $urlPostSubmitCustomerForm");
     var jsonSubmitCustomerForm = await http.post(
         Uri.parse(
@@ -573,6 +559,8 @@ class _CustomerPageState extends State<CustomerPage> {
           "FotoGedung": "$buildingFromServer",
           "CustSignature": "$signatureCustomerFromServer",
           "SalesSignature": "$signatureSalesFromServer",
+          "Long": "${_currentPosition.longitude}",
+          "Lat": "${_currentPosition.latitude}",
           "CreatedBy": 1,
           "CreatedDate": "2021-04-05T14:56:48.57",
           "TaxAddresses": [
@@ -614,6 +602,21 @@ class _CustomerPageState extends State<CustomerPage> {
     }
   }
 
+  //Ini buat geolocator
+  Position _currentPosition;
+  _getCurrentLocation() {
+    Geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best, forceAndroidLocationManager: true)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+      });
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -636,6 +639,8 @@ class _CustomerPageState extends State<CustomerPage> {
   Widget build(BuildContext context) {
 
     print("ini customer page");
+    // print(_currentPosition.latitude);
+    // print(_currentPosition.longitude);
 
     return Scaffold(
       appBar: AppBar(
@@ -2756,6 +2761,7 @@ class _CustomerPageState extends State<CustomerPage> {
                   await UploadNPWP(_imageNPWP);
                   await UploadSIUP(_imageSIUP);
                   await UploadBuilding(_imageBuilding);
+                  _getCurrentLocation();
                   DataSignSales = await _signaturecontrollersales.toPngBytes();
                   await UploadSignatureSales(
                       DataSignSales, signatureSalesFromServer);

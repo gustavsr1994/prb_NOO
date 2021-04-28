@@ -218,8 +218,8 @@ class _LoginPageState extends State<LoginPage> {
                       controller.reverse();
                     } else {
                       if (_formKey.currentState.validate()) {
-                        print("Ini proses login");
                         processLogin(_usernameController.text, _passController.text);
+                        print("Ini proses login");
                       }
                       controller.forward();
                     }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prb_app/feature/dashboard/Signature/signature-page.dart';
+import 'package:prb_app/feature/dashboard/status/status-page.dart';
 import 'package:prb_app/feature/dashboard/taxadress/taxaddress-page.dart';
 import 'package:prb_app/feature/splash/splash-page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +20,7 @@ class DashboardEmployeePage extends StatefulWidget {
 
 /// This is the private State class that goes with MyStatefulWidget.
 class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
-  int _selectedItemIndex = 0;
+  int _selectedItemIndex = 1;
 
   Future<void> logoutUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -34,6 +35,7 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
 
     final List pages = [
       CustomerPage(name: widget.username,),
+      StatusPage(name: widget.username),
     ];
 
     print("Ini bottom nav");
@@ -61,6 +63,15 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
                   ),
                 ),
                 icon: Icon(Icons.person,
+                ),
+              ),
+              BottomNavigationBarItem(
+                title: Text("View Status",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                  ),
+                ),
+                icon: Icon(Icons.book,
                 ),
               ),
               BottomNavigationBarItem(
