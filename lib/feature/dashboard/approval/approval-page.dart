@@ -120,7 +120,6 @@ class _ApprovalPageState extends State<ApprovalPage> {
 
   @override
   Widget build(BuildContext context) {
-
     print("Ini Approval Page");
 
     return Scaffold(
