@@ -15,25 +15,24 @@ import 'package:signature/signature.dart';
 import '../../../model/approval.dart';
 
 class ApprovalDetailPage extends StatefulWidget {
-
   int id;
 
   ApprovalDetailPage({
-    Key key, this.id,
+    Key key,
+    this.id,
   });
-
 
   @override
   _ApprovalDetailPageState createState() => _ApprovalDetailPageState();
 }
 
 class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
-
   Approval data = new Approval();
 
   List<Approval> _dataApprovalDetail = [];
-  void getApprovalDetail() async{
-    var urlGetApprovalDetail = "http://119.18.157.236:8893/api/NOOCustTables/"+widget.id.toString();
+  void getApprovalDetail() async {
+    var urlGetApprovalDetail =
+        "http://119.18.157.236:8893/api/NOOCustTables/" + widget.id.toString();
     final response = await http.get(Uri.parse(urlGetApprovalDetail));
     final listData = json.decode(response.body);
     print(urlGetApprovalDetail);
@@ -55,9 +54,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
       signatureApprovalFromServer = value.replaceAll("\"", "");
     });
   }
+
   var iduser = 0;
 
-  void getSharedPrefs() async{
+  void getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       print("ini printan line 99 & 100");
@@ -68,8 +68,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
     // var approveBy = prefs.getInt("id");
   }
 
-  processApprovalButton(int id, String value, int approveBy, String ApprovedSignature) async{
-    var urlPostApproval = "http://119.18.157.236:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy&ApprovedSignature=$ApprovedSignature";
+  processApprovalButton(
+      int id, String value, int approveBy, String ApprovedSignature) async {
+    var urlPostApproval =
+        "http://192.168.0.13:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy&ApprovedSignature=$ApprovedSignature";
     print("Ini urlPost Approval : $urlPostApproval");
     var jsonApprovalButton = await http.post(Uri.parse(urlPostApproval));
     // var user = User.fromJson(json.decode(jsonApprovalButton.body)); //maaf ngga kepake
@@ -92,21 +94,25 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var id = this.widget.id;
     var approveBy = prefs.getInt("iduser");
-    var urlPostReject = "http://119.18.157.236:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy";
+    var urlPostReject =
+        "http://192.168.0.13:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy";
     print("Ini urlPostLogin okay : $urlPostReject");
     var jsonRejectButton = await http.post(Uri.parse(urlPostReject));
     var dataRejectButton = jsonDecode(jsonRejectButton.body);
-    if (dataRejectButton['id'] == id){
+    if (dataRejectButton['id'] == id) {
       print("Ini button Reject");
-      if(dataRejectButton['value'] == "0" ){
+      if (dataRejectButton['value'] == "0") {
         print("Ini value 0/Reject");
-        Alert(context: context, title: "RFlutter", desc: "Flutter awesome").show();
+        Alert(context: context, title: "RFlutter", desc: "Flutter awesome")
+            .show();
       }
     }
   }
 
   Uint8List DataSign;
-  String signatureApprovalFromServer = "SIGNATUREAPPROVAL_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  String signatureApprovalFromServer = "SIGNATUREAPPROVAL_" +
+      DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) +
+      "_.jpg";
   //SignatureController Sales
   final SignatureController _signaturecontrollerapproval = SignatureController(
     penStrokeWidth: 1,
@@ -124,7 +130,6 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-
     print("ini approval detail");
 
     return Scaffold(
@@ -144,19 +149,17 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                  "Customer Name",
+                "Customer Name",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Text(
-                  ":"
-              ),
+                child: Text(":"),
               ),
               Text(
-                data.custName??"",
+                data.custName ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -164,23 +167,23 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Brand Name",
+                "Brand Name",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(50, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.brandName??"",
+                data.brandName ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -188,23 +191,23 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Category",
+                "Category",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(75, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.category??"",
+                data.category ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -212,23 +215,23 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Segment",
+                "Segment",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(76, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.segment??"",
+                data.segment ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -236,23 +239,23 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Sub Segment",
+                "Sub Segment",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(43, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.subSegment??"",
+                data.subSegment ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -260,23 +263,23 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Class",
+                "Class",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(102, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.selectclass??"",
+                data.selectclass ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -284,23 +287,23 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Phone No",
+                "Phone No",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(69, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.phoneNo??"",
+                data.phoneNo ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -308,23 +311,23 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Company Status",
+                "Company Status",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.companyStatus??"",
+                data.companyStatus ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -332,23 +335,23 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Fax No",
+                "Fax No",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(92, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.faxNo??"",
+                data.faxNo ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -356,23 +359,23 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Contact Person",
+                "Contact Person",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(28, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.contactPerson??"",
+                data.contactPerson ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -380,23 +383,23 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Email Address",
+                "Email Address",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(36, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.emailAddress??"",
+                data.emailAddress ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -404,47 +407,44 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Website",
+                "Website",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(84, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.website??"",
-                style: TextStyle(
-                    fontSize: 17,
-                  color: Colors.black54
-                ),
+                data.website ?? "",
+                style: TextStyle(fontSize: 17, color: Colors.black54),
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "NPWP",
+                "NPWP",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(96, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.nPWP??"",
+                data.nPWP ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -452,48 +452,44 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "KTP",
+                "KTP",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(113, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.kTP??"",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54
-                ),
+                data.kTP ?? "",
+                style: TextStyle(fontSize: 17, color: Colors.black54),
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
-
             children: [
               Text(
-                  "Currency",
+                "Currency",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(77, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.currency??"",
+                data.currency ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -501,23 +497,23 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Price Group",
+                "Price Group",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(56, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.priceGroup??"",
+                data.priceGroup ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -525,23 +521,23 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Salesman",
+                "Salesman",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(70, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.salesman??"",
+                data.salesman ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -549,23 +545,23 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Sales Office",
+                "Sales Office",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(55, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.salesOffice??"",
+                data.salesOffice ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -573,23 +569,23 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Business Unit",
+                "Business Unit",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(41, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.businessUnit??"",
+                data.businessUnit ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -597,170 +593,179 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Foto NPWP",
+                "Foto NPWP",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(57, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Container(
-                height: 100,
+                  height: 100,
                   // child: data.fotoNPWP != null ? Container() : "null" == data.fotoNPWP ? Container():
-                  child:
-                  Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
-                    loadingBuilder:(BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null ?
-                                   loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                                   : null,
-                          ),
-                        );
+                  child: Image.network(
+                    "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes
+                              : null,
+                        ),
+                      );
                     },
-                  )
-              ),
+                  )),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Foto KTP",
+                "Foto KTP",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(74, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Container(
-                  height: 100,
-                  child:
-                  // data.fotoKTP != null ? Container():
-                  Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
-                    loadingBuilder:(BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null ?
-                          loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                              : null,
-                        ),
-                      );
-                    },
-                  ),
+                height: 100,
+                child:
+                // data.fotoKTP != null ? Container():
+                Image.network(
+                  "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes
+                            : null,
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Foto SIUP",
+                "Foto SIUP",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(70, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Container(
-                  height: 100,
-                  child:
-                  // data.fotoSIUP != null ? Container():
-                  Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoSIUP}",
-                    loadingBuilder:(BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null ?
-                          loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                              : null,
-                        ),
-                      );
-                    },
-                  ),
+                height: 100,
+                child:
+                // data.fotoSIUP != null ? Container():
+                Image.network(
+                  "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoSIUP}",
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes
+                            : null,
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Foto Gedung",
+                "Foto Gedung",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(49, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Container(
-                  height: 100,
-                  child:
-                  // data.fotoGedung != null ? Container():
-                  Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung}",
-                    loadingBuilder:(BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null ?
-                          loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                              : null,
-                        ),
-                      );
-                    },
-                  ),
+                height: 100,
+                child:
+                // data.fotoGedung != null ? Container():
+                Image.network(
+                  "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoGedung}",
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes
+                            : null,
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Approval\nSignature",
+                "Approval\nSignature",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(72, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
-
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Container(
             child: Column(
               children: [
                 Text(""),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 Card(
                   child: Signature(
                     controller: _signaturecontrollerapproval,
@@ -798,29 +803,26 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 //Clear Canvass
                 IconButton(
                     icon: const Icon(Icons.clear),
-                    onPressed: (){
+                    onPressed: () {
                       setState(() => _signaturecontrollerapproval.clear());
-                    }
-                ),
+                    }),
               ],
             ),
           ),
           Row(
             children: [
               Text(
-                  "Status",
+                "Status",
                 style: TextStyle(
-                   fontSize: 17,
+                  fontSize: 17,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(98, 0, 20, 0),
-                child: Text(
-                    ":"
-                ),
+                child: Text(":"),
               ),
               Text(
-                  data.status??"",
+                data.status ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.bold,
@@ -829,7 +831,9 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 30,),
+          SizedBox(
+            height: 30,
+          ),
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -840,12 +844,15 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   onPressed: () async {
                     print("Ini proses approval");
                     DataSign = await _signaturecontrollerapproval.toPngBytes();
-                    UploadSignatureApproval(DataSign, signatureApprovalFromServer);
+                    UploadSignatureApproval(
+                        DataSign, signatureApprovalFromServer);
                     await getSharedPrefs();
-                    processApprovalButton(widget.id, "1", iduser,signatureApprovalFromServer );
+                    processApprovalButton(
+                        widget.id, "1", iduser, signatureApprovalFromServer);
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context)=> DashboardManagerPage()));
+                        MaterialPageRoute(
+                            builder: (context) => DashboardManagerPage()));
                     // Navigator.pop(context);
                     successDialog(
                       context,
@@ -859,7 +866,9 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                     ),
                   ),
                 ),
-                SizedBox(width: 20,),
+                SizedBox(
+                  width: 20,
+                ),
 
                 //Button Reject
                 // ignore: deprecated_member_use
