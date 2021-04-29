@@ -57,7 +57,7 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
             },
             items: [
               BottomNavigationBarItem(
-                title: Text("Customer Form",
+                title: Text("New",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                   ),
@@ -66,7 +66,7 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
                 ),
               ),
               BottomNavigationBarItem(
-                title: Text("View Status",
+                title: Text("List",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                   ),

@@ -25,12 +25,12 @@ class Status {
   String fotoSIUP;
   String fotoGedung;
   String custSignature;
-  Null salesSignature;
+  String salesSignature;
   String approval1Signature;
   String approval2Signature;
   int imported;
-  Null long;
-  Null lat;
+  String long;
+  String lat;
   String approval1;
   String approval2;
   String status;

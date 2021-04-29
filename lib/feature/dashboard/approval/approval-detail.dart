@@ -164,14 +164,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Customer Name",
+                "Customer Name     :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.custName ?? "",
@@ -188,14 +184,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Brand Name",
+                "Brand Name            :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(50, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.brandName ?? "",
@@ -212,14 +204,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Category",
+                "Category                  :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(75, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.category ?? "",
@@ -236,14 +224,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Segment",
+                "Segment                  :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(76, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.segment ?? "",
@@ -260,14 +244,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Sub Segment",
+                "Sub Segment          :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(43, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.subSegment ?? "",
@@ -284,14 +264,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Class",
+                "Class                        :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(102, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.selectclass ?? "",
@@ -308,14 +284,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Phone No",
+                "Phone No                 :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(69, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.phoneNo ?? "",
@@ -332,14 +304,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Company Status",
+                "Company Status     :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.companyStatus ?? "",
@@ -356,14 +324,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Fax No",
+                "Fax No                      :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(92, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.faxNo ?? "",
@@ -380,14 +344,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Contact Person",
+                "Contact Person       :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(28, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.contactPerson ?? "",
@@ -404,14 +364,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Email Address",
+                "Email Address         :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(36, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.emailAddress ?? "",
@@ -428,14 +384,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Website",
+                "Website                    :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(84, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.website ?? "",
@@ -449,14 +401,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "NPWP",
+                "NPWP                       :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(96, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.nPWP ?? "",
@@ -473,14 +421,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "KTP",
+                "KTP                           :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(113, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.kTP ?? "",
@@ -494,14 +438,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Currency",
+                "Currency                   :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(77, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.currency ?? "",
@@ -518,14 +458,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Price Group",
+                "Price Group              :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(56, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.priceGroup ?? "",
@@ -542,14 +478,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Salesman",
+                "Salesman                 :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(70, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.salesman ?? "",
@@ -566,14 +498,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Sales Office",
+                "Sales Office              :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(55, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.salesOffice ?? "",
@@ -590,14 +518,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Business Unit",
+                "Business Unit           :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(41, 0, 20, 0),
-                child: Text(":"),
               ),
               Text(
                 dataApproval.businessUnit ?? "",
@@ -611,17 +535,433 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           SizedBox(
             height: 10,
           ),
+          SizedBox(
+            height: 30,
+          ),
+          Divider(
+            color: Colors.black,
+            thickness: 1,
+          ),
+          SizedBox(height: 10,),
+
+          //Company Address
+          Center(
+            child: Text(
+              "Company Address",
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.blue,
+              ),
+            ),
+          ),
+          SizedBox(height: 20,),
           Row(
             children: [
               Text(
-                "Foto NPWP",
+                "Name                        :    ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(57, 0, 20, 0),
-                child: Text(":"),
+              Text(
+                dataCompanyAddress.name ?? "",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "Street Name            :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                dataCompanyAddress.streetName ?? "",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "City                            :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                dataCompanyAddress.city ?? "",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "Country                     :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                dataCompanyAddress.country ?? "",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "State                         :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                dataCompanyAddress.state ?? "",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "ZIP Code                  :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                dataCompanyAddress.zipCode.toString(),
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Divider(
+            color: Colors.black,
+            thickness: 1,
+          ),
+          SizedBox(height: 10,),
+
+          //Ini TAX Address
+          Center(
+            child: Text(
+              "TAX Address",
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.blue,
+              ),
+            ),
+          ),
+          SizedBox(height: 20,),
+          Row(
+            children: [
+              Text(
+                "Name                        :    ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                dataTAXAddress.name ?? "",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "Street Name            :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                dataTAXAddress.streetName ?? "",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "City                            :    ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                dataTAXAddress.city ?? "",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "Country                     :    ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                dataTAXAddress.country ?? "",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "State                          :    ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                dataTAXAddress.state ?? "",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "ZIP Code                   :    ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                dataTAXAddress.zipCode.toString(),
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Divider(
+            color: Colors.black,
+            thickness: 1,
+          ),
+          SizedBox(height: 10,),
+
+          //Ini Delivery Address
+          Center(
+            child: Text(
+              "Delivery Address",
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.blue,
+              ),
+            ),
+          ),
+          SizedBox(height: 20,),
+          Row(
+            children: [
+              Text(
+                "Name                        :    ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                dataDeliveryAddress.name ?? "",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "Street Name            :    ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                dataDeliveryAddress.streetName ?? "",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "City                            :    ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                dataDeliveryAddress.city ?? "",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "Country                     :    ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                dataDeliveryAddress.country ?? "",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "State                          :   ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                dataDeliveryAddress.state ?? "",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "ZIP Code                   :   ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                dataDeliveryAddress.zipCode.toString(),
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Divider(
+            color: Colors.black,
+            thickness: 1,
+          ),
+          SizedBox(height: 10,),
+          SizedBox(height: 10,),
+          Row(
+            children: [
+              Text(
+                "Foto NPWP             :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
               ),
               Container(
                   height: 100,
@@ -649,14 +989,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Foto KTP",
+                "Foto KTP                 :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(74, 0, 20, 0),
-                child: Text(":"),
               ),
               Container(
                 height: 100,
@@ -686,14 +1022,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Foto SIUP",
+                "Foto SIUP               :      ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(70, 0, 20, 0),
-                child: Text(":"),
               ),
               Container(
                 height: 100,
@@ -723,14 +1055,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Foto Gedung",
+                "Foto Gedung         :       ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(49, 0, 20, 0),
-                child: Text(":"),
               ),
               Container(
                 height: 100,
@@ -760,14 +1088,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Approval\nSignature",
+                "Approval\nSignature               : ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(72, 0, 20, 0),
-                child: Text(":"),
               ),
             ],
           ),
@@ -812,6 +1136,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ],
             ),
           ),
+          SizedBox(height: 10,),
           Row(
             children: [
               Text(
@@ -834,493 +1159,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(
-            height: 30,
-          ),
-          Divider(
-            color: Colors.black,
-            thickness: 1,
-          ),
-          SizedBox(height: 10,),
-
-          //Company Address
-          Center(
-            child: Text(
-              "Company Address",
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.blue,
-              ),
-            ),
-          ),
           SizedBox(height: 20,),
-          Row(
-            children: [
-              Text(
-                "Name",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(100, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataCompanyAddress.name ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "Street Name",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(52, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataCompanyAddress.streetName ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "City",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(118, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataCompanyAddress.city ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "Country",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(87, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataCompanyAddress.country ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "State",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(107, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataCompanyAddress.state ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "ZIP Code",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(78, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataCompanyAddress.zipCode.toString(),
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Divider(
-            color: Colors.black,
-            thickness: 1,
-          ),
-          SizedBox(height: 10,),
-
-          //Ini TAX Address
-          Center(
-            child: Text(
-              "TAX Address",
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.blue,
-              ),
-            ),
-          ),
-          SizedBox(height: 20,),
-          Row(
-            children: [
-              Text(
-                "Name",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(100, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataTAXAddress.name ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "Street Name",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(52, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataTAXAddress.streetName ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "City",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(118, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataTAXAddress.city ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "Country",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(87, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataTAXAddress.country ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "State",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(107, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataTAXAddress.state ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "ZIP Code",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(78, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataTAXAddress.zipCode.toString(),
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Divider(
-            color: Colors.black,
-            thickness: 1,
-          ),
-          SizedBox(height: 10,),
-
-          //Ini Delivery Address
-          Center(
-            child: Text(
-              "Delivery Address",
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.blue,
-              ),
-            ),
-          ),
-          SizedBox(height: 20,),
-          Row(
-            children: [
-              Text(
-                "Name",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(100, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataDeliveryAddress.name ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "Street Name",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(52, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataDeliveryAddress.streetName ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "City",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(118, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataDeliveryAddress.city ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "Country",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(87, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataDeliveryAddress.country ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "State",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(107, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataDeliveryAddress.state ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "ZIP Code",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(78, 0, 20, 0),
-                child: Text(":"),
-              ),
-              Text(
-                dataDeliveryAddress.zipCode.toString(),
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          SizedBox(height: 10,),
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1357,7 +1196,6 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 SizedBox(
                   width: 20,
                 ),
-
                 //Button Reject
                 // ignore: deprecated_member_use
                 RaisedButton(

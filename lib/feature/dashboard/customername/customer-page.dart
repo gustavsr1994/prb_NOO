@@ -5,6 +5,7 @@ import 'package:async/async.dart';
 import 'package:commons/commons.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -688,6 +689,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
             //Customer Name
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Container(
                   child: Text(
@@ -1096,7 +1098,7 @@ class _CustomerPageState extends State<CustomerPage> {
               children: <Widget>[
                 Container(
                   child: Text(
-                    "NPWP                   :",
+                    "NPWP                  :",
                   ),
                 ),
                 SizedBox(
@@ -1136,7 +1138,7 @@ class _CustomerPageState extends State<CustomerPage> {
               children: <Widget>[
                 Container(
                   child: Text(
-                    "KTP                       :",
+                    "KTP                      :",
                   ),
                 ),
                 SizedBox(
@@ -1417,175 +1419,6 @@ class _CustomerPageState extends State<CustomerPage> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 20,
-            ),
-
-            //ScrollHorizontal ListView Upload KTP Alt dan Attachment Lainya
-            Container(
-              height: 120, //Mengubah ukuran tinggi upload ktp
-//              width: 100,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  //Upload KTP
-                  Card(
-                    child: Container(
-                      height: 200,
-                      width: 150,
-                      child: ListView(
-                        children: [
-                          Column(
-                            children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Center(
-                                child: _imageKTP == null
-                                    ? Text("KTP")
-                                    : Image.file(
-                                        _imageKTP,
-                                        fit: BoxFit.cover,
-//                                  width: 150,
-//                                  height: 80,
-                                      ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                          FloatingActionButton(
-                            onPressed: getImageKTP,
-                            tooltip: 'Pick Image',
-                            child: Icon(Icons.add_a_photo),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-
-                  //Upload NPWP
-                  Card(
-                    child: Container(
-                      height: 200,
-                      width: 150,
-                      child: ListView(
-                        children: [
-                          Column(
-                            children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Center(
-                                child: _imageNPWP == null
-                                    ? Text("NPWP")
-                                    : Image.file(
-                                        _imageNPWP,
-                                        fit: BoxFit.cover,
-//                                  width: 150,
-//                                  height: 80,
-                                      ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                          FloatingActionButton(
-                            onPressed: getImageNPWP,
-                            tooltip: 'Pick Image',
-                            child: Icon(Icons.add_a_photo),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-
-                  //Upload SIUP
-                  Card(
-                    child: Container(
-                      height: 200,
-                      width: 150,
-                      child: ListView(
-                        children: [
-                          Column(
-                            children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Center(
-                                child: _imageSIUP == null
-                                    ? Text("SIUP")
-                                    : Image.file(
-                                        _imageSIUP,
-                                        fit: BoxFit.cover,
-//                                  width: 150,
-//                                  height: 80,
-                                      ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                          FloatingActionButton(
-                            onPressed: getImageSIUP,
-                            tooltip: 'Pick Image',
-                            child: Icon(Icons.add_a_photo),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-
-                  //Upload BUILDING
-                  Card(
-                    child: Container(
-                      height: 200,
-                      width: 150,
-                      child: ListView(
-                        children: [
-                          Column(
-                            children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Center(
-                                child: _imageBuilding == null
-                                    ? Text("Building")
-                                    : Image.file(
-                                        _imageBuilding,
-                                        fit: BoxFit.cover,
-                                      ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                          FloatingActionButton(
-                            onPressed: getImageBuilding,
-                            tooltip: 'Pick Image',
-                            child: Icon(Icons.add_a_photo),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
             SizedBox(
               height: 20,
             ),
@@ -2423,6 +2256,175 @@ class _CustomerPageState extends State<CustomerPage> {
               thickness: 1,
               indent: 10,
               endIndent: 10,
+            ),
+
+            SizedBox(
+              height: 20,
+            ),
+
+            //ScrollHorizontal ListView Upload KTP Alt dan Attachment Lainya
+            Container(
+              height: 120, //Mengubah ukuran tinggi upload ktp
+//              width: 100,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  //Upload KTP
+                  Card(
+                    child: Container(
+                      height: 200,
+                      width: 150,
+                      child: ListView(
+                        children: [
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Center(
+                                child: _imageKTP == null
+                                    ? Text("KTP")
+                                    : Image.file(
+                                  _imageKTP,
+                                  fit: BoxFit.cover,
+//                                  width: 150,
+//                                  height: 80,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                          FloatingActionButton(
+                            onPressed: getImageKTP,
+                            tooltip: 'Pick Image',
+                            child: Icon(Icons.add_a_photo),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+
+                  //Upload NPWP
+                  Card(
+                    child: Container(
+                      height: 200,
+                      width: 150,
+                      child: ListView(
+                        children: [
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Center(
+                                child: _imageNPWP == null
+                                    ? Text("NPWP")
+                                    : Image.file(
+                                  _imageNPWP,
+                                  fit: BoxFit.cover,
+//                                  width: 150,
+//                                  height: 80,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                          FloatingActionButton(
+                            onPressed: getImageNPWP,
+                            tooltip: 'Pick Image',
+                            child: Icon(Icons.add_a_photo),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+
+                  //Upload SIUP
+                  Card(
+                    child: Container(
+                      height: 200,
+                      width: 150,
+                      child: ListView(
+                        children: [
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Center(
+                                child: _imageSIUP == null
+                                    ? Text("SIUP")
+                                    : Image.file(
+                                  _imageSIUP,
+                                  fit: BoxFit.cover,
+//                                  width: 150,
+//                                  height: 80,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                          FloatingActionButton(
+                            onPressed: getImageSIUP,
+                            tooltip: 'Pick Image',
+                            child: Icon(Icons.add_a_photo),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+
+                  //Upload BUILDING
+                  Card(
+                    child: Container(
+                      height: 200,
+                      width: 150,
+                      child: ListView(
+                        children: [
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Center(
+                                child: _imageBuilding == null
+                                    ? Text("Building")
+                                    : Image.file(
+                                  _imageBuilding,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                          FloatingActionButton(
+                            onPressed: getImageBuilding,
+                            tooltip: 'Pick Image',
+                            child: Icon(Icons.add_a_photo),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
 
             SizedBox(

@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   processLogin(String username, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var urlPostLogin = "http://119.18.157.236:8893/Api/Login?username=$username&password=$password";
+    var urlPostLogin = "http://119.18.157.236:8893/Api/Login?username=$username&password=${password.replaceAll("#", "%23")}";
     print("Ini urlPostLogin okay : $urlPostLogin");
     var jsonLogin = await http.post(Uri.parse(urlPostLogin));
     if(jsonLogin.body.toString().isEmpty){
