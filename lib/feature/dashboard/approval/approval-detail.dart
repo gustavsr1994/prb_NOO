@@ -76,7 +76,6 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
   void getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      print("ini printan line 99 & 100");
       print(prefs.getInt("iduser"));
       iduser = prefs.getInt("iduser");
     });
@@ -112,7 +111,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
     var approveBy = prefs.getInt("iduser");
     var urlPostReject =
         "http://192.168.0.13:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy";
-    print("Ini urlPostLogin okay : $urlPostReject");
+    print("Ini urlPostReject okay : $urlPostReject");
     var jsonRejectButton = await http.post(Uri.parse(urlPostReject));
     var dataRejectButton = jsonDecode(jsonRejectButton.body);
     if (dataRejectButton['id'] == id) {
@@ -1336,7 +1335,8 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                         DataSign, signatureApprovalFromServer);
                     await getSharedPrefs();
                     processApprovalButton(
-                        widget.id, "1", iduser, signatureApprovalFromServer);
+                        widget.id, "1", iduser, signatureApprovalFromServer
+                    );
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -1365,6 +1365,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   onPressed: () {
                     getSharedPrefs();
                     processRejectButton(widget.id, 0, iduser);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DashboardManagerPage()));
                     infoDialog(context, "Rejected");
                   },
                   child: Text(
