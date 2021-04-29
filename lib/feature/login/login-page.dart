@@ -27,14 +27,6 @@ class _LoginPageState extends State<LoginPage> {
     var urlPostLogin = "http://119.18.157.236:8893/Api/Login?username=$username&password=$password";
     print("Ini urlPostLogin okay : $urlPostLogin");
     var jsonLogin = await http.post(Uri.parse(urlPostLogin));
-    var user = User.fromJson(jsonDecode(jsonLogin.body));
-    print("cek ini");
-    print(user.id);
-    prefs.setInt("iduser", user.id);
-    print(user.username);
-    print(user.name);
-    print(jsonLogin.body.toString());
-    print(jsonLogin.body.toString().isEmpty);
     if(jsonLogin.body.toString().isEmpty){
       print("Aduh gagal login dong");
       // Show Dialog
@@ -66,6 +58,14 @@ class _LoginPageState extends State<LoginPage> {
       );
       return false;
     }
+    var user = User.fromJson(jsonDecode(jsonLogin.body));
+    print("cek ini");
+    print(user.id);
+    prefs.setInt("iduser", user.id);
+    print(user.username);
+    print(user.name);
+    print(jsonLogin.body.toString());
+    print(jsonLogin.body.toString().isEmpty);
     var dataLogin = json.decode(jsonLogin.body);
     print("Ini datalogin : $dataLogin");
     print("Ini username: $username");
@@ -204,7 +204,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 45,
                 // ignore: deprecated_member_use
                 child: ProgressButton(
-                  animationDuration: Duration(seconds: 3),
+                  // animationDuration: Duration(days:8),
                   borderRadius: BorderRadius.all(Radius.circular(50)),
                   strokeWidth: 0,
                   child: Text(
@@ -217,11 +217,12 @@ class _LoginPageState extends State<LoginPage> {
                     if (controller.isCompleted) {
                       controller.reverse();
                     } else {
-                      if (_formKey.currentState.validate()) {
-                        processLogin(_usernameController.text, _passController.text);
-                        print("Ini proses login");
-                      }
                       controller.forward();
+                    }
+                    if (_formKey.currentState.validate()) {
+                      processLogin(_usernameController.text, _passController.text);
+                      controller.forward();
+                      print("Ini proses login");
                     }
                   },
                 ),
