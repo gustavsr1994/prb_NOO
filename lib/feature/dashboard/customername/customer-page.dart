@@ -106,7 +106,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
   // getImageKTP
   Future getImageKTP() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality:20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -143,7 +143,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
   // getImageNPWP
   Future getImageNPWP() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -180,7 +180,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
   // getImageSIUP
   Future getImageSIUP() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -217,7 +217,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
   // getImageBuilding
   Future getImageBuilding() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -560,8 +560,8 @@ class _CustomerPageState extends State<CustomerPage> {
           "FotoGedung": "$buildingFromServer",
           "CustSignature": "$signatureCustomerFromServer",
           "SalesSignature": "$signatureSalesFromServer",
-          "Long": "${_currentPosition.longitude}",
-          "Lat": "${_currentPosition.latitude}",
+          // "Long": "${_currentPosition.longitude}",
+          // "Lat": "${_currentPosition.latitude}",
           "CreatedBy": 1,
           "CreatedDate": "2021-04-05T14:56:48.57",
           "TaxAddresses": [
@@ -2763,7 +2763,6 @@ class _CustomerPageState extends State<CustomerPage> {
                   await UploadNPWP(_imageNPWP);
                   await UploadSIUP(_imageSIUP);
                   await UploadBuilding(_imageBuilding);
-                  _getCurrentLocation();
                   DataSignSales = await _signaturecontrollersales.toPngBytes();
                   await UploadSignatureSales(
                       DataSignSales, signatureSalesFromServer);
