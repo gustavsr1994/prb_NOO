@@ -6,6 +6,7 @@ import 'package:prb_app/feature/dashboard/customername/customer-page.dart';
 import 'package:prb_app/feature/dashboard/dashboardemployee-page.dart';
 import 'package:http/http.dart' as http;
 import 'package:prb_app/feature/dashboard/dashboardmanager-page.dart';
+import 'package:prb_app/feature/dashboard/status/status-detail.dart';
 import 'package:prb_app/model/user.dart';
 import 'package:progress_bars/circle_progress_bar/circle_progress_bar.dart';
 import 'package:progress_indicator_button/progress_button.dart';
@@ -79,22 +80,29 @@ class _LoginPageState extends State<LoginPage> {
       //Buat login beda page
       if (dataLogin['Role'] == "0") {
         print("Ini role 0");
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => DashboardEmployeePage(
-                  username: user.name,
-                ),
-            )
-        );
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) =>
+            DashboardEmployeePage(
+              username: user.name,
+            )), (Route<dynamic> route) => false);
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (context) => DashboardEmployeePage(
+        //           username: user.name,
+        //         ),
+        //     )
+        // );
       } else if (dataLogin['Role'] == "1") {
         print("Ini Role 1");
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DashboardManagerPage(),
-            )
-        );// As manager
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>
+            DashboardManagerPage()), (Route<dynamic> route) => false);
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => DashboardManagerPage(),
+        //     )
+        // );// As manager
       } else {
         throw Exception("Gagal Login");
       }

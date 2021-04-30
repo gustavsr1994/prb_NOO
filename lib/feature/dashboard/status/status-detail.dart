@@ -100,6 +100,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+
     print("ini approval detail");
 
     return Scaffold(
@@ -921,20 +922,30 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
               Container(
                   height: 100,
                   // child: data.fotoNPWP != null ? Container() : "null" == data.fotoNPWP ? Container():
-                  child: Image.network(
-                    "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
-                              : null,
+                  child: InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) => Image.network(
+                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
                         ),
                       );
                     },
+                    child: Image.network(
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
                   )),
             ],
           ),
@@ -953,20 +964,30 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                 height: 100,
                 child:
                 // data.fotoKTP != null ? Container():
-                Image.network(
-                  "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes
-                            : null,
+                InkWell(
+                  onTap: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (_) => Image.network(
+                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
                       ),
                     );
                   },
+                  child: Image.network(
+                    "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes
+                              : null,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
@@ -986,20 +1007,30 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                 height: 100,
                 child:
                 // data.fotoSIUP != null ? Container():
-                Image.network(
-                  "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoSIUP}",
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes
-                            : null,
+                InkWell(
+                  onTap: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (_) => Image.network(
+                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoSIUP}",
                       ),
                     );
                   },
+                  child: Image.network(
+                    "http://119.18.157.236:8893//api/Files/GetFiles?fileName=${data.fotoSIUP}",
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes
+                              : null,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
@@ -1019,20 +1050,30 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                 height: 100,
                 child:
                 // data.fotoGedung != null ? Container():
-                Image.network(
-                  "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.fotoGedung}",
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes
-                            : null,
+                InkWell(
+                  onTap: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (_) => Image.network(
+                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung}",
                       ),
                     );
                   },
+                  child: Image.network(
+                    "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung}",
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes
+                              : null,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
@@ -1055,22 +1096,34 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                 padding: EdgeInsets.fromLTRB(62, 0, 20, 0),
                 child: Text(":"),
               ),
-              Container(
-                height: 100,
-                child: Image.network(
-                  "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.approval1Signature}",
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes
-                            : null,
-                      ),
-                    );
-                  },
+              Flexible(
+                child: Container(
+                  height: 100,
+                  child: InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) => Image.network(
+                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.approval1Signature}",
+                        ),
+                      );
+                    },
+                    child: Image.network(
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.approval1Signature}",
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -1090,22 +1143,35 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                 padding: EdgeInsets.fromLTRB(62, 0, 20, 0),
                 child: Text(":"),
               ),
-              Container(
-                height: 100,
-                child: Image.network(
-                  "http://192.168.0.13:8893/api/Files/GetFiles?fileName=${data.approval2Signature}",
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes
-                            : null,
-                      ),
-                    );
-                  },
+              Flexible(
+                child: Container(
+                  height: 100,
+                  // width: 100,
+                  child: InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) => Image.network(
+                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.approval2Signature}",
+                        ),
+                      );
+                    },
+                    child: Image.network(
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.approval2Signature}",
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ),
             ],
