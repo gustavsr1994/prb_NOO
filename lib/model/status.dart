@@ -38,6 +38,7 @@ class Status {
   String createdDate;
   String approved1;
   String approved2;
+  String remark;
 
   Status({
     this.id, this.custName, this.brandName, this.category, this.segment,
@@ -47,7 +48,8 @@ class Status {
     this.salesOffice, this.businessUnit, this.notes, this.fotoNPWP,
     this.fotoKTP, this.fotoSIUP, this.fotoGedung, this.custSignature,
     this.salesSignature, this.approval1Signature, this.approval2Signature,
-    this.imported, this.long, this.lat, this.approval1, this.approval2, this.status, this.createdBy, this.createdDate, this.approved1, this.approved2
+    this.imported, this.long, this.lat, this.approval1, this.approval2, this.status,
+    this.createdBy, this.createdDate, this.approved1, this.approved2, this.remark
   });
 
   Status.fromJson(Map<String, dynamic> json) {
@@ -90,6 +92,7 @@ class Status {
   createdDate = json['CreatedDate'];
   approved1 = json['Approved1'];
   approved2 = json['Approved2'];
+  remark = json['Remark'];
   }
 
   Map<String, dynamic> toJson() {
@@ -133,6 +136,7 @@ class Status {
   data['CreatedDate'] = this.createdDate;
   data['Approved1'] = this.approved1;
   data['Approved2'] = this.approved2;
+  data['Remark'] = this.remark;
   return data;
   }
 }

@@ -1180,6 +1180,25 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           Row(
             children: [
               Text(
+                "Remark                     : ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                data.remark ?? "",
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 10,),
+          Row(
+            children: [
+              Text(
                 "Status",
                 style: TextStyle(
                   fontSize: 17,

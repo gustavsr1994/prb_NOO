@@ -11,8 +11,8 @@ import 'deliveryaddress/deliveryaddress-page.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 class DashboardManagerPage extends StatefulWidget {
-//  String email;
-//  DashboardManagerPage({Key key, this.email}) : super(key: key);
+  String username;
+  DashboardManagerPage({Key key, this.username}) : super(key: key);
 
   @override
   _DashboardManagerPageState createState() => _DashboardManagerPageState();
@@ -33,9 +33,14 @@ class _DashboardManagerPageState extends State<DashboardManagerPage> {
   @override
   Widget build(BuildContext context) {
 
+    final List pages = [
+      ApprovalPage(name: widget.username,),
+    ];
+
     print("Ini bottom nav");
-    _selectedItemIndex = 0;
-    return Scaffold(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
           bottomNavigationBar: BottomNavigationBar(
             elevation: 50,
             backgroundColor: Color(0xFFF0F0F0),
@@ -51,7 +56,7 @@ class _DashboardManagerPageState extends State<DashboardManagerPage> {
             },
             items: [
               BottomNavigationBarItem(
-                title: Text("Customer Form",
+                title: Text("List",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                   ),
@@ -77,7 +82,8 @@ class _DashboardManagerPageState extends State<DashboardManagerPage> {
               ),
             ],
           ),
-          body: ApprovalPage(),
-      );
+          body: ApprovalPage(name: widget.username,),
+      ),
+    );
   }
 }

@@ -9,6 +9,9 @@ import 'approval-detail.dart';
 import 'approval-detail.dart';
 
 class ApprovalPage extends StatefulWidget {
+  String name;
+  ApprovalPage({Key key, this.name}) : super(key: key);
+
   @override
   _ApprovalPageState createState() => _ApprovalPageState();
 }
@@ -27,79 +30,6 @@ class _ApprovalPageState extends State<ApprovalPage> {
   }
 
   var urlGetApproval = "http://119.18.157.236:8893/api/FindApproval/";
-
-  List<Approval> _dataApproval = [];
-  // void getApproval() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   String userId =  prefs.getInt("iduser").toString();
-  //   print(urlGetApproval+userId);
-  //   final response = await http.get(Uri.parse(urlGetApproval+userId));
-  //   print("response="+response.body);
-  //   Iterable listData = jsonDecode(response.body);
-  //   print("--");
-  //   print(listData.runtimeType.toString());
-  //   if(mounted)setState(() {
-  //     _dataApproval =
-  //         listData.map((item) {print(item.runtimeType.toString());
-  //         return Approval.fromJson(item);}).toList();
-  //     for(Approval item in _dataApproval) {
-  //       print(item.toString());
-  //       print("test nama ${item.custName}");
-  //       print("test date ${item.createdDate}");
-  //       print("test date ${item.status}");
-  //       this.listData.add(Container(
-  //         child: Card(
-  //           child: Column(
-  //             crossAxisAlignment: CrossAxisAlignment.stretch,
-  //             children: [
-  //               Container(
-  //                 padding: EdgeInsets.all(6),
-  //                 alignment: Alignment.centerLeft,
-  //                 child: Text(
-  //                   "Name : ${item.custName}",
-  //                   textAlign: TextAlign.left,
-  //                   style: TextStyle(
-  //                     color: Colors.blue,
-  //                     fontSize: 12,
-  //                   ),
-  //                 ),
-  //               ),
-  //               Container(
-  //                 padding: EdgeInsets.all(6),
-  //                 alignment: Alignment.centerLeft,
-  //                 child: Text(
-  //                   "Date : ${item.createdDate}",
-  //                   textAlign: TextAlign.left,
-  //                   style: TextStyle(
-  //                     fontSize: 12,
-  //                     color: Colors.blue,
-  //                   ),
-  //                 ),
-  //               ),
-  //               Container(
-  //                 padding: EdgeInsets.all(6),
-  //                 alignment: Alignment.centerLeft,
-  //                 child: Text(
-  //                   "${item.status}",
-  //                   textAlign: TextAlign.left,
-  //                   style: TextStyle(
-  //                     color: Colors.blue,
-  //                     fontWeight: FontWeight.bold,
-  //                   ),
-  //                 ),
-  //               ),
-  //               SizedBox(height: 5,),
-  //
-  //               //Ini row button
-  //
-  //             ],
-  //           ),
-  //         ),
-  //       ));
-  //     }
-  //   });
-  //   print("Data Approval : $listData");
-  // }
 
   List<Widget> listData = [];
 
@@ -127,6 +57,19 @@ class _ApprovalPageState extends State<ApprovalPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Center(
+                child: Text(
+                  widget.name??"",
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
         body: new Container(
           child: new ListView.builder(

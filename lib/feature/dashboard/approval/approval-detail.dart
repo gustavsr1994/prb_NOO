@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:commons/commons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
   Address dataDeliveryAddress = new Address();
   Address dataTAXAddress = new Address();
 
+  TextEditingController _remarkController = TextEditingController();
 
   List<Approval> _dataApprovalDetail = [];
   void getApprovalDetail() async {
@@ -83,33 +85,23 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
   }
 
   processApprovalButton(
-      int id, String value, int approveBy, String ApprovedSignature) async {
+      int id, String value, int approveBy, String ApprovedSignature, String Remark) async {
     var urlPostApproval =
-        "http://119.18.157.236:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy&ApprovedSignature=$ApprovedSignature";
+        "http://119.18.157.236:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy&ApprovedSignature=$ApprovedSignature&Remark=$Remark";
     print("Ini urlPost Approval : $urlPostApproval");
     var jsonApprovalButton = await http.post(Uri.parse(urlPostApproval));
-    // var user = User.fromJson(json.decode(jsonApprovalButton.body)); //maaf ngga kepake
-    // approveBy = user.id;
     print(jsonApprovalButton.body.toString());
     print(jsonApprovalButton.body.toString().isEmpty);
-    // var dataApprovalButton = jsonDecode(jsonApprovalButton.body); //maaf ngga kepake
     print(jsonApprovalButton.body.toString());
     print(jsonApprovalButton.body.toString().isEmpty);
-    // if (dataApprovalButton['id'] == id){
-    //   print("Ini button Approval");
-    //   if(dataApprovalButton['value'] == "1" ){
-    //     print("Ini value 1/Approve");
-    //     Alert(context: context, title: "RFlutter", desc: "Flutter awesome").show();
-    //   }
-    // }
   }
 
-  processRejectButton(int id, int value, int approveBy) async {
+  processRejectButton(int id, int value, int approveBy, String Remark) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var id = this.widget.id;
     var approveBy = prefs.getInt("iduser");
     var urlPostReject =
-        "http://119.18.157.236:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy";
+        "http://119.18.157.236:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy&Remark=$Remark";
     print("Ini urlPostReject okay : $urlPostReject");
     var jsonRejectButton = await http.post(Uri.parse(urlPostReject));
     var dataRejectButton = jsonDecode(jsonRejectButton.body);
@@ -1179,6 +1171,30 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
+                  "Remark                     :    ",
+                style: TextStyle(
+                  fontSize: 17
+                ),
+              ),
+              Container(
+                child: Expanded(
+                  child: AutoSizeTextField(
+                    keyboardType: TextInputType.text,
+                    controller: _remarkController,
+                    maxLines: 3,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.fromLTRB(0, 0, 0,11),
+                      isDense: true,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+          SizedBox(height: 15,),
+          Row(
+            children: [
+              Text(
                 "Status",
                 style: TextStyle(
                   fontSize: 17,
@@ -1213,7 +1229,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                         DataSign, signatureApprovalFromServer);
                     await getSharedPrefs();
                     processApprovalButton(
-                        widget.id, "1", iduser, signatureApprovalFromServer
+                        widget.id, "1", iduser, signatureApprovalFromServer,_remarkController.text
                     );
                     Navigator.push(
                         context,
@@ -1241,7 +1257,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   color: Colors.blue,
                   onPressed: () {
                     getSharedPrefs();
-                    processRejectButton(widget.id, 0, iduser);
+                    processRejectButton(widget.id, 0, iduser, _remarkController.text);
                     Navigator.push(
                         context,
                         MaterialPageRoute(

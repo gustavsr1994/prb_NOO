@@ -30,36 +30,29 @@ class CustomerPage extends StatefulWidget {
 
 class _CustomerPageState extends State<CustomerPage> {
   //Customer Controller
-  TextEditingController _customerNameControllerCustomer =
-      TextEditingController();
+  TextEditingController _customerNameControllerCustomer = TextEditingController();
   TextEditingController _brandNameControllerCustomer = TextEditingController();
   TextEditingController _categoryControllerCustomer = TextEditingController();
   TextEditingController _segmenControllerCustomer = TextEditingController();
   TextEditingController _subSegmenControllerCustomer = TextEditingController();
   TextEditingController _classControllerCustomer = TextEditingController();
   TextEditingController _phoneControllerCustomer = TextEditingController();
-  TextEditingController _companyStausControllerCustomer =
-      TextEditingController();
+  TextEditingController _companyStausControllerCustomer = TextEditingController();
   TextEditingController _faxControllerCustomer = TextEditingController();
-  TextEditingController _contactPersonControllerCustomer =
-      TextEditingController();
-  TextEditingController _emailAddressControllerCustomer =
-      TextEditingController();
+  TextEditingController _contactPersonControllerCustomer = TextEditingController();
+  TextEditingController _emailAddressControllerCustomer = TextEditingController();
   TextEditingController _npwpControllerCustomer = TextEditingController();
   TextEditingController _ktpControllerCustomer = TextEditingController();
   TextEditingController _currencyControllerCustomer = TextEditingController();
-  TextEditingController _salesOfficeControllerCustomer =
-      TextEditingController();
+  TextEditingController _salesOfficeControllerCustomer = TextEditingController();
   TextEditingController _priceGroupControllerCustomer = TextEditingController();
-  TextEditingController _businessUnitControllerCustomer =
-      TextEditingController();
+  TextEditingController _businessUnitControllerCustomer = TextEditingController();
   TextEditingController _salesmanControllerCustomer = TextEditingController();
   TextEditingController _websiteControllerCustomer = TextEditingController();
   TextEditingController _fotoktpControllerCustomer = TextEditingController();
   TextEditingController _fotonpwpControllerCustomer = TextEditingController();
   TextEditingController _fotosiupControllerCustomer = TextEditingController();
-  TextEditingController _fotobuildingControllerCustomer =
-      TextEditingController();
+  TextEditingController _fotobuildingControllerCustomer = TextEditingController();
 
   //Company Controller
   TextEditingController _nameControllerCompany = TextEditingController();
