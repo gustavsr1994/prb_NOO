@@ -61,7 +61,7 @@ class _StatusPageState extends State<StatusPage> {
               padding: const EdgeInsets.all(20.0),
               child: Center(
                 child: Text(
-                  widget.name,
+                  widget.name??"",
                   style: TextStyle(
                     color: Colors.black,
                   ),

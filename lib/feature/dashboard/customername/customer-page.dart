@@ -11,8 +11,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
+import 'package:prb_app/feature/dashboard/dashboardemployee-page.dart';
 import 'package:prb_app/model/user.dart';
 import 'package:progress_bars/circle_progress_bar/circle_progress_bar.dart';
+import 'package:progress_indicator_button/progress_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
 
@@ -560,8 +562,8 @@ class _CustomerPageState extends State<CustomerPage> {
           "FotoGedung": "$buildingFromServer",
           "CustSignature": "$signatureCustomerFromServer",
           "SalesSignature": "$signatureSalesFromServer",
-          // "Long": "${_currentPosition.longitude}",
-          // "Lat": "${_currentPosition.latitude}",
+          "Long": "",
+          "Lat": "",
           "CreatedBy": 1,
           "CreatedDate": "2021-04-05T14:56:48.57",
           "TaxAddresses": [
@@ -658,7 +660,7 @@ class _CustomerPageState extends State<CustomerPage> {
             padding: const EdgeInsets.all(20.0),
             child: Center(
               child: Text(
-                widget.name,
+                widget.name??"",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -2485,38 +2487,38 @@ class _CustomerPageState extends State<CustomerPage> {
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
                               //Icon check
-                              IconButton(
-                                  icon: const Icon(Icons.check),
-                                  color: Colors.blue,
-                                  onPressed: () async {
-                                    // showDialog(
-                                    //     context: context,
-                                    //     barrierDismissible: false,
-                                    //     builder: (context) {
-                                    //       return Center(
-                                    //         child: CircleProgressBar(
-                                    //           backgroundColor: Colors.black54,
-                                    //           progressColor: Colors.orange,
-                                    //           size: 20,
-                                    //           child: SizedBox(
-                                    //               child: Icon(
-                                    //             Icons.local_fire_department,
-                                    //           )),
-                                    //         ),
-                                    //       );
-                                    //     });
-                                    // Future.delayed(Duration(seconds: 2)).then(
-                                    //   (value) {
-                                    //     Navigator.pop(context);
-                                    //     setState(
-                                    //       () {
-                                    //         text = "LOADED";
-                                    //       },
-                                    //     );
-                                    //   },
-                                    // );
-                                  }
-                                  ),
+                              // IconButton(
+                              //     icon: const Icon(Icons.check),
+                              //     color: Colors.blue,
+                              //     onPressed: () async {
+                              //       // showDialog(
+                              //       //     context: context,
+                              //       //     barrierDismissible: false,
+                              //       //     builder: (context) {
+                              //       //       return Center(
+                              //       //         child: CircleProgressBar(
+                              //       //           backgroundColor: Colors.black54,
+                              //       //           progressColor: Colors.orange,
+                              //       //           size: 20,
+                              //       //           child: SizedBox(
+                              //       //               child: Icon(
+                              //       //             Icons.local_fire_department,
+                              //       //           )),
+                              //       //         ),
+                              //       //       );
+                              //       //     });
+                              //       // Future.delayed(Duration(seconds: 2)).then(
+                              //       //   (value) {
+                              //       //     Navigator.pop(context);
+                              //       //     setState(
+                              //       //       () {
+                              //       //         text = "LOADED";
+                              //       //       },
+                              //       //     );
+                              //       //   },
+                              //       // );
+                              //     }
+                              //     ),
                               //Clear Canvass
                               IconButton(
                                   icon: const Icon(
@@ -2565,19 +2567,6 @@ class _CustomerPageState extends State<CustomerPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
-                              IconButton(
-                                  icon: const Icon(Icons.check),
-                                  color: Colors.blue,
-                                  onPressed: () async {
-                                    // if (_signaturecontrollercustomer
-                                    //     .isNotEmpty) {
-                                    //   final Uint8List data =
-                                    //       await _signaturecontrollercustomer
-                                    //           .toPngBytes();
-                                    //   if (data != null) {}
-                                    // }
-                                  }
-                                  ),
                               //Clear Canvass
                               IconButton(
                                   icon: const Icon(
@@ -2598,160 +2587,95 @@ class _CustomerPageState extends State<CustomerPage> {
               ),
             ),
 
-            //Signature Canvas Sales
-            // Container(
-            //   child: Column(
-            //     children: [
-            //       Text("Sales"),
-            //       SizedBox(height: 10,),
-            //       Card(
-            //         child: Signature(
-            //           controller: _signaturecontrollersales,
-            //           height: 300,
-            //           backgroundColor: Colors.white,
-            //         ),
-            //       ),
-            //       //Oke dan button clear
-            //       Container(
-            //         decoration: const BoxDecoration(
-            //           color: Colors.black,
-            //         ),
-            //         child: Container(
-            //           width: 355,
-            //           child: Row(
-            //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //             mainAxisSize: MainAxisSize.max,
-            //             children: <Widget>[
-            //               IconButton(
-            //                   icon: const Icon(Icons.check),
-            //                   color: Colors.blue,
-            //                   onPressed: () async {
-            //                     showDialog(
-            //                         context: context,
-            //                         barrierDismissible: false,
-            //                         builder: (context) {
-            //                           return Center(
-            //                             child: CircleProgressBar(
-            //                               backgroundColor: Colors.black54,
-            //                               progressColor: Colors.orange,
-            //                               size: 20,
-            //                               child: SizedBox(
-            //                                 child: Icon(
-            //                                   Icons.local_fire_department,
-            //                                 )
-            //                               ),
-            //                             ),
-            //                           );
-            //                         });
-            //                     Future.delayed(Duration(seconds: 2)).then(
-            //                           (value) {
-            //                         Navigator.pop(context);
-            //                         setState(
-            //                               () {
-            //                             text = "LOADED";
-            //                           },
-            //                         );
-            //                       },
-            //                     );
-            //                   }
-            //               ),
-            //             ],
-            //           ),
-            //         ),
-            //       ),
-            //       //Clear Canvass
-            //       IconButton(
-            //           icon: const Icon(Icons.clear),
-            //           onPressed: (){
-            //             setState(() => _signaturecontrollersales.clear());
-            //           }
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // SizedBox(height: 10,),
-
-            //Signature Canvas Customer
-            // Container(
-            //   child: Column(
-            //     children: [
-            //       Text("Customer"),
-            //       SizedBox(height: 10,),
-            //       Card(
-            //         child: Signature(
-            //           controller: _signaturecontrollercustomer,
-            //           height: 300,
-            //           backgroundColor: Colors.white,
-            //         ),
-            //       ),
-            //       //Oke dan button clear
-            //       Container(
-            //         decoration: const BoxDecoration(
-            //           color: Colors.black,
-            //         ),
-            //         child: Container(
-            //           width: 355,
-            //           child: Row(
-            //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //             mainAxisSize: MainAxisSize.max,
-            //             children: <Widget>[
-            //               IconButton(
-            //                   icon: const Icon(Icons.check),
-            //                   color: Colors.blue,
-            //                   onPressed: () async {
-            //                     if (_signaturecontrollercustomer.isNotEmpty){
-            //                       final Uint8List data = await _signaturecontrollercustomer.toPngBytes();
-            //                       if (data != null) {
-            //                         await Navigator.of(context).push(
-            //                             MaterialPageRoute<void>(
-            //                                 builder: (BuildContext context){
-            //                                   return Center(
-            //                                     child: Container(
-            //                                       color: Colors.grey[300],
-            //                                       child: Image.memory(data),
-            //                                     ),
-            //                                   );
-            //                                 }
-            //                             )
-            //                         );
-            //                       }
-            //                     }
-            //                   }
-            //               ),
-            //             ],
-            //           ),
-            //         ),
-            //       ),
-            //       //Clear Canvass
-            //       IconButton(
-            //           icon: const Icon(Icons.clear),
-            //           onPressed: (){
-            //             setState(() => _signaturecontrollercustomer.clear());
-            //           }
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // SizedBox(height: 10,),
-
-            //Button Refresh
-            // Center(
-            //   child: RaisedButton(
-            //     color: Colors.blue,
-            //     onPressed: () async {
-            //         SharedPreferences prefs = await SharedPreferences.getInstance();
-            //         prefs.remove("customer");
-            //     },
+            //Button Submit
+            // ignore: deprecated_member_use
+            // ProgressButton(
             //     child: Text(
-            //       "Refresh",
+            //       "Submit",
             //       style: TextStyle(
             //         color: Colors.white,
             //       ),
             //     ),
-            //   ),
+            //     onPressed: (AnimationController controller) async {
+            //       if (controller.isCompleted) {
+            //         controller.reverse();
+            //       } else {
+            //         controller.forward();
+            //       }
+            //       if (_formkey.currentState.validate()) {
+            //         print("Ini proses submit");
+            //         await UploadKTP(_imageKTP);
+            //         await UploadNPWP(_imageNPWP);
+            //         await UploadSIUP(_imageSIUP);
+            //         await UploadBuilding(_imageBuilding);
+            //         DataSignSales = await _signaturecontrollersales.toPngBytes();
+            //         await UploadSignatureSales(
+            //             DataSignSales, signatureSalesFromServer);
+            //         DataSignCustomer = await _signaturecontrollercustomer.toPngBytes();
+            //         await UploadSignatureCustomer(
+            //             DataSignCustomer, signatureCustomerFromServer);
+            //         processSubmitCustomerForm(
+            //           //Customer
+            //           _customerNameControllerCustomer.text,
+            //           _brandNameControllerCustomer.text,
+            //           _valCategory,
+            //           _valSegment,
+            //           _valSubSegment,
+            //           _valClass,
+            //           _phoneControllerCustomer.text,
+            //           _valCompanyStatus,
+            //           _faxControllerCustomer.text,
+            //           _contactPersonControllerCustomer.text,
+            //           _emailAddressControllerCustomer.text,
+            //           _npwpControllerCustomer.text,
+            //           _ktpControllerCustomer.text,
+            //           _currencyControllerCustomer.text,
+            //           _salesOfficeControllerCustomer.text,
+            //           _valPriceGroup,
+            //           _businessUnitControllerCustomer.text,
+            //           _salesmanControllerCustomer.text,
+            //           _websiteControllerCustomer.text,
+            //
+            //           //Company
+            //           _nameControllerCompany.text,
+            //           _streetControllerCompany.text,
+            //           _cityControllerCompany.text,
+            //           _countryControllerCompany.text,
+            //           _stateControllerCompany.text,
+            //           _zipCodeControllerCompany.text,
+            //
+            //           //Tax
+            //           _nameControllerTax.text,
+            //           _streetControllerTax.text,
+            //           _cityControllerTax.text,
+            //           _countryControllerTax.text,
+            //           _stateControllerTax.text,
+            //           _zipCodeControllerTax.text,
+            //
+            //           //Delivery
+            //           _nameControllerDelivery.text,
+            //           _streetControllerDelivery.text,
+            //           _cityControllerDelivery.text,
+            //           _countryControllerDelivery.text,
+            //           _stateControllerDelivery.text,
+            //           _zipCodeControllerDelivery.text,
+            //         );
+            //         Navigator.pop(
+            //             context,
+            //             MaterialPageRoute(
+            //                 builder: (context) =>  CustomerPage()));
+            //         successDialog(
+            //             context,
+            //             "Success"
+            //         );
+            //         return Center(
+            //           child: CircleProgressBar(
+            //             size: 20,
+            //           ),
+            //         );
+            //       }
+            //     },
             // ),
-
-            //Button Submit
             // ignore: deprecated_member_use
             RaisedButton(
               color: Colors.blue,
@@ -2815,10 +2739,13 @@ class _CustomerPageState extends State<CustomerPage> {
                     _stateControllerDelivery.text,
                     _zipCodeControllerDelivery.text,
                   );
-                  return Center(
-                    child: CircleProgressBar(
-                      size: 20,
-                    ),
+                  successDialog(
+                      context,
+                      "Success"
+                  );
+                  Navigator.push(
+                    context,
+                    new MaterialPageRoute(builder: (context) => new DashboardEmployeePage()),
                   );
                 }
               },
