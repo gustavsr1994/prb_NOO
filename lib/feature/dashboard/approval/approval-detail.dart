@@ -6,10 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:prb_app/feature/dashboard/approval/approval-page.dart';
 import 'package:prb_app/feature/dashboard/dashboardmanager-page.dart';
 import 'package:prb_app/model/address.dart';
-import 'package:prb_app/model/user.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
@@ -80,8 +78,6 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
       print(prefs.getInt("iduser"));
       iduser = prefs.getInt("iduser");
     });
-    // var id = this.widget.id;
-    // var approveBy = prefs.getInt("id");
   }
 
   processApprovalButton(

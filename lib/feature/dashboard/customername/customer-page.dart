@@ -266,13 +266,8 @@ class _CustomerPageState extends State<CustomerPage> {
   }
 
   UploadSignatureCustomer(imageFile, String namaFile) async {
-    //var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-    //var length = await imageFile.length();
     var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
     var request = new http.MultipartRequest("POST", uri);
-    //var multipartFile = new http.MultipartFile.fromBytes('file', imageFile,
-    //filename: namaFile);
-    //contentType: new MediaType('image', 'png'));
     request.files.add(
         http.MultipartFile.fromBytes('file', imageFile, filename: namaFile));
     var response = await request.send();

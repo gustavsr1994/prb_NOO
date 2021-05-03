@@ -33,6 +33,42 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
   @override
   Widget build(BuildContext context) {
 
+    showAlertDialog(BuildContext context) {
+      // set up the buttons
+      // ignore: deprecated_member_use
+      Widget cancelButton = FlatButton(
+        child: Text("No"),
+        onPressed:  () {
+          Navigator.pop(context);
+        },
+      );
+      // ignore: deprecated_member_use
+      Widget continueButton = FlatButton(
+        child: Text("Yes"),
+        onPressed:  () {
+          logoutUser();
+        },
+      );
+
+      // set up the AlertDialog
+      AlertDialog alert = AlertDialog(
+        title: Text("AlertDialog"),
+        content: Text("Are You Sure Want to Logout?"),
+        actions: [
+          cancelButton,
+          continueButton,
+        ],
+      );
+
+      // show the dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
+
     final List pages = [
       CustomerPage(name: widget.username,),
       StatusPage(name: widget.username),
@@ -85,7 +121,7 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
                   ),
                   onTap: () {
                         setState(() {
-                          logoutUser();
+                          showAlertDialog(context);
                         });
                   },
                 ),

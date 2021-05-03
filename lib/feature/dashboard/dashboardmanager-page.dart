@@ -1,3 +1,4 @@
+import 'package:abhi_flutter_alertdialog/abhi_flutter_alertdialog.dart';
 import 'package:flutter/material.dart';
 import 'package:prb_app/feature/dashboard/Signature/signature-page.dart';
 import 'package:prb_app/feature/dashboard/approval/approval-page.dart';
@@ -27,15 +28,48 @@ class _DashboardManagerPageState extends State<DashboardManagerPage> {
     prefs?.clear();
     Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => SplashPage()), (Route<dynamic>route) => false);
+        MaterialPageRoute(builder: (context) => SplashPage()), (Route<dynamic>route) => false
+    );
   }
 
   @override
   Widget build(BuildContext context) {
 
-    final List pages = [
-      ApprovalPage(name: widget.username,),
-    ];
+    showAlertDialog(BuildContext context) {
+      // set up the buttons
+      // ignore: deprecated_member_use
+      Widget cancelButton = FlatButton(
+        child: Text("No"),
+        onPressed:  () {
+          Navigator.pop(context);
+        },
+      );
+      // ignore: deprecated_member_use
+      Widget continueButton = FlatButton(
+        child: Text("Yes"),
+        onPressed:  () {
+          logoutUser();
+        },
+      );
+
+      // set up the AlertDialog
+      AlertDialog alert = AlertDialog(
+        title: Text("AlertDialog"),
+        content: Text("Are You Sure Want to Logout?"),
+        actions: [
+          cancelButton,
+          continueButton,
+        ],
+      );
+
+      // show the dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
 
     print("Ini bottom nav");
     return MaterialApp(
@@ -75,7 +109,7 @@ class _DashboardManagerPageState extends State<DashboardManagerPage> {
                   ),
                   onTap: () {
                     setState(() {
-                      logoutUser();
+                      showAlertDialog(context);
                     });
                   },
                 ),
