@@ -17,6 +17,7 @@ class StatusPage extends StatefulWidget {
 class _StatusPageState extends State<StatusPage> {
 
   List data;
+
   Future<String> getData() async {
     var urlGetApproval = "http://119.18.157.236:8893/Api/FindNOObyUserId/";
     SharedPreferences prefs = await SharedPreferences.getInstance();

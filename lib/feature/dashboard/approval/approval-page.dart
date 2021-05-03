@@ -10,7 +10,8 @@ import 'approval-detail.dart';
 
 class ApprovalPage extends StatefulWidget {
   String name;
-  ApprovalPage({Key key, this.name}) : super(key: key);
+  String Role;
+  ApprovalPage({Key key, this.name,this.Role}) : super(key: key);
 
   @override
   _ApprovalPageState createState() => _ApprovalPageState();
@@ -19,7 +20,13 @@ class ApprovalPage extends StatefulWidget {
 class _ApprovalPageState extends State<ApprovalPage> {
   List data;
   Future<String> getData() async {
-    var urlGetApproval = "http://119.18.157.236:8893/api/FindApproval/";
+    var urlGetApproval;
+    if (widget.Role == "1"){
+      urlGetApproval="http://119.18.157.236:8893/api/FindApproval/";
+    }
+    else if(widget.Role == "2"){
+      urlGetApproval="http://119.18.157.236:8893/api/NOOCustTables";
+    }
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userId = prefs.getInt("iduser").toString();
     print(urlGetApproval + userId);

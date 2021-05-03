@@ -13,7 +13,8 @@ import 'package:flutter_icons/flutter_icons.dart';
 
 class DashboardManagerPage extends StatefulWidget {
   String username;
-  DashboardManagerPage({Key key, this.username}) : super(key: key);
+  String Role;
+  DashboardManagerPage({Key key, this.username, this.Role}) : super(key: key);
 
   @override
   _DashboardManagerPageState createState() => _DashboardManagerPageState();

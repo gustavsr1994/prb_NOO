@@ -93,11 +93,12 @@ class _LoginPageState extends State<LoginPage> {
         //         ),
         //     )
         // );
-      } else if (dataLogin['Role'] == "1") {
+      } else if (dataLogin['Role'] == "1" || dataLogin['Role'] == "2") {
         print("Ini Role 1");
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>
             DashboardManagerPage(
               username: user.name,
+              Role: dataLogin['Role'],
             )), (Route<dynamic> route) => false);
         // Navigator.push(
         //     context,
