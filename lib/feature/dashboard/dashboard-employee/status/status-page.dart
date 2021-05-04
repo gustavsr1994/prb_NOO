@@ -2,31 +2,23 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:prb_app/model/Approval.dart';
-import 'package:prb_app/model/user.dart';
+import 'package:prb_app/feature/dashboard/dashboard-employee/status/status-detail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'approval-detail.dart';
-import 'approval-detail.dart';
 
-class ApprovalPage extends StatefulWidget {
+
+class StatusPage extends StatefulWidget {
   String name;
-  String Role;
-  ApprovalPage({Key key, this.name,this.Role}) : super(key: key);
-
+  StatusPage({Key key, this.name}) : super(key: key);
   @override
-  _ApprovalPageState createState() => _ApprovalPageState();
+  _StatusPageState createState() => _StatusPageState();
 }
 
-class _ApprovalPageState extends State<ApprovalPage> {
+class _StatusPageState extends State<StatusPage> {
+
   List data;
+
   Future<String> getData() async {
-    var urlGetApproval;
-    if (widget.Role == "1"){
-      urlGetApproval="http://119.18.157.236:8893/api/FindApproval/";
-    }
-    else if(widget.Role == "2"){
-      urlGetApproval="http://119.18.157.236:8893/api/NOOCustTables";
-    }
+    var urlGetApproval = "http://119.18.157.236:8893/Api/FindNOObyUserId/";
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userId = prefs.getInt("iduser").toString();
     print(urlGetApproval + userId);
@@ -36,7 +28,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
     });
   }
 
-  var urlGetApproval = "http://119.18.157.236:8893/api/FindApproval/";
+  var urlGetApproval = "http://119.18.157.236:8893/Api/FindNOObyUserId/";
 
   List<Widget> listData = [];
 
@@ -52,13 +44,13 @@ class _ApprovalPageState extends State<ApprovalPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("Ini Approval Page");
+    print("Ini Status Page");
 
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white60,
           title: Text(
-            "Approval",
+            "Status",
             style: TextStyle(
               color: Colors.blue,
               fontWeight: FontWeight.bold,
@@ -159,7 +151,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                               height: 30,
                               child: InkWell(
                                   child: Text(
-                                    "VIEW DETAILS",
+                                    "STATUS DETAILS",
                                     style: TextStyle(
                                       color: Colors.blue,
                                     ),
@@ -169,7 +161,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              ApprovalDetailPage(
+                                              StatusDetailPage(
                                                 id: data[index]["id"],
                                               )),
                                     );
@@ -187,19 +179,6 @@ class _ApprovalPageState extends State<ApprovalPage> {
                               ),
                             ),
                           ),
-                          // Center(
-                          //   child: Container(
-                          //     height: 30,
-                          //     child: InkWell(
-                          //       child: Text(
-                          //         "ADJUSTMENT LEAVE",
-                          //         style: TextStyle(
-                          //           color: Colors.blue,
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
                         ],
                       ),
                     ],

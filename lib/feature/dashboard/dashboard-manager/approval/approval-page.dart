@@ -2,34 +2,44 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:prb_app/feature/dashboard/approval/approval-detail.dart';
-import 'package:prb_app/feature/dashboard/status/status-detail.dart';
+import 'package:prb_app/model/Approval.dart';
+import 'package:prb_app/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'approval-detail.dart';
+import 'approval-detail.dart';
 
-
-class StatusPage extends StatefulWidget {
+class ApprovalPage extends StatefulWidget {
   String name;
-  StatusPage({Key key, this.name}) : super(key: key);
+  String Role;
+  ApprovalPage({Key key, this.name,this.Role}) : super(key: key);
+
   @override
-  _StatusPageState createState() => _StatusPageState();
+  _ApprovalPageState createState() => _ApprovalPageState();
 }
 
-class _StatusPageState extends State<StatusPage> {
-
+class _ApprovalPageState extends State<ApprovalPage> {
   List data;
-
   Future<String> getData() async {
-    var urlGetApproval = "http://119.18.157.236:8893/Api/FindNOObyUserId/";
+    var urlGetApproval;
+    var response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userId = prefs.getInt("iduser").toString();
+    if (widget.Role == "1"){
+      print("ini url get approval");
+      urlGetApproval="http://119.18.157.236:8893/api/FindApproval/";
+       response = await http.get(Uri.parse(urlGetApproval + userId));
+    }
+    else if (widget.Role == "2"){
+      urlGetApproval="http://119.18.157.236:8893/api/NOOCustTables";
+      response = await http.get(Uri.parse(urlGetApproval));
+    }
     print(urlGetApproval + userId);
-    final response = await http.get(Uri.parse(urlGetApproval + userId));
     this.setState(() {
       data = jsonDecode(response.body);
     });
   }
 
-  var urlGetApproval = "http://119.18.157.236:8893/Api/FindNOObyUserId/";
+  // var urlGetApproval = "http://119.18.157.236:8893/api/FindApproval/";
 
   List<Widget> listData = [];
 
@@ -45,13 +55,13 @@ class _StatusPageState extends State<StatusPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("Ini Status Page");
+    print("Ini Approval Page");
 
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white60,
           title: Text(
-            "Status",
+            "Approval",
             style: TextStyle(
               color: Colors.blue,
               fontWeight: FontWeight.bold,
@@ -152,7 +162,7 @@ class _StatusPageState extends State<StatusPage> {
                               height: 30,
                               child: InkWell(
                                   child: Text(
-                                    "STATUS DETAILS",
+                                    "VIEW DETAILS",
                                     style: TextStyle(
                                       color: Colors.blue,
                                     ),
@@ -162,7 +172,7 @@ class _StatusPageState extends State<StatusPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              StatusDetailPage(
+                                              ApprovalDetailPage(
                                                 id: data[index]["id"],
                                               )),
                                     );
@@ -180,6 +190,19 @@ class _StatusPageState extends State<StatusPage> {
                               ),
                             ),
                           ),
+                          // Center(
+                          //   child: Container(
+                          //     height: 30,
+                          //     child: InkWell(
+                          //       child: Text(
+                          //         "ADJUSTMENT LEAVE",
+                          //         style: TextStyle(
+                          //           color: Colors.blue,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ],

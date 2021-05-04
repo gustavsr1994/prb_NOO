@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prb_app/feature/dashboard/approval/approval-page.dart';
-import 'package:prb_app/feature/dashboard/dashboardemployee-page.dart';
+import 'file:///C:/Users/mz002/StudioProjects/prb_NOO/lib/feature/dashboard/dashboard-employee/dashboardemployee-page.dart';
 import 'package:prb_app/feature/login/login-page.dart';
 import 'package:splashscreen/splashscreen.dart';
 

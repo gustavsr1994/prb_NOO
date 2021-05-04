@@ -1,34 +1,33 @@
+import 'package:abhi_flutter_alertdialog/abhi_flutter_alertdialog.dart';
 import 'package:flutter/material.dart';
-import 'package:prb_app/feature/dashboard/Signature/signature-page.dart';
-import 'package:prb_app/feature/dashboard/status/status-page.dart';
-import 'package:prb_app/feature/dashboard/taxadress/taxaddress-page.dart';
 import 'package:prb_app/feature/splash/splash-page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Signature/signature-page-alt.dart';
-import 'companyaddress/companyaddress-page.dart';
-import 'customername/customer-page.dart';
-import 'deliveryaddress/deliveryaddress-page.dart';
+import 'approval/approval-page.dart';
+import 'approved/approved-page.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
-class DashboardEmployeePage extends StatefulWidget {
+class DashboardManagerPage extends StatefulWidget {
   String username;
-  DashboardEmployeePage({Key key, this.username}) : super(key: key);
+  String Role;
+  DashboardManagerPage({Key key, this.username, this.Role}) : super(key: key);
 
   @override
-  _DashboardEmployeePageState createState() => _DashboardEmployeePageState();
+  _DashboardManagerPageState createState() => _DashboardManagerPageState();
 }
 
 /// This is the private State class that goes with MyStatefulWidget.
-class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
-  int _selectedItemIndex = 1;
+class _DashboardManagerPageState extends State<DashboardManagerPage> {
+  int _selectedItemIndex = 0;
 
   Future<void> logoutUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs?.clear();
     Navigator.pushAndRemoveUntil(
-        context, 
-        MaterialPageRoute(builder: (context) => SplashPage()), (Route<dynamic>route) => false);
+        context,
+        MaterialPageRoute(builder: (context) => SplashPage()), (Route<dynamic>route) => false
+    );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +69,8 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
     }
 
     final List pages = [
-      CustomerPage(name: widget.username,),
-      StatusPage(name: widget.username),
+      ApprovalPage(name: widget.username, Role: widget.Role,),
+      ApprovedPage(name: widget.username, Role: widget.Role),
     ];
 
     print("Ini bottom nav");
@@ -93,7 +92,7 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
             },
             items: [
               BottomNavigationBarItem(
-                title: Text("New",
+                title: Text("List",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                   ),
@@ -102,7 +101,7 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
                 ),
               ),
               BottomNavigationBarItem(
-                title: Text("List",
+                title: Text("Approved",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                   ),
@@ -120,9 +119,9 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
                     Icons.logout,
                   ),
                   onTap: () {
-                        setState(() {
-                          showAlertDialog(context);
-                        });
+                    setState(() {
+                      showAlertDialog(context);
+                    });
                   },
                 ),
               ),
