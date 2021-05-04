@@ -891,46 +891,6 @@ class _CustomerPageState extends State<CustomerPage> {
               height: 10,
             ),
 
-            //Phone
-            Row(
-              children: <Widget>[
-                Container(
-                  child: Text(
-                    "Phone                  :",
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  child: Expanded(
-                    child: TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter Phone Number!!';
-                        }
-                        return null;
-                      },
-                      textAlign: TextAlign.center,
-                      controller: _phoneControllerCustomer,
-                      keyboardType: TextInputType.phone,
-                      autofocus: false,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hintText: 'Phone',
-                        filled: true,
-                        contentPadding: EdgeInsets.all(5),
-//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-
             //Company Status
             Row(
               children: <Widget>[
@@ -963,12 +923,12 @@ class _CustomerPageState extends State<CustomerPage> {
               height: 10,
             ),
 
-            //Fax
+            //Currency
             Row(
               children: <Widget>[
                 Container(
                   child: Text(
-                    "Fax                       :",
+                    "Currency              :",
                   ),
                 ),
                 SizedBox(
@@ -979,17 +939,17 @@ class _CustomerPageState extends State<CustomerPage> {
                     child: TextFormField(
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter FAX Number!!';
+                          return 'Please enter Currency!!';
                         }
                         return null;
                       },
                       textAlign: TextAlign.center,
-                      controller: _faxControllerCustomer,
-                      keyboardType: TextInputType.number,
+                      controller: _currencyControllerCustomer,
+                      keyboardType: TextInputType.text,
                       autofocus: false,
                       decoration: InputDecoration(
                         isDense: true,
-                        hintText: 'Fax',
+                        hintText: 'Currency',
                         filled: true,
                         contentPadding: EdgeInsets.all(5),
 //                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
@@ -997,6 +957,39 @@ class _CustomerPageState extends State<CustomerPage> {
                     ),
                   ),
                 )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+
+            //Price Group
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "Price Group         :",
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                DropdownButton(
+                  hint: Text("Select PriceGroup"),
+                  value: _valPriceGroup,
+                  items: _dataPriceGroup.map((item) {
+                    return DropdownMenuItem(
+                      child: Text(item['NAME'] ?? "loading.."),
+                      value: item['NAME'],
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _valPriceGroup = value;
+//                      this._salutationPriceGroup = value;
+                    });
+                  },
+                ),
               ],
             ),
             SizedBox(
@@ -1030,86 +1023,6 @@ class _CustomerPageState extends State<CustomerPage> {
                       decoration: InputDecoration(
                         isDense: true,
                         hintText: 'Contact Person',
-                        filled: true,
-                        contentPadding: EdgeInsets.all(5),
-//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-
-            //Email Address
-            Row(
-              children: <Widget>[
-                Container(
-                  child: Text(
-                    "Email Address    :",
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  child: Expanded(
-                    child: TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter Email Address!!';
-                        }
-                        return null;
-                      },
-                      textAlign: TextAlign.center,
-                      controller: _emailAddressControllerCustomer,
-                      keyboardType: TextInputType.emailAddress,
-                      autofocus: false,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hintText: 'Email Address',
-                        filled: true,
-                        contentPadding: EdgeInsets.all(5),
-//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-
-            //NPWP
-            Row(
-              children: <Widget>[
-                Container(
-                  child: Text(
-                    "NPWP                  :",
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  child: Expanded(
-                    child: TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter NPWP!!';
-                        }
-                        return null;
-                      },
-                      textAlign: TextAlign.center,
-                      controller: _npwpControllerCustomer,
-                      keyboardType: TextInputType.number,
-                      autofocus: false,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hintText: 'NPWP',
                         filled: true,
                         contentPadding: EdgeInsets.all(5),
 //                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
@@ -1163,12 +1076,12 @@ class _CustomerPageState extends State<CustomerPage> {
               height: 10,
             ),
 
-            //Currency
+            //NPWP
             Row(
               children: <Widget>[
                 Container(
                   child: Text(
-                    "Currency              :",
+                    "NPWP                  :",
                   ),
                 ),
                 SizedBox(
@@ -1179,17 +1092,217 @@ class _CustomerPageState extends State<CustomerPage> {
                     child: TextFormField(
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter Currency!!';
+                          return 'Please enter NPWP!!';
                         }
                         return null;
                       },
                       textAlign: TextAlign.center,
-                      controller: _currencyControllerCustomer,
+                      controller: _npwpControllerCustomer,
+                      keyboardType: TextInputType.number,
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hintText: 'NPWP',
+                        filled: true,
+                        contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+
+            //Phone
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "Phone                  :",
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Container(
+                  child: Expanded(
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Phone Number!!';
+                        }
+                        return null;
+                      },
+                      textAlign: TextAlign.center,
+                      controller: _phoneControllerCustomer,
+                      keyboardType: TextInputType.phone,
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hintText: 'Phone',
+                        filled: true,
+                        contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+
+            //Fax
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "Fax                       :",
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Container(
+                  child: Expanded(
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter FAX Number!!';
+                        }
+                        return null;
+                      },
+                      textAlign: TextAlign.center,
+                      controller: _faxControllerCustomer,
+                      keyboardType: TextInputType.number,
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hintText: 'Fax',
+                        filled: true,
+                        contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+
+            //Email Address
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "Email Address    :",
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Container(
+                  child: Expanded(
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Email Address!!';
+                        }
+                        return null;
+                      },
+                      textAlign: TextAlign.center,
+                      controller: _emailAddressControllerCustomer,
+                      keyboardType: TextInputType.emailAddress,
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hintText: 'Email Address',
+                        filled: true,
+                        contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+
+            //Website
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "Website                :",
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Container(
+                  child: Expanded(
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Website!!';
+                        }
+                        return null;
+                      },
+                      textAlign: TextAlign.center,
+                      controller: _websiteControllerCustomer,
+                      keyboardType: TextInputType.url,
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hintText: 'Website',
+                        filled: true,
+                        contentPadding: EdgeInsets.all(5),
+//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+
+            //Salesman
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "Salesman             :",
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Container(
+                  child: Expanded(
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Salesman!!';
+                        }
+                        return null;
+                      },
+                      textAlign: TextAlign.center,
+                      controller: _salesmanControllerCustomer,
                       keyboardType: TextInputType.text,
                       autofocus: false,
                       decoration: InputDecoration(
                         isDense: true,
-                        hintText: 'Currency',
+                        hintText: 'Salesman',
                         filled: true,
                         contentPadding: EdgeInsets.all(5),
 //                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
@@ -1243,39 +1356,6 @@ class _CustomerPageState extends State<CustomerPage> {
               height: 10,
             ),
 
-            //Price Group
-            Row(
-              children: <Widget>[
-                Container(
-                  child: Text(
-                    "Price Group         :",
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                DropdownButton(
-                  hint: Text("Select PriceGroup"),
-                  value: _valPriceGroup,
-                  items: _dataPriceGroup.map((item) {
-                    return DropdownMenuItem(
-                      child: Text(item['NAME'] ?? "loading.."),
-                      value: item['NAME'],
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      _valPriceGroup = value;
-//                      this._salutationPriceGroup = value;
-                    });
-                  },
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-
             //Business Unit
             Row(
               children: <Widget>[
@@ -1310,103 +1390,6 @@ class _CustomerPageState extends State<CustomerPage> {
                     ),
                   ),
                 )
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-
-            //Salesman
-            Row(
-              children: <Widget>[
-                Container(
-                  child: Text(
-                    "Salesman             :",
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  child: Expanded(
-                    child: TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter Salesman!!';
-                        }
-                        return null;
-                      },
-                      textAlign: TextAlign.center,
-                      controller: _salesmanControllerCustomer,
-                      keyboardType: TextInputType.text,
-                      autofocus: false,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hintText: 'Salesman',
-                        filled: true,
-                        contentPadding: EdgeInsets.all(5),
-//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-
-            //Website
-            Row(
-              children: <Widget>[
-                Container(
-                  child: Text(
-                    "Website                :",
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  child: Expanded(
-                    child: TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter Website!!';
-                        }
-                        return null;
-                      },
-                      textAlign: TextAlign.center,
-                      controller: _websiteControllerCustomer,
-                      keyboardType: TextInputType.url,
-                      autofocus: false,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hintText: 'Website',
-                        filled: true,
-                        contentPadding: EdgeInsets.all(5),
-//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-
-            //Attachment label
-            Row(
-              children: <Widget>[
-                Container(
-                  child: Text(
-                    "Attachment          :",
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
               ],
             ),
             SizedBox(
@@ -1456,12 +1439,6 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
-                          // validator: (value) {
-                          //   if (value == null || value.isEmpty) {
-                          //     return 'Please enter Company Name!!';
-                          //   }
-                          //   return null;
-                          // },
                           textAlign: TextAlign.center,
                           controller: _nameControllerCompany,
                           keyboardType: TextInputType.text,
@@ -1772,12 +1749,6 @@ class _CustomerPageState extends State<CustomerPage> {
                     Container(
                       child: Expanded(
                         child: TextFormField(
-                          // validator: (value) {
-                          //   if (value == null || value.isEmpty) {
-                          //     return 'Please enter TAX Street!!';
-                          //   }
-                          //   return null;
-                          // },
                           textAlign: TextAlign.center,
                           controller: _streetControllerTax,
                           keyboardType: TextInputType.text,
@@ -2252,6 +2223,21 @@ class _CustomerPageState extends State<CustomerPage> {
               height: 20,
             ),
 
+            //Attachment label
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "Attachment          :",
+                  ),
+                ),
+
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+
             //ScrollHorizontal ListView Upload KTP Alt dan Attachment Lainya
             Container(
               height: 120, //Mengubah ukuran tinggi upload ktp
@@ -2438,232 +2424,114 @@ class _CustomerPageState extends State<CustomerPage> {
 
             //FlipCard
             Card(
-              child: FlipCard(
-                direction: FlipDirection.HORIZONTAL,
-                speed: 1000,
-                onFlipDone: (status) {
-                  print(status);
-                },
-                front: Container(
-                  child: Column(
-                    children: [
-                      Text(
-                        "Sales",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Card(
-                        child: Signature(
-                          controller: _signaturecontrollersales,
-                          height: 300,
-                          backgroundColor: Colors.white,
-                        ),
-                      ),
-                      //Oke dan button clear
-                      Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.black,
-                        ),
-                        child: Container(
-                          width: 355,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              //Icon check
-                              // IconButton(
-                              //     icon: const Icon(Icons.check),
-                              //     color: Colors.blue,
-                              //     onPressed: () async {
-                              //       // showDialog(
-                              //       //     context: context,
-                              //       //     barrierDismissible: false,
-                              //       //     builder: (context) {
-                              //       //       return Center(
-                              //       //         child: CircleProgressBar(
-                              //       //           backgroundColor: Colors.black54,
-                              //       //           progressColor: Colors.orange,
-                              //       //           size: 20,
-                              //       //           child: SizedBox(
-                              //       //               child: Icon(
-                              //       //             Icons.local_fire_department,
-                              //       //           )),
-                              //       //         ),
-                              //       //       );
-                              //       //     });
-                              //       // Future.delayed(Duration(seconds: 2)).then(
-                              //       //   (value) {
-                              //       //     Navigator.pop(context);
-                              //       //     setState(
-                              //       //       () {
-                              //       //         text = "LOADED";
-                              //       //       },
-                              //       //     );
-                              //       //   },
-                              //       // );
-                              //     }
-                              //     ),
-                              //Clear Canvass
-                              IconButton(
-                                  icon: const Icon(
-                                    Icons.clear,
-                                    color: Colors.blue,
-                                  ),
-                                  onPressed: () {
-                                    setState(() =>
-                                        _signaturecontrollersales.clear());
-                                  }),
-                            ],
+              color: Colors.black,
+              child: Container(
+                width: 20,
+                child: FlipCard(
+                  direction: FlipDirection.HORIZONTAL,
+                  speed: 1000,
+                  onFlipDone: (status) {
+                    print(status);
+                  },
+                  front: Container(
+                    child: Column(
+                      children: [
+                        Text(
+                          "Sales",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Card(
+                          child: Signature(
+                            controller: _signaturecontrollersales,
+                            height: 300,
+                            backgroundColor: Colors.white,
+                          ),
+                        ),
+                        //Oke dan button clear
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.black,
+                          ),
+                          child: Container(
+                            width: 355,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                //Clear Canvass
+                                IconButton(
+                                    icon: const Icon(
+                                      Icons.clear,
+                                      color: Colors.blue,
+                                    ),
+                                    onPressed: () {
+                                      setState(() =>
+                                          _signaturecontrollersales.clear());
+                                    }),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                back: Container(
-                  child: Column(
-                    children: [
-                      // SizedBox(height: 10,),
-                      Text(
-                        "Customer",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Card(
-                        child: Signature(
-                          controller: _signaturecontrollercustomer,
-                          height: 300,
-                          backgroundColor: Colors.white,
-                        ),
-                      ),
-                      //Oke dan button clear
-                      Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.black,
-                        ),
-                        child: Container(
-                          width: 355,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              //Clear Canvass
-                              IconButton(
-                                  icon: const Icon(
-                                    Icons.clear,
-                                    color: Colors.blue,
-                                  ),
-                                  onPressed: () {
-                                    setState(() =>
-                                        _signaturecontrollercustomer.clear());
-                                  }),
-                            ],
+                  back: Container(
+                    child: Column(
+                      children: [
+                        // SizedBox(height: 10,),
+                        Text(
+                          "Customer",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Card(
+                          child: Signature(
+                            controller: _signaturecontrollercustomer,
+                            height: 300,
+                            backgroundColor: Colors.white,
+                          ),
+                        ),
+                        //Oke dan button clear
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.black,
+                          ),
+                          child: Container(
+                            width: 355,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                //Clear Canvass
+                                IconButton(
+                                    icon: const Icon(
+                                      Icons.clear,
+                                      color: Colors.blue,
+                                    ),
+                                    onPressed: () {
+                                      setState(() =>
+                                          _signaturecontrollercustomer.clear());
+                                    }),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
 
-            //Button Submit
-            // ignore: deprecated_member_use
-            // ProgressButton(
-            //     child: Text(
-            //       "Submit",
-            //       style: TextStyle(
-            //         color: Colors.white,
-            //       ),
-            //     ),
-            //     onPressed: (AnimationController controller) async {
-            //       if (controller.isCompleted) {
-            //         controller.reverse();
-            //       } else {
-            //         controller.forward();
-            //       }
-            //       if (_formkey.currentState.validate()) {
-            //         print("Ini proses submit");
-            //         await UploadKTP(_imageKTP);
-            //         await UploadNPWP(_imageNPWP);
-            //         await UploadSIUP(_imageSIUP);
-            //         await UploadBuilding(_imageBuilding);
-            //         DataSignSales = await _signaturecontrollersales.toPngBytes();
-            //         await UploadSignatureSales(
-            //             DataSignSales, signatureSalesFromServer);
-            //         DataSignCustomer = await _signaturecontrollercustomer.toPngBytes();
-            //         await UploadSignatureCustomer(
-            //             DataSignCustomer, signatureCustomerFromServer);
-            //         processSubmitCustomerForm(
-            //           //Customer
-            //           _customerNameControllerCustomer.text,
-            //           _brandNameControllerCustomer.text,
-            //           _valCategory,
-            //           _valSegment,
-            //           _valSubSegment,
-            //           _valClass,
-            //           _phoneControllerCustomer.text,
-            //           _valCompanyStatus,
-            //           _faxControllerCustomer.text,
-            //           _contactPersonControllerCustomer.text,
-            //           _emailAddressControllerCustomer.text,
-            //           _npwpControllerCustomer.text,
-            //           _ktpControllerCustomer.text,
-            //           _currencyControllerCustomer.text,
-            //           _salesOfficeControllerCustomer.text,
-            //           _valPriceGroup,
-            //           _businessUnitControllerCustomer.text,
-            //           _salesmanControllerCustomer.text,
-            //           _websiteControllerCustomer.text,
-            //
-            //           //Company
-            //           _nameControllerCompany.text,
-            //           _streetControllerCompany.text,
-            //           _cityControllerCompany.text,
-            //           _countryControllerCompany.text,
-            //           _stateControllerCompany.text,
-            //           _zipCodeControllerCompany.text,
-            //
-            //           //Tax
-            //           _nameControllerTax.text,
-            //           _streetControllerTax.text,
-            //           _cityControllerTax.text,
-            //           _countryControllerTax.text,
-            //           _stateControllerTax.text,
-            //           _zipCodeControllerTax.text,
-            //
-            //           //Delivery
-            //           _nameControllerDelivery.text,
-            //           _streetControllerDelivery.text,
-            //           _cityControllerDelivery.text,
-            //           _countryControllerDelivery.text,
-            //           _stateControllerDelivery.text,
-            //           _zipCodeControllerDelivery.text,
-            //         );
-            //         Navigator.pop(
-            //             context,
-            //             MaterialPageRoute(
-            //                 builder: (context) =>  CustomerPage()));
-            //         successDialog(
-            //             context,
-            //             "Success"
-            //         );
-            //         return Center(
-            //           child: CircleProgressBar(
-            //             size: 20,
-            //           ),
-            //         );
-            //       }
-            //     },
-            // ),
             // ignore: deprecated_member_use
             RaisedButton(
               color: Colors.blue,

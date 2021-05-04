@@ -30,7 +30,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
        response = await http.get(Uri.parse(urlGetApproval + userId));
     }
     else if (widget.Role == "2"){
-      urlGetApproval="http://119.18.157.236:8893/api/NOOCustTables";
+      urlGetApproval="http://119.18.157.236:8893/api/ViewAllCust";
       response = await http.get(Uri.parse(urlGetApproval));
     }
     print(urlGetApproval + userId);

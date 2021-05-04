@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:commons/commons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -1185,10 +1186,12 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
+              AutoSizeText(
                 data.remark ?? "",
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize: 17,
+                  fontSize: 10,
                   fontWeight: FontWeight.bold,
                   color: Colors.black54,
                 ),
