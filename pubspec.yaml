@@ -42,6 +42,7 @@ dependencies:
   image_picker:
   intl: ^0.16.0
   path:
+  pull_to_refresh: ^1.6.5
   progress_bars: ^0.0.3
   progress_indicator_button: ^0.0.3
   rflutter_alert: ^1.0.3

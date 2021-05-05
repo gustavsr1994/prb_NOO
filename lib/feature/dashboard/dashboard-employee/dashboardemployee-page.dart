@@ -66,7 +66,7 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
     }
 
     final List pages = [
-      CustomerPage(name: widget.username,),
+      CustomerPage(name: widget.username),
       StatusPage(name: widget.username),
     ];
 

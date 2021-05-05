@@ -99,9 +99,28 @@ class _CustomerPageState extends State<CustomerPage> {
   String signatureCustomerFromServer = "SIGNATURECUSTOMER_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
   final picker = ImagePicker();
 
-  // getImageKTP
-  Future getImageKTP() async {
+  // getImageKTP From Camera
+  Future getImageKTPFromCamera() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality:20);
+    var nows = DateTime.now();
+    String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
+    var renamedFile = await File(pickedFile.path).rename(
+        '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/KTP_' +
+            dateNow.toString() +
+            "_" +
+            ".jpg");
+    setState(() {
+      if (pickedFile != null) {
+        _imageKTP = renamedFile;
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  // getImageKTP From Galery
+  Future getImageKTPFromGalery() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality:20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -136,9 +155,28 @@ class _CustomerPageState extends State<CustomerPage> {
     });
   }
 
-  // getImageNPWP
-  Future getImageNPWP() async {
+  // getImageNPWP from camera
+  Future getImageNPWPFromCamera() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
+    var nows = DateTime.now();
+    String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
+    var renamedFile = await File(pickedFile.path).rename(
+        '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/NPWP_' +
+            dateNow.toString() +
+            "_" +
+            ".jpg");
+    setState(() {
+      if (pickedFile != null) {
+        _imageNPWP = renamedFile;
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  // getImageNPWP from galery
+  Future getImageNPWPFromGallery() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -173,9 +211,28 @@ class _CustomerPageState extends State<CustomerPage> {
     });
   }
 
-  // getImageSIUP
-  Future getImageSIUP() async {
+  // getImageSIUP from camera
+  Future getImageSIUPFromCamera() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
+    var nows = DateTime.now();
+    String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
+    var renamedFile = await File(pickedFile.path).rename(
+        '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/SIUP_' +
+            dateNow.toString() +
+            "_" +
+            ".jpg");
+    setState(() {
+      if (pickedFile != null) {
+        _imageSIUP = renamedFile;
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  // getImageSIUP from gallery
+  Future getImageSIUPFromGallery() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -210,9 +267,28 @@ class _CustomerPageState extends State<CustomerPage> {
     });
   }
 
-  // getImageBuilding
-  Future getImageBuilding() async {
+  // getImageBuilding from camera
+  Future getImageBuildingFromCamera() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
+    var nows = DateTime.now();
+    String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
+    var renamedFile = await File(pickedFile.path).rename(
+        '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/BUILDING_' +
+            dateNow.toString() +
+            '_' +
+            '.jpg');
+    setState(() {
+      if (pickedFile != null) {
+        _imageBuilding = renamedFile;
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  // getImageBuilding from gallery
+  Future getImageBuildingFromGallery() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -438,6 +514,87 @@ class _CustomerPageState extends State<CustomerPage> {
     return false;
   }
 
+  //hit api Currency
+  var urlGetCurrency = "http://119.18.157.236:8893/Api/Currency";
+  String _valCurrency;
+
+  // ignore: deprecated_member_use
+  List<dynamic> _dataCurrency = List();
+
+  void getCurrency() async {
+    final response = await http.get(Uri.parse(urlGetCurrency));
+    var listData = jsonDecode(response.body);
+    print(urlGetCurrency);
+    setState(() {
+      _dataCurrency = listData;
+      if (!currencyContains(_valCurrency)) {
+        _valCurrency = null;
+      }
+    });
+    print("Data Currency : $listData");
+  }
+
+  bool currencyContains(String currency) {
+    for (int i = 0; i < _dataCurrency.length; i++) {
+      if (currency == _dataCurrency[i]["CurrencyCode"]) return true;
+    }
+    return false;
+  }
+
+  //hit api Business Unit
+  var urlGetBusinessUnit = "http://119.18.157.236:8893/Api/ViewBU";
+  String _valBusinessUnit;
+
+  // ignore: deprecated_member_use
+  List<dynamic> _dataBusinessUnit = List();
+
+  void getBusinessUnit() async {
+    final response = await http.get(Uri.parse(urlGetBusinessUnit));
+    var listData = jsonDecode(response.body);
+    print(urlGetBusinessUnit);
+    setState(() {
+      _dataBusinessUnit = listData;
+      if (!businessUnitContains(_valBusinessUnit)) {
+        _valBusinessUnit = null;
+      }
+    });
+    print("Data BusinessUnit : $listData");
+  }
+
+  bool businessUnitContains(String businessunit) {
+    for (int i = 0; i < _dataBusinessUnit.length; i++) {
+      if (businessunit == _dataBusinessUnit[i]["NameBU"]) return true;
+    }
+    return false;
+  }
+
+  //hit api Sales Office
+  var urlGetSalesOffice = "http://119.18.157.236:8893/Api/ViewSO";
+  String _valSalesOffice;
+
+  // ignore: deprecated_member_use
+  List<dynamic> _dataSalesOffice = List();
+
+  void getSalesOffice() async {
+    final response = await http.get(Uri.parse(urlGetSalesOffice));
+    var listData = jsonDecode(response.body);
+    print(urlGetSalesOffice);
+    setState(() {
+      _dataSalesOffice = listData;
+      if (!salesOfficeContains(_valSalesOffice)) {
+        _valSalesOffice = null;
+      }
+    });
+    print("Data SalesOffice : $listData");
+  }
+
+  bool salesOfficeContains(String salesoffice) {
+    for (int i = 0; i < _dataSalesOffice.length; i++) {
+      if (salesoffice == _dataSalesOffice[i]["NameSO"]) return true;
+    }
+    return false;
+  }
+
   //SignatureController Sales
   final SignatureController _signaturecontrollersales = SignatureController(
     penStrokeWidth: 1,
@@ -617,6 +774,9 @@ class _CustomerPageState extends State<CustomerPage> {
     getClass();
     getPriceGroup();
     getCompanyStatus();
+    getCurrency();
+    getBusinessUnit();
+    getSalesOffice();
     _signaturecontrollersales.addListener(() => print('Value changed'));
     _signaturecontrollercustomer.addListener(() => print('Value changed'));
     // _signaturecontrollerasm.addListener(() => print('Value changed'));
@@ -630,8 +790,6 @@ class _CustomerPageState extends State<CustomerPage> {
   Widget build(BuildContext context) {
 
     print("ini customer page");
-    // print(_currentPosition.latitude);
-    // print(_currentPosition.longitude);
 
     return Scaffold(
       appBar: AppBar(
@@ -934,29 +1092,21 @@ class _CustomerPageState extends State<CustomerPage> {
                 SizedBox(
                   width: 10,
                 ),
-                Container(
-                  child: Expanded(
-                    child: TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter Currency!!';
-                        }
-                        return null;
-                      },
-                      textAlign: TextAlign.center,
-                      controller: _currencyControllerCustomer,
-                      keyboardType: TextInputType.text,
-                      autofocus: false,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hintText: 'Currency',
-                        filled: true,
-                        contentPadding: EdgeInsets.all(5),
-//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-                      ),
-                    ),
-                  ),
-                )
+                DropdownButton(
+                  hint: Text("Select Currency"),
+                  value: _valCurrency,
+                  items: _dataCurrency.map((item) {
+                    return DropdownMenuItem(
+                      child: Text(item['CurrencyCode'] ?? "loading.."),
+                      value: item['CurrencyCode'],
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _valCurrency = value;
+                    });
+                  },
+                ),
               ],
             ),
             SizedBox(
@@ -1327,29 +1477,21 @@ class _CustomerPageState extends State<CustomerPage> {
                 SizedBox(
                   width: 10,
                 ),
-                Container(
-                  child: Expanded(
-                    child: TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter Sales Office!!';
-                        }
-                        return null;
-                      },
-                      textAlign: TextAlign.center,
-                      controller: _salesOfficeControllerCustomer,
-                      keyboardType: TextInputType.text,
-                      autofocus: false,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hintText: 'Sales Office',
-                        filled: true,
-                        contentPadding: EdgeInsets.all(5),
-//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-                      ),
-                    ),
-                  ),
-                )
+                DropdownButton(
+                  hint: Text("Select Sales Office"),
+                  value: _valSalesOffice,
+                  items: _dataSalesOffice.map((item) {
+                    return DropdownMenuItem(
+                      child: Text(item['NameSO'] ?? "loading.."),
+                      value: item['NameSO'],
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _valSalesOffice = value;
+                    });
+                  },
+                ),
               ],
             ),
             SizedBox(
@@ -1367,29 +1509,22 @@ class _CustomerPageState extends State<CustomerPage> {
                 SizedBox(
                   width: 10,
                 ),
-                Container(
-                  child: Expanded(
-                    child: TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter Business Unit!!';
-                        }
-                        return null;
-                      },
-                      textAlign: TextAlign.center,
-                      controller: _businessUnitControllerCustomer,
-                      keyboardType: TextInputType.text,
-                      autofocus: false,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hintText: 'Business Unit',
-                        filled: true,
-                        contentPadding: EdgeInsets.all(5),
-//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-                      ),
-                    ),
-                  ),
-                )
+                DropdownButton(
+                  hint: Text("Select Business Unit"),
+                  value: _valBusinessUnit,
+                  items: _dataBusinessUnit.map((item) {
+                    return DropdownMenuItem(
+                      child: Text(item['NameBU'] ?? "loading.."),
+                      value: item['NameBU'],
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _valBusinessUnit = value;
+//                      this._salutationPriceGroup = value;
+                    });
+                  },
+                ),
               ],
             ),
             SizedBox(
@@ -2208,7 +2343,7 @@ class _CustomerPageState extends State<CustomerPage> {
             ),
 
             SizedBox(
-              height: 10,
+              height: 20,
             ),
 
             Divider(
@@ -2245,159 +2380,309 @@ class _CustomerPageState extends State<CustomerPage> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
+
                   //Upload KTP
-                  Card(
-                    child: Container(
-                      height: 200,
-                      width: 150,
-                      child: ListView(
-                        children: [
-                          Column(
+                  FlipCard(
+                      front: Card(
+                        child: Container(
+                          height: 200,
+                          width: 150,
+                          child: ListView(
                             children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Center(
-                                child: _imageKTP == null
-                                    ? Text("KTP")
-                                    : Image.file(
-                                  _imageKTP,
-                                  fit: BoxFit.cover,
+
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Center(
+                                    child: _imageKTP == null
+                                        ? Text("KTP")
+                                        : Image.file(
+                                      _imageKTP,
+                                      fit: BoxFit.cover,
 //                                  width: 150,
 //                                  height: 80,
-                                ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                height: 10,
+                              FloatingActionButton(
+                                onPressed: getImageKTPFromCamera,
+                                tooltip: 'Pick Image',
+                                child: Icon(Icons.add_a_photo),
                               ),
                             ],
                           ),
-                          FloatingActionButton(
-                            onPressed: getImageKTP,
-                            tooltip: 'Pick Image',
-                            child: Icon(Icons.add_a_photo),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                      back: Card(
+                        child: Container(
+                          height: 200,
+                          width: 150,
+                          child: ListView(
+                            children: [
+
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Center(
+                                    child: _imageKTP == null
+                                        ? Text("KTP")
+                                        : Image.file(
+                                      _imageKTP,
+                                      fit: BoxFit.cover,
+//                                  width: 150,
+//                                  height: 80,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              ),
+                              FloatingActionButton(
+                                onPressed: getImageKTPFromGalery,
+                                tooltip: 'Pick Image',
+                                child: Icon(Icons.photo_album),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                   ),
                   SizedBox(
                     width: 5,
                   ),
 
                   //Upload NPWP
-                  Card(
-                    child: Container(
-                      height: 200,
-                      width: 150,
-                      child: ListView(
-                        children: [
-                          Column(
+                  FlipCard(
+                      front: Card(
+                        child: Container(
+                          height: 200,
+                          width: 150,
+                          child: ListView(
                             children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Center(
-                                child: _imageNPWP == null
-                                    ? Text("NPWP")
-                                    : Image.file(
-                                  _imageNPWP,
-                                  fit: BoxFit.cover,
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Center(
+                                    child: _imageNPWP == null
+                                        ? Text("NPWP")
+                                        : Image.file(
+                                      _imageNPWP,
+                                      fit: BoxFit.cover,
 //                                  width: 150,
 //                                  height: 80,
-                                ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                height: 10,
+                              FloatingActionButton(
+                                onPressed: getImageNPWPFromCamera,
+                                tooltip: 'Pick Image',
+                                child: Icon(Icons.add_a_photo),
                               ),
                             ],
                           ),
-                          FloatingActionButton(
-                            onPressed: getImageNPWP,
-                            tooltip: 'Pick Image',
-                            child: Icon(Icons.add_a_photo),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                      back: Card(
+                        child: Container(
+                          height: 200,
+                          width: 150,
+                          child: ListView(
+                            children: [
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Center(
+                                    child: _imageNPWP == null
+                                        ? Text("NPWP")
+                                        : Image.file(
+                                      _imageNPWP,
+                                      fit: BoxFit.cover,
+//                                  width: 150,
+//                                  height: 80,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              ),
+                              FloatingActionButton(
+                                onPressed: getImageNPWPFromGallery,
+                                tooltip: 'Pick Image',
+                                child: Icon(Icons.photo_album),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                   ),
                   SizedBox(
                     width: 5,
                   ),
 
                   //Upload SIUP
-                  Card(
-                    child: Container(
-                      height: 200,
-                      width: 150,
-                      child: ListView(
-                        children: [
-                          Column(
+                  FlipCard(
+                      front: Card(
+                        child: Container(
+                          height: 200,
+                          width: 150,
+                          child: ListView(
                             children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Center(
-                                child: _imageSIUP == null
-                                    ? Text("SIUP")
-                                    : Image.file(
-                                  _imageSIUP,
-                                  fit: BoxFit.cover,
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Center(
+                                    child: _imageSIUP == null
+                                        ? Text("NIB")
+                                        : Image.file(
+                                      _imageSIUP,
+                                      fit: BoxFit.cover,
 //                                  width: 150,
 //                                  height: 80,
-                                ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                height: 10,
+                              FloatingActionButton(
+                                onPressed: getImageSIUPFromCamera,
+                                tooltip: 'Pick Image',
+                                child: Icon(Icons.add_a_photo),
                               ),
                             ],
                           ),
-                          FloatingActionButton(
-                            onPressed: getImageSIUP,
-                            tooltip: 'Pick Image',
-                            child: Icon(Icons.add_a_photo),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                      back: Card(
+                        child: Container(
+                          height: 200,
+                          width: 150,
+                          child: ListView(
+                            children: [
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Center(
+                                    child: _imageSIUP == null
+                                        ? Text("NIB")
+                                        : Image.file(
+                                      _imageSIUP,
+                                      fit: BoxFit.cover,
+//                                  width: 150,
+//                                  height: 80,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              ),
+                              FloatingActionButton(
+                                onPressed: getImageSIUPFromGallery,
+                                tooltip: 'Pick Image',
+                                child: Icon(Icons.photo_album),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                   ),
+
                   SizedBox(
                     width: 5,
                   ),
 
                   //Upload BUILDING
-                  Card(
-                    child: Container(
-                      height: 200,
-                      width: 150,
-                      child: ListView(
-                        children: [
-                          Column(
+                  FlipCard(
+                      front: Card(
+                        child: Container(
+                          height: 200,
+                          width: 150,
+                          child: ListView(
                             children: [
-                              SizedBox(
-                                height: 10,
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Center(
+                                    child: _imageBuilding == null
+                                        ? Text("Building")
+                                        : Image.file(
+                                      _imageBuilding,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
                               ),
-                              Center(
-                                child: _imageBuilding == null
-                                    ? Text("Building")
-                                    : Image.file(
-                                  _imageBuilding,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
+                              FloatingActionButton(
+                                onPressed: getImageBuildingFromCamera,
+                                tooltip: 'Pick Image',
+                                child: Icon(Icons.add_a_photo),
                               ),
                             ],
                           ),
-                          FloatingActionButton(
-                            onPressed: getImageBuilding,
-                            tooltip: 'Pick Image',
-                            child: Icon(Icons.add_a_photo),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                      back: Card(
+                        child: Container(
+                          height: 200,
+                          width: 150,
+                          child: ListView(
+                            children: [
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Center(
+                                    child: _imageBuilding == null
+                                        ? Text("Building")
+                                        : Image.file(
+                                      _imageBuilding,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              ),
+                              FloatingActionButton(
+                                onPressed: getImageBuildingFromGallery,
+                                tooltip: 'Pick Image',
+                                child: Icon(Icons.photo_album),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                   ),
                 ],
               ),
@@ -2564,10 +2849,10 @@ class _CustomerPageState extends State<CustomerPage> {
                     _emailAddressControllerCustomer.text,
                     _npwpControllerCustomer.text,
                     _ktpControllerCustomer.text,
-                    _currencyControllerCustomer.text,
-                    _salesOfficeControllerCustomer.text,
+                    _valCurrency,
+                    _valSalesOffice,
                     _valPriceGroup,
-                    _businessUnitControllerCustomer.text,
+                    _valBusinessUnit,
                     _salesmanControllerCustomer.text,
                     _websiteControllerCustomer.text,
 
