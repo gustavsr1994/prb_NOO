@@ -18,8 +18,6 @@ import 'package:progress_indicator_button/progress_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
 
-
-
 class CustomerPage extends StatefulWidget {
 
   String name;
@@ -2709,7 +2707,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
             //FlipCard
             Card(
-              color: Colors.black,
+              color: Colors.grey,
               child: Container(
                 width: 20,
                 child: FlipCard(

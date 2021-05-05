@@ -1229,7 +1229,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                     processApprovalButton(
                         widget.id, "1", iduser, signatureApprovalFromServer,_remarkController.text
                     );
-                    Navigator.pop(
+                    Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => DashboardManagerPage()));
