@@ -7,13 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:prb_app/feature/dashboard/dashboard-manager/approval/approval-page.dart';
-import 'file:///C:/Users/mz002/StudioProjects/prb_NOO/lib/feature/dashboard/dashboard-manager/dashboardmanager-page.dart';
 import 'package:prb_app/model/address.dart';
 import 'package:prb_app/model/approval.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
 
+import '../dashboardmanager-page.dart';
 
 class ApprovalDetailPage extends StatefulWidget {
   int id;
@@ -82,8 +82,8 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
     });
   }
 
-  processApprovalButton(
-      int id, String value, int approveBy, String ApprovedSignature, String Remark) async {
+  processApprovalButton(int id, String value, int approveBy,
+      String ApprovedSignature, String Remark) async {
     var urlPostApproval =
         "http://119.18.157.236:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy&ApprovedSignature=$ApprovedSignature&Remark=$Remark";
     print("Ini urlPost Approval : $urlPostApproval");
@@ -531,7 +531,9 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
             color: Colors.black,
             thickness: 1,
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
 
           //Company Address
           Center(
@@ -543,7 +545,9 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Row(
             children: [
               Text(
@@ -668,7 +672,9 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
             color: Colors.black,
             thickness: 1,
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
 
           //Ini TAX Address
           Center(
@@ -680,7 +686,9 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Row(
             children: [
               Text(
@@ -805,7 +813,9 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
             color: Colors.black,
             thickness: 1,
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
 
           //Ini Delivery Address
           Center(
@@ -817,7 +827,9 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Row(
             children: [
               Text(
@@ -942,8 +954,12 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
             color: Colors.black,
             thickness: 1,
           ),
-          SizedBox(height: 10,),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
@@ -958,10 +974,10 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   child: InkWell(
                     onTap: () async {
                       await showDialog(
-                          context: context,
-                          builder: (_) => Image.network(
-                            "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${dataApproval.fotoNPWP}",
-                          ),
+                        context: context,
+                        builder: (_) => Image.network(
+                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${dataApproval.fotoNPWP}",
+                        ),
                       );
                     },
                     child: Image.network(
@@ -973,7 +989,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                           child: CircularProgressIndicator(
                             value: loadingProgress.expectedTotalBytes != null
                                 ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes
+                                    loadingProgress.expectedTotalBytes
                                 : null,
                           ),
                         );
@@ -996,8 +1012,8 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               Container(
                 height: 100,
                 child:
-                // data.fotoKTP != null ? Container():
-                InkWell(
+                    // data.fotoKTP != null ? Container():
+                    InkWell(
                   onTap: () async {
                     await showDialog(
                       context: context,
@@ -1015,7 +1031,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                         child: CircularProgressIndicator(
                           value: loadingProgress.expectedTotalBytes != null
                               ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
+                                  loadingProgress.expectedTotalBytes
                               : null,
                         ),
                       );
@@ -1039,8 +1055,8 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               Container(
                 height: 100,
                 child:
-                // data.fotoSIUP != null ? Container():
-                InkWell(
+                    // data.fotoSIUP != null ? Container():
+                    InkWell(
                   onTap: () async {
                     await showDialog(
                       context: context,
@@ -1058,7 +1074,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                         child: CircularProgressIndicator(
                           value: loadingProgress.expectedTotalBytes != null
                               ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
+                                  loadingProgress.expectedTotalBytes
                               : null,
                         ),
                       );
@@ -1082,8 +1098,8 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               Container(
                 height: 100,
                 child:
-                // data.fotoGedung != null ? Container():
-                InkWell(
+                    // data.fotoGedung != null ? Container():
+                    InkWell(
                   onTap: () async {
                     await showDialog(
                       context: context,
@@ -1101,7 +1117,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                         child: CircularProgressIndicator(
                           value: loadingProgress.expectedTotalBytes != null
                               ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
+                                  loadingProgress.expectedTotalBytes
                               : null,
                         ),
                       );
@@ -1151,8 +1167,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                      ],
+                      children: <Widget>[],
                     ),
                   ),
                 ),
@@ -1165,14 +1180,14 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ],
             ),
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
-                  "Remark                     :    ",
-                style: TextStyle(
-                  fontSize: 17
-                ),
+                "Remark                     :    ",
+                style: TextStyle(fontSize: 17),
               ),
               Container(
                 child: Expanded(
@@ -1181,7 +1196,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                     controller: _remarkController,
                     maxLines: 3,
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.fromLTRB(0, 0, 0,11),
+                      contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 11),
                       isDense: true,
                     ),
                   ),
@@ -1189,7 +1204,9 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               )
             ],
           ),
-          SizedBox(height: 15,),
+          SizedBox(
+            height: 15,
+          ),
           Row(
             children: [
               Text(
@@ -1212,7 +1229,9 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1226,9 +1245,8 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                     UploadSignatureApproval(
                         DataSign, signatureApprovalFromServer);
                     await getSharedPrefs();
-                    processApprovalButton(
-                        widget.id, "1", iduser, signatureApprovalFromServer,_remarkController.text
-                    );
+                    processApprovalButton(widget.id, "1", iduser,
+                        signatureApprovalFromServer, _remarkController.text);
                     Navigator.pop(
                         context,
                         MaterialPageRoute(
@@ -1255,7 +1273,8 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   color: Colors.blue,
                   onPressed: () {
                     getSharedPrefs();
-                    processRejectButton(widget.id, 0, iduser, _remarkController.text);
+                    processRejectButton(
+                        widget.id, 0, iduser, _remarkController.text);
                     Navigator.push(
                         context,
                         MaterialPageRoute(
