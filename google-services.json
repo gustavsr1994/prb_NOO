@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "423410623625",
+    "project_id": "prb-noo",
+    "storage_bucket": "prb-noo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423410623625:android:eeecf9f1bdd5e394ee5258",
+        "android_client_info": {
+          "package_name": "id.prb.prb_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "423410623625-rcavj61sr7dpej0pos9f5fu5d9nc1uem.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdpZesG_gEXiq1KoEhRYrLPZS0DKOjIWQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "423410623625-rcavj61sr7dpej0pos9f5fu5d9nc1uem.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

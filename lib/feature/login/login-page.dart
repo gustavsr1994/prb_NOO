@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'package:commons/commons.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/mz002/StudioProjects/prb_NOO/lib/feature/dashboard/dashboard-employee/dashboardemployee-page.dart';
 import 'package:http/http.dart' as http;
-import 'file:///C:/Users/mz002/StudioProjects/prb_NOO/lib/feature/dashboard/dashboard-manager/dashboardmanager-page.dart';
 import 'package:prb_app/model/user.dart';
 import 'package:progress_bars/circle_progress_bar/circle_progress_bar.dart';
 import 'package:progress_indicator_button/progress_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../dashboard/dashboard-employee/dashboardemployee-page.dart';
+import '../dashboard/dashboard-manager/dashboardmanager-page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -22,38 +22,37 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   processLogin(String username, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var urlPostLogin = "http://119.18.157.236:8893/Api/Login?username=$username&password=${password.replaceAll("#", "%23")}";
+    var urlPostLogin =
+        "http://119.18.157.236:8893/Api/Login?username=$username&password=${password.replaceAll("#", "%23")}";
     print("Ini urlPostLogin okay : $urlPostLogin");
     var jsonLogin = await http.post(Uri.parse(urlPostLogin));
-    if(jsonLogin.body.toString().isEmpty){
+    if (jsonLogin.body.toString().isEmpty) {
       print("Aduh gagal login dong");
       // Show Dialog
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text(
-              'Error',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            content: Text(
-              "Please Check Your Username and Password !!",
-              style: TextStyle(
+                title: Text(
+                  'Error',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                content: Text(
+                  "Please Check Your Username and Password !!",
+                  style: TextStyle(
 //                fontWeight: FontWeight.bold,
-                  color: Colors.red
-              ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('OK'),
-              )
-            ],
-          )
-      );
+                      color: Colors.red),
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('OK'),
+                  )
+                ],
+              ));
       return false;
     }
     var user = User.fromJson(jsonDecode(jsonLogin.body));
@@ -68,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
     print("Ini datalogin : $dataLogin");
     print("Ini username: $username");
     print("Ini password $password");
-    if (dataLogin['Username'] ==  username){
+    if (dataLogin['Username'] == username) {
       print("ini button login");
       prefs.setString("username", dataLogin['Username']);
       prefs.setString("password", password);
@@ -78,10 +77,11 @@ class _LoginPageState extends State<LoginPage> {
       if (dataLogin['Role'] == "0") {
         print("Ini role 0");
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) =>
-            DashboardEmployeePage(
-              username: user.name,
-            )), (Route<dynamic> route) => false);
+            MaterialPageRoute(
+                builder: (context) => DashboardEmployeePage(
+                      username: user.name,
+                    )),
+            (Route<dynamic> route) => false);
         // Navigator.push(
         //     context,
         //     MaterialPageRoute(
@@ -92,11 +92,13 @@ class _LoginPageState extends State<LoginPage> {
         // );
       } else if (dataLogin['Role'] == "1" || dataLogin['Role'] == "2") {
         print("Ini Role 1");
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>
-            DashboardManagerPage(
-              username: user.name,
-              Role: dataLogin['Role'],
-            )), (Route<dynamic> route) => false);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (context) => DashboardManagerPage(
+                      username: user.name,
+                      Role: dataLogin['Role'],
+                    )),
+            (Route<dynamic> route) => false);
         // Navigator.push(
         //     context,
         //     MaterialPageRoute(
@@ -125,7 +127,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-
     print("Ini Login Page");
 
     return Scaffold(
@@ -138,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
             // key: _formKey,
             shrinkWrap: true,
             padding: EdgeInsets.only(left: 24.0, right: 24.0),
-            children: <Widget> [
+            children: <Widget>[
               Container(
                 child: Image.asset('assets/images/prb-icon.png'),
               ),
@@ -150,7 +151,9 @@ class _LoginPageState extends State<LoginPage> {
                   fontSize: 30,
                 ),
               ),
-              SizedBox(height: 15,),
+              SizedBox(
+                height: 15,
+              ),
               Container(
                 padding: EdgeInsets.fromLTRB(45, 0, 45, 0),
                 child: TextFormField(
@@ -168,11 +171,14 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: 'Username',
                     filled: true,
                     contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32.0)),
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               Container(
                 padding: EdgeInsets.fromLTRB(45, 0, 45, 0),
                 child: TextFormField(
@@ -189,11 +195,10 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: InputDecoration(
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _obscureText ? Icons.visibility_off
-                        : Icons.visibility,
+                        _obscureText ? Icons.visibility_off : Icons.visibility,
                         color: Theme.of(context).primaryColorDark,
                       ),
-                      onPressed: (){
+                      onPressed: () {
                         setState(() {
                           _obscureText = !_obscureText;
                         });
@@ -202,11 +207,14 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: 'Password',
                     filled: true,
                     contentPadding: EdgeInsets.fromLTRB(65.0, 10.0, 20.0, 10.0),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32.0)),
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               Container(
                 padding: EdgeInsets.fromLTRB(100, 0, 100, 0),
                 height: 45,
@@ -228,7 +236,8 @@ class _LoginPageState extends State<LoginPage> {
                       controller.forward();
                     }
                     if (_formKey.currentState.validate()) {
-                      processLogin(_usernameController.text, _passController.text);
+                      processLogin(
+                          _usernameController.text, _passController.text);
                       controller.forward();
                       print("Ini proses login");
                     }

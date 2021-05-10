@@ -28,6 +28,7 @@ class Status {
   String salesSignature;
   String approval1Signature;
   String approval2Signature;
+  String approval3Signature;
   int imported;
   String long;
   String lat;
@@ -48,8 +49,9 @@ class Status {
     this.salesOffice, this.businessUnit, this.notes, this.fotoNPWP,
     this.fotoKTP, this.fotoSIUP, this.fotoGedung, this.custSignature,
     this.salesSignature, this.approval1Signature, this.approval2Signature,
-    this.imported, this.long, this.lat, this.approval1, this.approval2, this.status,
-    this.createdBy, this.createdDate, this.approved1, this.approved2, this.remark
+    this.approval3Signature, this.imported, this.long, this.lat, this.approval1,
+    this.approval2, this.status, this.createdBy, this.createdDate, this.approved1,
+    this.approved2, this.remark
   });
 
   Status.fromJson(Map<String, dynamic> json) {
@@ -82,6 +84,7 @@ class Status {
   salesSignature = json['SalesSignature'];
   approval1Signature = json['Approval1Signature'];
   approval2Signature = json['Approval2Signature'];
+  approval3Signature = json['Approval3Signature'];
   imported = json['Imported'];
   long = json['Long'];
   lat = json['Lat'];
@@ -126,6 +129,7 @@ class Status {
   data['SalesSignature'] = this.salesSignature;
   data['Approval1Signature'] = this.approval1Signature;
   data['Approval2Signature'] = this.approval2Signature;
+  data['Approval3Signature'] = this.approval3Signature;
   data['Imported'] = this.imported;
   data['Long'] = this.long;
   data['Lat'] = this.lat;

@@ -6,11 +6,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'file:///C:/Users/mz002/StudioProjects/prb_NOO/lib/feature/dashboard/dashboard-manager/dashboardmanager-page.dart';
 import 'package:prb_app/model/address.dart';
 import 'package:prb_app/model/approval.dart';
 import 'package:prb_app/model/status.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
 
@@ -101,7 +99,6 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-
     print("ini approval detail");
 
     return Scaffold(
@@ -499,7 +496,9 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
             color: Colors.black,
             thickness: 1,
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
 
           //Company Address
           Center(
@@ -511,7 +510,9 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
               ),
             ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Row(
             children: [
               Text(
@@ -636,7 +637,9 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
             color: Colors.black,
             thickness: 1,
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
 
           //Ini TAX Address
           Center(
@@ -648,7 +651,9 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
               ),
             ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Row(
             children: [
               Text(
@@ -773,7 +778,9 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
             color: Colors.black,
             thickness: 1,
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
 
           //Ini Delivery Address
           Center(
@@ -785,7 +792,9 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
               ),
             ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Row(
             children: [
               Text(
@@ -910,8 +919,12 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
             color: Colors.black,
             thickness: 1,
           ),
-          SizedBox(height: 10,),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
@@ -941,7 +954,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                           child: CircularProgressIndicator(
                             value: loadingProgress.expectedTotalBytes != null
                                 ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes
+                                    loadingProgress.expectedTotalBytes
                                 : null,
                           ),
                         );
@@ -964,8 +977,8 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
               Container(
                 height: 100,
                 child:
-                // data.fotoKTP != null ? Container():
-                InkWell(
+                    // data.fotoKTP != null ? Container():
+                    InkWell(
                   onTap: () async {
                     await showDialog(
                       context: context,
@@ -983,7 +996,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                         child: CircularProgressIndicator(
                           value: loadingProgress.expectedTotalBytes != null
                               ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
+                                  loadingProgress.expectedTotalBytes
                               : null,
                         ),
                       );
@@ -1007,8 +1020,8 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
               Container(
                 height: 100,
                 child:
-                // data.fotoSIUP != null ? Container():
-                InkWell(
+                    // data.fotoSIUP != null ? Container():
+                    InkWell(
                   onTap: () async {
                     await showDialog(
                       context: context,
@@ -1026,7 +1039,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                         child: CircularProgressIndicator(
                           value: loadingProgress.expectedTotalBytes != null
                               ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
+                                  loadingProgress.expectedTotalBytes
                               : null,
                         ),
                       );
@@ -1050,8 +1063,8 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
               Container(
                 height: 100,
                 child:
-                // data.fotoGedung != null ? Container():
-                InkWell(
+                    // data.fotoGedung != null ? Container():
+                    InkWell(
                   onTap: () async {
                     await showDialog(
                       context: context,
@@ -1069,7 +1082,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                         child: CircularProgressIndicator(
                           value: loadingProgress.expectedTotalBytes != null
                               ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
+                                  loadingProgress.expectedTotalBytes
                               : null,
                         ),
                       );
@@ -1118,7 +1131,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                           child: CircularProgressIndicator(
                             value: loadingProgress.expectedTotalBytes != null
                                 ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes
+                                    loadingProgress.expectedTotalBytes
                                 : null,
                           ),
                         );
@@ -1166,6 +1179,54 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                           child: CircularProgressIndicator(
                             value: loadingProgress.expectedTotalBytes != null
                                 ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "Approval 3\nSignature",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(62, 0, 20, 0),
+                child: Text(":"),
+              ),
+              Flexible(
+                child: Container(
+                  height: 100,
+                  // width: 100,
+                  child: InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) => Image.network(
+                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.approval3Signature}",
+                        ),
+                      );
+                    },
+                    child: Image.network(
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.approval3Signature}",
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
                                 loadingProgress.expectedTotalBytes
                                 : null,
                           ),
@@ -1177,7 +1238,9 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
@@ -1198,7 +1261,9 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
@@ -1221,7 +1286,9 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
         ],
       ),
     );
