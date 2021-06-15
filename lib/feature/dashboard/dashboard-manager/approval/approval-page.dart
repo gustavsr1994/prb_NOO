@@ -21,6 +21,11 @@ class ApprovalPage extends StatefulWidget {
 class _ApprovalPageState extends State<ApprovalPage> {
   List data;
   Future<String> getData() async {
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
     var urlGetApproval;
     var response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -28,11 +33,11 @@ class _ApprovalPageState extends State<ApprovalPage> {
     if (widget.Role == "1"){
       print("ini url get approval");
       urlGetApproval="http://119.18.157.236:8893/api/FindApproval/";
-       response = await http.get(Uri.parse(urlGetApproval + userId));
+       response = await http.get(Uri.parse(urlGetApproval + userId),headers: <String,String>{'authorization': basicAuth});
     }
     else if (widget.Role == "2"){
       urlGetApproval="http://119.18.157.236:8893/api/ViewAllCust";
-      response = await http.get(Uri.parse(urlGetApproval));
+      response = await http.get(Uri.parse(urlGetApproval), headers: <String,String>{'authorization': basicAuth});
     }
     print(urlGetApproval + userId);
     this.setState(() {
@@ -145,6 +150,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                   padding: EdgeInsets.all(7),
                   child: Card(
                     elevation: 3,
+                    clipBehavior: Clip.antiAlias,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [

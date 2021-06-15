@@ -6,11 +6,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:prb_app/base/base-url.dart';
 import 'package:prb_app/model/address.dart';
 import 'package:prb_app/model/approval.dart';
 import 'package:prb_app/model/status.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
+import 'package:http/http.dart';
 
 class StatusDetailPage extends StatefulWidget {
   int id;
@@ -32,10 +34,17 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
 
   List<Approval> _dataApprovalDetail = [];
   void getStatusDetail() async {
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
     var urlGetApprovalDetail =
         "http://119.18.157.236:8893/api/NOOCustTables/" + widget.id.toString();
-    final response = await http.get(Uri.parse(urlGetApprovalDetail));
-    final listData = json.decode(response.body);
+    Response r = await http.get(Uri.parse(urlGetApprovalDetail), headers: <String,String>{'authorization': basicAuth});
+    print(r.statusCode);
+    print(r.body);
+    final listData = json.decode(r.body);
     var DataCompany = (listData as Map<String, dynamic>)["CompanyAddresses"];
     var DataDelivery = (listData as Map<String, dynamic>)["DeliveryAddresses"];
     var DataTAX = (listData as Map<String, dynamic>)["TaxAddresses"];
@@ -54,18 +63,18 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
     });
   }
 
-  UploadSignatureApproval(imageFile, String namaFile) async {
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
-    var request = new http.MultipartRequest("POST", uri);
-    request.files.add(
-        http.MultipartFile.fromBytes('file', imageFile, filename: namaFile));
-    var response = await request.send();
-    print(response.statusCode);
-    response.stream.transform(utf8.decoder).listen((value) {
-      print(value);
-      signatureApprovalFromServer = value.replaceAll("\"", "");
-    });
-  }
+  // UploadSignatureApproval(imageFile, String namaFile) async {
+  //   var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+  //   var request = new http.MultipartRequest("POST", uri);
+  //   request.files.add(
+  //       http.MultipartFile.fromBytes('file', imageFile, filename: namaFile));
+  //   var response = await request.send();
+  //   print(response.statusCode);
+  //   response.stream.transform(utf8.decoder).listen((value) {
+  //     print(value);
+  //     signatureApprovalFromServer = value.replaceAll("\"", "");
+  //   });
+  // }
 
   var iduser = 0;
 
@@ -933,34 +942,37 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Container(
-                  height: 100,
-                  // child: data.fotoNPWP != null ? Container() : "null" == data.fotoNPWP ? Container():
-                  child: InkWell(
-                    onTap: () async {
-                      await showDialog(
-                        context: context,
-                        builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
-                        ),
-                      );
-                    },
-                    child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
-                                : null,
+              Flexible(
+                child: Container(
+                    height: 100,
+                    // child: data.fotoNPWP != null ? Container() : "null" == data.fotoNPWP ? Container():
+                    child: InkWell(
+                      onTap: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (_) => Image.network(
+                            "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
                           ),
                         );
                       },
-                    ),
-                  )),
+                      child: Image.network(
+                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
+                        // BaseUrl.urlFile+data.fotoNPWP,
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes
+                                  : null,
+                            ),
+                          );
+                        },
+                      ),
+                    )),
+              ),
             ],
           ),
           SizedBox(
@@ -974,33 +986,35 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Container(
-                height: 100,
-                child:
-                    // data.fotoKTP != null ? Container():
-                    InkWell(
-                  onTap: () async {
-                    await showDialog(
-                      context: context,
-                      builder: (_) => Image.network(
-                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
-                      ),
-                    );
-                  },
-                  child: Image.network(
-                    "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes
-                              : null,
+              Flexible(
+                child: Container(
+                  height: 100,
+                  child:
+                      // data.fotoKTP != null ? Container():
+                      InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) => Image.network(
+                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
                         ),
                       );
                     },
+                    child: Image.network(
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -1017,33 +1031,35 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Container(
-                height: 100,
-                child:
-                    // data.fotoSIUP != null ? Container():
-                    InkWell(
-                  onTap: () async {
-                    await showDialog(
-                      context: context,
-                      builder: (_) => Image.network(
-                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoSIUP}",
-                      ),
-                    );
-                  },
-                  child: Image.network(
-                    "http://119.18.157.236:8893//api/Files/GetFiles?fileName=${data.fotoSIUP}",
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes
-                              : null,
+              Flexible(
+                child: Container(
+                  height: 100,
+                  child:
+                      // data.fotoSIUP != null ? Container():
+                      InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) => Image.network(
+                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoSIUP}",
                         ),
                       );
                     },
+                    child: Image.network(
+                      "http://119.18.157.236:8893//api/Files/GetFiles?fileName=${data.fotoSIUP}",
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -1060,33 +1076,35 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Container(
-                height: 100,
-                child:
-                    // data.fotoGedung != null ? Container():
-                    InkWell(
-                  onTap: () async {
-                    await showDialog(
-                      context: context,
-                      builder: (_) => Image.network(
-                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung}",
-                      ),
-                    );
-                  },
-                  child: Image.network(
-                    "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung}",
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes
-                              : null,
+              Flexible(
+                child: Container(
+                  height: 100,
+                  child:
+                      // data.fotoGedung != null ? Container():
+                      InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) => Image.network(
+                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung}",
                         ),
                       );
                     },
+                    child: Image.network(
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung}",
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),

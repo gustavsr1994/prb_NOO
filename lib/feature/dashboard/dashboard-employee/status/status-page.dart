@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:prb_app/feature/dashboard/dashboard-employee/status/status-detail.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,13 +20,20 @@ class _StatusPageState extends State<StatusPage> {
   List data;
 
   Future<String> getData() async {
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
     var urlGetApproval = "http://119.18.157.236:8893/Api/FindNOObyUserId/";
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userId = prefs.getInt("iduser").toString();
     print(urlGetApproval + userId);
-    final response = await http.get(Uri.parse(urlGetApproval + userId));
+    Response r = await get(Uri.parse(urlGetApproval + userId),headers: <String,String>{'authorization': basicAuth});
+    print(r.statusCode);
+    print(r.body);
     this.setState(() {
-      data = jsonDecode(response.body);
+      data = jsonDecode(r.body);
     });
   }
 

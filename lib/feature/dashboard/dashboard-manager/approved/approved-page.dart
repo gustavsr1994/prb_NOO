@@ -22,11 +22,16 @@ class _ApprovedPageState extends State<ApprovedPage> {
   List data;
 
   Future<String> getData() async {
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
     var urlGetApproved = "http://119.18.157.236:8893/Api/ApprovedNOO/";
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userId = prefs.getInt("iduser").toString();
     print(urlGetApproved + userId);
-    final response = await http.get(Uri.parse(urlGetApproved + userId));
+    final response = await http.get(Uri.parse(urlGetApproved + userId),headers: <String,String>{'authorization': basicAuth});
     this.setState(() {
       data = jsonDecode(response.body);
     });

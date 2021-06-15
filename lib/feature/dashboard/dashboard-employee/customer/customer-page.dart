@@ -19,7 +19,6 @@ import 'file:///C:/Users/mz002/StudioProjects/prb_NOO/lib/feature/dashboard/dash
 import 'package:signature/signature.dart';
 
 
-
 class CustomerPage extends StatefulWidget {
 
   String name;
@@ -359,11 +358,17 @@ class _CustomerPageState extends State<CustomerPage> {
   var urlGetCategory = "http://119.18.157.236:8893/Api/CustCategory";
   String _valCategory;
 
+
   // ignore: deprecated_member_use
   List<dynamic> _dataCategory = List();
 
   void getCategory() async {
-    final response = await http.get(Uri.parse(urlGetCategory));
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
+    final response = await http.get(Uri.parse(urlGetCategory), headers: <String, String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetCategory);
     setState(() {
@@ -391,8 +396,12 @@ class _CustomerPageState extends State<CustomerPage> {
   List<dynamic> _dataSegment = List(), _dataSubSegment = List();
 
   void getSegment() async {
-    final response = await http
-        .get(Uri.parse(urlGetSegment)); //untuk melakukan request ke webservice
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
+    final response = await http.get(Uri.parse(urlGetSegment),headers: <String,String>{'authorization': basicAuth}); //untuk melakukan request ke webservice
     var listData = jsonDecode(response.body); //lalu kita decode hasil datanya
     print(urlGetSegment);
     setState(() {
@@ -412,7 +421,12 @@ class _CustomerPageState extends State<CustomerPage> {
   }
 
   void getSubSegment(String SelectedSegment) async {
-    final response = await http.get(Uri.parse(urlGetSubSegment));
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
+    final response = await http.get(Uri.parse(urlGetSubSegment),headers: <String,String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(SelectedSegment);
     setState(() {
@@ -443,7 +457,12 @@ class _CustomerPageState extends State<CustomerPage> {
   List<dynamic> _dataClass = List();
 
   void getClass() async {
-    final response = await http.get(Uri.parse(urlGetClass));
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
+    final response = await http.get(Uri.parse(urlGetClass),headers: <String,String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetClass);
     setState(() {
@@ -469,7 +488,12 @@ class _CustomerPageState extends State<CustomerPage> {
   List<dynamic> _dataCompanyStatus = List();
 
   void getCompanyStatus() async {
-    final response = await http.get(Uri.parse(urlGetCompanyStatus));
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
+    final response = await http.get(Uri.parse(urlGetCompanyStatus),headers: <String,String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetCompanyStatus);
     setState(() {
@@ -496,7 +520,12 @@ class _CustomerPageState extends State<CustomerPage> {
   List<dynamic> _dataPriceGroup = List();
 
   void getPriceGroup() async {
-    final response = await http.get(Uri.parse(urlGetPriceGroup));
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
+    final response = await http.get(Uri.parse(urlGetPriceGroup),headers: <String,String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetPriceGroup);
     setState(() {
@@ -523,7 +552,12 @@ class _CustomerPageState extends State<CustomerPage> {
   List<dynamic> _dataCurrency = List();
 
   void getCurrency() async {
-    final response = await http.get(Uri.parse(urlGetCurrency));
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
+    final response = await http.get(Uri.parse(urlGetCurrency),headers: <String,String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetCurrency);
     setState(() {
@@ -550,7 +584,12 @@ class _CustomerPageState extends State<CustomerPage> {
   List<dynamic> _dataBusinessUnit = List();
 
   void getBusinessUnit() async {
-    final response = await http.get(Uri.parse(urlGetBusinessUnit));
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
+    final response = await http.get(Uri.parse(urlGetBusinessUnit),headers: <String,String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetBusinessUnit);
     setState(() {
@@ -577,7 +616,12 @@ class _CustomerPageState extends State<CustomerPage> {
   List<dynamic> _dataSalesOffice = List();
 
   void getSalesOffice() async {
-    final response = await http.get(Uri.parse(urlGetSalesOffice));
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
+    final response = await http.get(Uri.parse(urlGetSalesOffice),headers: <String,String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetSalesOffice);
     setState(() {
@@ -673,14 +717,20 @@ class _CustomerPageState extends State<CustomerPage> {
       String stateDelivery,
       String zipcodeDelivery,
       ) async {
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
     var urlPostSubmitCustomerForm =
         "http://119.18.157.236:8893/Api/NOOCustTables";
     print("Ini url Post Submit Customer : $urlPostSubmitCustomerForm");
     var jsonSubmitCustomerForm = await http.post(
         Uri.parse(
-          "$urlPostSubmitCustomerForm",
+          urlPostSubmitCustomerForm,
         ),
         headers: <String, String>{
+          'authorization': basicAuth,
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, dynamic>{

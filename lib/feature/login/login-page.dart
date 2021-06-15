@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:commons/commons.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:prb_app/base/base-url.dart';
 import 'package:prb_app/model/user.dart';
 import 'package:progress_bars/circle_progress_bar/circle_progress_bar.dart';
 import 'package:progress_indicator_button/progress_button.dart';
@@ -22,10 +23,23 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   processLogin(String username, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var urlPostLogin =
-        "http://119.18.157.236:8893/Api/Login?username=$username&password=${password.replaceAll("#", "%23")}";
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
+
+    var urlPostLogin = "http://119.18.157.236:8893/Api/Login?username=$username&password=${password.replaceAll("#", "%23")}";
+    Response r = await post(urlPostLogin,
+        headers: <String, String>{'authorization': basicAuth}
+        );
+    print(r.statusCode);
+    print(r.body);
     print("Ini urlPostLogin okay : $urlPostLogin");
-    var jsonLogin = await http.post(Uri.parse(urlPostLogin));
+    var jsonLogin = await post(
+        urlPostLogin,
+        headers: <String, String>{'authorization': basicAuth}
+        );
     if (jsonLogin.body.toString().isEmpty) {
       print("Aduh gagal login dong");
       // Show Dialog

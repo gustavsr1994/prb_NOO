@@ -31,9 +31,14 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
 
   List<Approval> _dataApprovalDetail = [];
   void getStatusDetail() async {
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
     var urlGetApprovalDetail =
         "http://119.18.157.236:8893/api/NOOCustTables/" + widget.id.toString();
-    final response = await http.get(Uri.parse(urlGetApprovalDetail));
+    final response = await http.get(Uri.parse(urlGetApprovalDetail),headers: <String,String>{'authorization': basicAuth});
     final listData = json.decode(response.body);
     var DataCompany = (listData as Map<String, dynamic>)["CompanyAddresses"];
     var DataDelivery = (listData as Map<String, dynamic>)["DeliveryAddresses"];
@@ -1178,7 +1183,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Remark                     : ",
+                "Remark                     :    ",
                 style: TextStyle(
                   fontSize: 17,
                 ),

@@ -37,9 +37,14 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
 
   List<Approval> _dataApprovalDetail = [];
   void getApprovalDetail() async {
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
     var urlGetApprovalDetail =
         "http://119.18.157.236:8893/api/NOOCustTables/" + widget.id.toString();
-    final response = await http.get(Uri.parse(urlGetApprovalDetail));
+    final response = await http.get(Uri.parse(urlGetApprovalDetail),headers: <String,String>{'authorization': basicAuth});
     final listData = json.decode(response.body);
     var DataCompany = (listData as Map<String, dynamic>)["CompanyAddresses"];
     var DataDelivery = (listData as Map<String, dynamic>)["DeliveryAddresses"];
@@ -84,10 +89,15 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
 
   processApprovalButton(int id, String value, int approveBy,
       String ApprovedSignature, String Remark) async {
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
     var urlPostApproval =
         "http://119.18.157.236:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy&ApprovedSignature=$ApprovedSignature&Remark=$Remark";
     print("Ini urlPost Approval : $urlPostApproval");
-    var jsonApprovalButton = await http.post(Uri.parse(urlPostApproval));
+    var jsonApprovalButton = await http.post(Uri.parse(urlPostApproval),headers: <String,String>{'authorization': basicAuth});
     print(jsonApprovalButton.body.toString());
     print(jsonApprovalButton.body.toString().isEmpty);
     print(jsonApprovalButton.body.toString());
@@ -96,12 +106,17 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
 
   processRejectButton(int id, int value, int approveBy, String Remark) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
     var id = this.widget.id;
     var approveBy = prefs.getInt("iduser");
     var urlPostReject =
         "http://119.18.157.236:8893/api/Approval?id=$id&value=$value&approveBy=$approveBy&Remark=$Remark";
     print("Ini urlPostReject okay : $urlPostReject");
-    var jsonRejectButton = await http.post(Uri.parse(urlPostReject));
+    var jsonRejectButton = await http.post(Uri.parse(urlPostReject),headers: <String,String>{'authorization': basicAuth});
     var dataRejectButton = jsonDecode(jsonRejectButton.body);
     if (dataRejectButton['id'] == id) {
       print("Ini button Reject");
