@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:prb_app/feature/dashboard/dashboard-employee/customer/customer-page.dart';
 import 'feature/splash/splash-page.dart';
 
 void main() async {
@@ -50,6 +51,7 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
+      // home: CustomerPage(),
       home: SplashPage(),
       // home: SplashPage(),
     );

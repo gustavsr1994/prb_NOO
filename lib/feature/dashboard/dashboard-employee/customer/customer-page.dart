@@ -803,8 +803,11 @@ class _CustomerPageState extends State<CustomerPage> {
     }
   }
 
-  Position  _currentPosition = Position(latitude: 0.0, longitude: 0.0);
-  Future<Position> _determinePosition() async {
+  // Position  _currentPosition = Position();
+  Position  _currentPosition;
+  String latitudeData = "";
+  String longitudeData = "";
+  _determinePosition() async {
     // await Future.delayed(Duration(seconds: 1));
     bool serviceEnabled;
     LocationPermission permission;
@@ -826,11 +829,14 @@ class _CustomerPageState extends State<CustomerPage> {
     return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high, forceAndroidLocationManager: true,).then((Position position) {
       setState(() {
         _currentPosition = position;
+        latitudeData = "${position.latitude}";
+        longitudeData = "${position.longitude}";
       });
     }).catchError((e){
       print(e);
     });
   }
+
 
   void initState() {
     // TODO: implement initState
@@ -2463,52 +2469,32 @@ class _CustomerPageState extends State<CustomerPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                "Longitude : ${_currentPosition.longitude}",
+                                "Longitude : $longitudeData",
                                 textAlign: TextAlign.start,
                               ),
                               SizedBox(height: 8,),
                               Text(
-                                "Latitude : ${_currentPosition.latitude}",
+                                "Latitude : $latitudeData",
                               ),
                             ],
                           )
-
                         ],
                       ),
                     ),
                     back: Card(
-                      child: Container(
-                        height: 200,
-                        width: 150,
-                        child: ListView(
-                          children: [
-
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Center(
-                                  child: _imageKTP == null
-                                      ? Text("KTP")
-                                      : Image.file(
-                                    _imageKTP,
-                                    fit: BoxFit.cover,
-//                                  width: 150,
-//                                  height: 80,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                              ],
-                            ),
-                            FloatingActionButton(
-                              // onPressed: "",
-                              tooltip: 'Pick Image',
-                              child: Icon(Icons.photo_album),
-                            ),
-                          ],
+                      child: Expanded(
+                        child: TextFormField(
+                          textCapitalization: TextCapitalization.words,
+                          textAlign: TextAlign.center,
+                          controller: _stateControllerDelivery,
+                          keyboardType: TextInputType.text,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'State',
+                            filled: true,
+                            contentPadding: EdgeInsets.all(5),
+                          )
                         ),
                       ),
                     ),
