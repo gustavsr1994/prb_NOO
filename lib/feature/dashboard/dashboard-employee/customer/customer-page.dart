@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:async/async.dart';
 import 'package:commons/commons.dart';
 import 'package:custom_switch/custom_switch.dart';
+import 'package:easy_alert/easy_alert.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -2482,21 +2483,7 @@ class _CustomerPageState extends State<CustomerPage> {
                       ),
                     ),
                     back: Card(
-                      child: Expanded(
-                        child: TextFormField(
-                          textCapitalization: TextCapitalization.words,
-                          textAlign: TextAlign.center,
-                          controller: _stateControllerDelivery,
-                          keyboardType: TextInputType.text,
-                          autofocus: false,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            hintText: 'State',
-                            filled: true,
-                            contentPadding: EdgeInsets.all(5),
-                          )
-                        ),
-                      ),
+                      child: Container(),
                     ),
                   ),
                   // Container(
@@ -2522,14 +2509,44 @@ class _CustomerPageState extends State<CustomerPage> {
                   )
                 ],
               ),
-              SizedBox(height: 20,),
-              Divider(
-                color: Colors.black,
-                height: 0,
-                thickness: 1,
-                indent: 10,
-                endIndent: 10,
+              SizedBox(height: 10,),
+
+              //Longlat label
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      Text("Longitude"),
+                      SizedBox(height: 8,),
+                      Container(
+                        width: 150,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            hintText: "$longitudeData",
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(width: 20,),
+                  Column(
+                    children: [
+                      Text("Latitude"),
+                      SizedBox(height: 8,),
+                      Container(
+                        width: 150,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            hintText: "$latitudeData",
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
               ),
+              SizedBox(height: 10,),
 
               SizedBox(
                 height: 20,
