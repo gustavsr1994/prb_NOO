@@ -187,13 +187,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           Row(
             children: [
               Text(
-                "Segment                  :     ",
+                "Distribution\nChannels                 ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Text(
-                data.segment ?? "",
+                ":     ${data.segment}" ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -207,13 +207,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           Row(
             children: [
               Text(
-                "Sub Segment          :     ",
+                "Channel\nSegmentation         ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Text(
-                data.subSegment ?? "",
+                ":     ${data.subSegment}" ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -1262,7 +1262,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           Row(
             children: [
               Text(
-                "Remark                     : ",
+                "Remark                     :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),

@@ -228,13 +228,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Segment                  :     ",
+                "Distribution\nChannels                 ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Text(
-                dataApproval.segment ?? "",
+                ":     ${dataApproval.segment}" ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,
@@ -248,13 +248,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Sub Segment          :     ",
+                "Channel\nSegmentation         ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Text(
-                dataApproval.subSegment ?? "",
+                ":     ${dataApproval.subSegment}" ?? "",
                 style: TextStyle(
                   fontSize: 17,
                   color: Colors.black54,

@@ -803,8 +803,9 @@ class _CustomerPageState extends State<CustomerPage> {
     }
   }
 
-  Position  _currentPosition;
+  Position  _currentPosition = Position(latitude: 0.0, longitude: 0.0);
   Future<Position> _determinePosition() async {
+    // await Future.delayed(Duration(seconds: 1));
     bool serviceEnabled;
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -845,7 +846,7 @@ class _CustomerPageState extends State<CustomerPage> {
     getSalesOffice();
     _signaturecontrollersales.addListener(() => print('Value changed'));
     _signaturecontrollercustomer.addListener(() => print('Value changed'));
-
+    _determinePosition();
   }
 
   String text = 'Press To Load';
@@ -924,6 +925,7 @@ class _CustomerPageState extends State<CustomerPage> {
                   Container(
                       child: Expanded(
                         child: TextFormField(
+                          textCapitalization: TextCapitalization.words,
                           focusNode: focus,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -964,6 +966,7 @@ class _CustomerPageState extends State<CustomerPage> {
                   Container(
                     child: Expanded(
                       child: TextFormField(
+                        textCapitalization: TextCapitalization.words,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter Brand Name';
@@ -988,6 +991,71 @@ class _CustomerPageState extends State<CustomerPage> {
               ),
               SizedBox(
                 height: 10,
+              ),
+
+              //Sales Office
+              Row(
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      "Sales Office         :",
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  DropdownButton(
+                    hint: Text("Select Sales Office"),
+                    value: _valSalesOffice,
+                    items: _dataSalesOffice.map((item) {
+                      return DropdownMenuItem(
+                        child: Text(item['NameSO'] ?? "loading.."),
+                        value: item['NameSO'],
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _valSalesOffice = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+
+              //Business Unit
+              Row(
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      "Business Unit      :",
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  DropdownButton(
+                    hint: Text("Select Business Unit"),
+                    value: _valBusinessUnit,
+                    items: _dataBusinessUnit.map((item) {
+                      return DropdownMenuItem(
+                        child: Text(item['NameBU'] ?? "loading.."),
+                        value: item['NameBU'],
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _valBusinessUnit = value;
+//                      this._salutationPriceGroup = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20,
               ),
 
               //Category
@@ -1027,14 +1095,14 @@ class _CustomerPageState extends State<CustomerPage> {
                 children: <Widget>[
                   Container(
                     child: Text(
-                      "Segmen               :",
+                      "Distribution\nChannels             :",
                     ),
                   ),
                   SizedBox(
                     width: 10,
                   ),
                   DropdownButton(
-                    hint: Text("Select Segment"),
+                    hint: Text("Select "),
                     value: _valSegment,
                     items: _dataSegment.map((item) {
                       return DropdownMenuItem(
@@ -1064,14 +1132,14 @@ class _CustomerPageState extends State<CustomerPage> {
                 children: <Widget>[
                   Container(
                     child: Text(
-                      "Sub Segmen       :",
+                      "Channel\nSegmentation     :",
                     ),
                   ),
                   SizedBox(
                     width: 10,
                   ),
                   DropdownButton(
-                    hint: Text("Select SubSegment"),
+                    hint: Text("Select "),
                     value: _valSubSegment,
                     items: _dataSubSegment.map((item) {
                       return DropdownMenuItem(
@@ -1129,7 +1197,7 @@ class _CustomerPageState extends State<CustomerPage> {
                 children: <Widget>[
                   Container(
                     child: Text(
-                      "Company \n Status                 :",
+                      "Company\nStatus                   :",
                     ),
                   ),
                   SizedBox(
@@ -1235,6 +1303,7 @@ class _CustomerPageState extends State<CustomerPage> {
                   Container(
                     child: Expanded(
                       child: TextFormField(
+                        textCapitalization: TextCapitalization.words,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter Contact Person!!';
@@ -1279,6 +1348,9 @@ class _CustomerPageState extends State<CustomerPage> {
                           if (value == null || value.isEmpty) {
                             return 'Please enter KTP!!';
                           }
+                          if(!(value.length > 16)&& value.isNotEmpty){
+                            return "KTP number less than 16 digits!!";
+                          }
                           return null;
                         },
                         textAlign: TextAlign.center,
@@ -1321,6 +1393,9 @@ class _CustomerPageState extends State<CustomerPage> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter NPWP!!';
+                          }
+                          if(!(value.length > 15)&& value.isNotEmpty){
+                            return "NPWP number less than 15 digits!!";
                           }
                           return null;
                         },
@@ -1527,6 +1602,7 @@ class _CustomerPageState extends State<CustomerPage> {
                           }
                           return null;
                         },
+                        textCapitalization: TextCapitalization.words,
                         textAlign: TextAlign.center,
                         controller: _salesmanControllerCustomer,
                         keyboardType: TextInputType.text,
@@ -1545,71 +1621,6 @@ class _CustomerPageState extends State<CustomerPage> {
               ),
               SizedBox(
                 height: 10,
-              ),
-
-              //Sales Office
-              Row(
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      "Sales Office         :",
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  DropdownButton(
-                    hint: Text("Select Sales Office"),
-                    value: _valSalesOffice,
-                    items: _dataSalesOffice.map((item) {
-                      return DropdownMenuItem(
-                        child: Text(item['NameSO'] ?? "loading.."),
-                        value: item['NameSO'],
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _valSalesOffice = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-
-              //Business Unit
-              Row(
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      "Business Unit      :",
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  DropdownButton(
-                    hint: Text("Select Business Unit"),
-                    value: _valBusinessUnit,
-                    items: _dataBusinessUnit.map((item) {
-                      return DropdownMenuItem(
-                        child: Text(item['NameBU'] ?? "loading.."),
-                        value: item['NameBU'],
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _valBusinessUnit = value;
-//                      this._salutationPriceGroup = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
               ),
 
               Divider(
@@ -1655,6 +1666,7 @@ class _CustomerPageState extends State<CustomerPage> {
                       Container(
                         child: Expanded(
                           child: TextFormField(
+                            textCapitalization: TextCapitalization.words,
                             textAlign: TextAlign.center,
                             controller: _nameControllerCompany,
                             keyboardType: TextInputType.text,
@@ -1720,7 +1732,7 @@ class _CustomerPageState extends State<CustomerPage> {
                     children: <Widget>[
                       Container(
                         child: Text(
-                          "City                        :",
+                          "City                       :",
                         ),
                       ),
                       SizedBox(
@@ -1735,13 +1747,14 @@ class _CustomerPageState extends State<CustomerPage> {
                             //   }
                             //   return null;
                             // },
+                            textCapitalization: TextCapitalization.words,
                             textAlign: TextAlign.center,
                             controller: _cityControllerCompany,
                             keyboardType: TextInputType.text,
                             autofocus: false,
                             decoration: InputDecoration(
                               isDense: true,
-                              hintText: 'city',
+                              hintText: 'City',
                               filled: true,
                               contentPadding: EdgeInsets.all(5),
 //                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
@@ -1775,6 +1788,7 @@ class _CustomerPageState extends State<CustomerPage> {
                             //   }
                             //   return null;
                             // },
+                            textCapitalization: TextCapitalization.words,
                             textAlign: TextAlign.center,
                             controller: _countryControllerCompany,
                             keyboardType: TextInputType.text,
@@ -1800,7 +1814,7 @@ class _CustomerPageState extends State<CustomerPage> {
                     children: <Widget>[
                       Container(
                         child: Text(
-                          "State                     :",
+                          "State                    :",
                         ),
                       ),
                       SizedBox(
@@ -1815,6 +1829,7 @@ class _CustomerPageState extends State<CustomerPage> {
                             //   }
                             //   return null;
                             // },
+                            textCapitalization: TextCapitalization.words,
                             textAlign: TextAlign.center,
                             controller: _stateControllerCompany,
                             keyboardType: TextInputType.text,
@@ -1931,6 +1946,7 @@ class _CustomerPageState extends State<CustomerPage> {
                             //   }
                             //   return null;
                             // },
+                            textCapitalization: TextCapitalization.words,
                             textAlign: TextAlign.center,
                             controller: _nameControllerTax,
                             keyboardType: TextInputType.text,
@@ -1965,6 +1981,7 @@ class _CustomerPageState extends State<CustomerPage> {
                       Container(
                         child: Expanded(
                           child: TextFormField(
+                            textCapitalization: TextCapitalization.words,
                             textAlign: TextAlign.center,
                             controller: _streetControllerTax,
                             keyboardType: TextInputType.text,
@@ -1990,7 +2007,7 @@ class _CustomerPageState extends State<CustomerPage> {
                     children: <Widget>[
                       Container(
                         child: Text(
-                          "City                        :",
+                          "City                       :",
                         ),
                       ),
                       SizedBox(
@@ -2005,13 +2022,14 @@ class _CustomerPageState extends State<CustomerPage> {
                             //   }
                             //   return null;
                             // },
+                            textCapitalization: TextCapitalization.words,
                             textAlign: TextAlign.center,
                             controller: _cityControllerTax,
                             keyboardType: TextInputType.text,
                             autofocus: false,
                             decoration: InputDecoration(
                               isDense: true,
-                              hintText: 'city',
+                              hintText: 'City',
                               filled: true,
                               contentPadding: EdgeInsets.all(5),
 //                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
@@ -2045,6 +2063,7 @@ class _CustomerPageState extends State<CustomerPage> {
                             //   }
                             //   return null;
                             // },
+                            textCapitalization: TextCapitalization.words,
                             textAlign: TextAlign.center,
                             controller: _countryControllerTax,
                             keyboardType: TextInputType.text,
@@ -2085,6 +2104,7 @@ class _CustomerPageState extends State<CustomerPage> {
                             //   }
                             //   return null;
                             // },
+                            textCapitalization: TextCapitalization.words,
                             textAlign: TextAlign.center,
                             controller: _stateControllerTax,
                             keyboardType: TextInputType.text,
@@ -2201,6 +2221,7 @@ class _CustomerPageState extends State<CustomerPage> {
                             //   }
                             //   return null;
                             // },
+                            textCapitalization: TextCapitalization.words,
                             textAlign: TextAlign.center,
                             controller: _nameControllerDelivery,
                             keyboardType: TextInputType.text,
@@ -2241,6 +2262,7 @@ class _CustomerPageState extends State<CustomerPage> {
                             //   }
                             //   return null;
                             // },
+                            textCapitalization: TextCapitalization.words,
                             textAlign: TextAlign.center,
                             controller: _streetControllerDelivery,
                             keyboardType: TextInputType.text,
@@ -2266,7 +2288,7 @@ class _CustomerPageState extends State<CustomerPage> {
                     children: <Widget>[
                       Container(
                         child: Text(
-                          "City                        :",
+                          "City                       :",
                         ),
                       ),
                       SizedBox(
@@ -2287,7 +2309,7 @@ class _CustomerPageState extends State<CustomerPage> {
                             autofocus: false,
                             decoration: InputDecoration(
                               isDense: true,
-                              hintText: 'city',
+                              hintText: 'City',
                               filled: true,
                               contentPadding: EdgeInsets.all(5),
 //                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
@@ -2321,6 +2343,7 @@ class _CustomerPageState extends State<CustomerPage> {
                             //   }
                             //   return null;
                             // },
+                            textCapitalization: TextCapitalization.words,
                             textAlign: TextAlign.center,
                             controller: _countryControllerDelivery,
                             keyboardType: TextInputType.text,
@@ -2361,6 +2384,7 @@ class _CustomerPageState extends State<CustomerPage> {
                             //   }
                             //   return null;
                             // },
+                            textCapitalization: TextCapitalization.words,
                             textAlign: TextAlign.center,
                             controller: _stateControllerDelivery,
                             keyboardType: TextInputType.text,
@@ -2423,10 +2447,96 @@ class _CustomerPageState extends State<CustomerPage> {
                 ],
               ),
 
-              SizedBox(
-                height: 20,
-              ),
+              //Location label
+              Row(
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      "Location               :   ",
+                    ),
+                  ),
+                  FlipCard(
+                    front: Card(
+                      child: Row(
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Longitude : ${_currentPosition.longitude}",
+                                textAlign: TextAlign.start,
+                              ),
+                              SizedBox(height: 8,),
+                              Text(
+                                "Latitude : ${_currentPosition.latitude}",
+                              ),
+                            ],
+                          )
 
+                        ],
+                      ),
+                    ),
+                    back: Card(
+                      child: Container(
+                        height: 200,
+                        width: 150,
+                        child: ListView(
+                          children: [
+
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Center(
+                                  child: _imageKTP == null
+                                      ? Text("KTP")
+                                      : Image.file(
+                                    _imageKTP,
+                                    fit: BoxFit.cover,
+//                                  width: 150,
+//                                  height: 80,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            ),
+                            FloatingActionButton(
+                              // onPressed: "",
+                              tooltip: 'Pick Image',
+                              child: Icon(Icons.photo_album),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  // Container(
+                  //   height: 25,
+                  //   width: 65,
+                  //   child: CustomSwitch(
+                  //     activeColor: Colors.green,
+                  //     value: locationVal,
+                  //     onChanged: (value){
+                  //       print("VALUE : $value");
+                  //       setState(() {
+                  //         locationVal = true;
+                  //         _determinePosition();
+                  //         print(locationVal);
+                  //         print(value);
+                  //
+                  //       });
+                  //     },
+                  //   ),
+                  // ),
+                  Text(
+                      ""
+                  )
+                ],
+              ),
+              SizedBox(height: 20,),
               Divider(
                 color: Colors.black,
                 height: 0,
@@ -2897,33 +3007,6 @@ class _CustomerPageState extends State<CustomerPage> {
                     ),
                   ),
                 ),
-              ),
-
-              SizedBox(height: 20,),
-              //Location label
-              Row(
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      "Location          :    ",
-                    ),
-                  ),
-                  Container(
-                    height: 25,
-                    width: 65,
-                    child: CustomSwitch(
-                      activeColor: Colors.green,
-                      value: locationVal,
-                      onChanged: (value){
-                        print("VALUE : $value");
-                        setState(() {
-                          locationVal = true;
-                          _determinePosition();
-                        });
-                      },
-                    ),
-                  )
-                ],
               ),
               SizedBox(height: 20,),
               // ignore: deprecated_member_use

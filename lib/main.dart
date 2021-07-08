@@ -5,10 +5,10 @@ import 'feature/splash/splash-page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  OneSignal.shared.init(
-      "1e72c3a5-63f4-447a-a56e-8aeda29e46d3", iOSSettings:null,
-  );
-  OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
+  // OneSignal.shared.init(
+  //     "1e72c3a5-63f4-447a-a56e-8aeda29e46d3", iOSSettings:null,
+  // );
+  // OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
 
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
@@ -28,13 +28,13 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
-      // will be called whenever a notification is received
-      setState(() {
-        title = notification.payload.title;
-        content = notification.payload.body;
-      });
-    });
+    // OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
+    //   // will be called whenever a notification is received
+    //   setState(() {
+    //     title = notification.payload.title;
+    //     content = notification.payload.body;
+    //   });
+    // });
 
     OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) {
       // will be called whenever a notification is opened/button pressed.
