@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:async/async.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:commons/commons.dart';
 import 'package:custom_switch/custom_switch.dart';
 import 'package:easy_alert/easy_alert.dart';
@@ -23,36 +24,45 @@ import 'package:signature/signature.dart';
 class CustomerPage extends StatefulWidget {
 
   String name;
-  CustomerPage({Key key, this.name}) : super(key: key);
+  String longitudeData;
+  String latitudeData;
+  String addressDetail;
+  String streetName;
+  String city;
+  String countrys;
+  String state;
+  String zipCode;
+  CustomerPage({
+    Key key,
+    this.name,
+    this.longitudeData,
+    this.latitudeData,
+    this.addressDetail,
+    this.streetName,
+    this.city,
+    this.state,
+    this.countrys,
+    this.zipCode,
+  }) : super(key: key);
   @override
   _CustomerPageState createState() => _CustomerPageState();
 }
 
 class _CustomerPageState extends State<CustomerPage> {
+
+  final _formkey = GlobalKey<FormState>();
+
   //Customer Controller
   TextEditingController _customerNameControllerCustomer = TextEditingController();
   TextEditingController _brandNameControllerCustomer = TextEditingController();
-  TextEditingController _categoryControllerCustomer = TextEditingController();
-  TextEditingController _segmenControllerCustomer = TextEditingController();
-  TextEditingController _subSegmenControllerCustomer = TextEditingController();
-  TextEditingController _classControllerCustomer = TextEditingController();
   TextEditingController _phoneControllerCustomer = TextEditingController();
-  TextEditingController _companyStausControllerCustomer = TextEditingController();
   TextEditingController _faxControllerCustomer = TextEditingController();
   TextEditingController _contactPersonControllerCustomer = TextEditingController();
   TextEditingController _emailAddressControllerCustomer = TextEditingController();
   TextEditingController _npwpControllerCustomer = TextEditingController();
   TextEditingController _ktpControllerCustomer = TextEditingController();
-  TextEditingController _currencyControllerCustomer = TextEditingController();
-  TextEditingController _salesOfficeControllerCustomer = TextEditingController();
-  TextEditingController _priceGroupControllerCustomer = TextEditingController();
-  TextEditingController _businessUnitControllerCustomer = TextEditingController();
   TextEditingController _salesmanControllerCustomer = TextEditingController();
   TextEditingController _websiteControllerCustomer = TextEditingController();
-  TextEditingController _fotoktpControllerCustomer = TextEditingController();
-  TextEditingController _fotonpwpControllerCustomer = TextEditingController();
-  TextEditingController _fotosiupControllerCustomer = TextEditingController();
-  TextEditingController _fotobuildingControllerCustomer = TextEditingController();
 
   //Company Controller
   TextEditingController _nameControllerCompany = TextEditingController();
@@ -77,24 +87,60 @@ class _CustomerPageState extends State<CustomerPage> {
   TextEditingController _countryControllerDelivery = TextEditingController();
   TextEditingController _stateControllerDelivery = TextEditingController();
   TextEditingController _zipCodeControllerDelivery = TextEditingController();
+  TextEditingController _longitudeControllerDelivery = TextEditingController();
+  TextEditingController _latitudeControllerDelivery = TextEditingController();
 
-  final _formkey = GlobalKey<FormState>();
+  String longitudeData = "";
+  String latitudeData = "";
+  String addressDetail = "";
+  String streetName = "";
+  String city = "";
+  String countrys = "";
+  String state = "";
+  String zipCode = "";
+  String salesmanId = "";
+
+  loadLongLatFromSharedPrefs() async{
+    SharedPreferences prefs =await SharedPreferences.getInstance();
+    setState(() {
+      salesmanId = widget.name;
+      streetName = (prefs.getString("getStreetName")??"");
+      city = (prefs.getString("getCity")??"");
+      countrys = (prefs.getString("getCountry")??"");
+      state = (prefs.getString("getState")??"");
+      zipCode = (prefs.getString("getZipCode")??"");
+      longitudeData = (prefs.getString("getLongitude")??"");
+      latitudeData = (prefs.getString("getLatitude")??"");
+      addressDetail = (prefs.getString("getAddressDetail")??"");
+      print("ini loadlonglat: $longitudeData");
+      print("Ini addressDetail: $addressDetail");
+      print("ini detail street: $streetName");
+      print("ini detail city: $city");
+      print("ini detail country: $countrys");
+      print("ini detail state: $state");
+      print("ini detail zipcode: $zipCode");
+    });
+  }
+
 
   File _imageKTP;
   File _imageNPWP;
   File _imageSIUP;
   File _imageBuilding;
+  File _imageBusinessPhotoFront;
+  File _imageBusinessPhotoInside;
+  File _imageBusinessPhotoSide;
   File _imageSignatureSales;
   Uint8List DataSignSales;
   Uint8List DataSignCustomer;
   var nows = DateTime.now();
-  String ktpFromServer =
-      "KTP_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
-  String npwpFromServer =
-      "NPWP_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
-  String siupFromServer =
-      "SIUP_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  String ktpFromServer = "KTP_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  String npwpFromServer = "NPWP_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  String siupFromServer = "SIUP_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
   String buildingFromServer = "BUILDING_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  String businessPhotoFrontFromServer = "BUSINESSPHOTOFRONT_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  String businessPhotoInsideFromServer = "BUSINESSPHOTOINSIDE_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  String businessPhotoSideFromServer = "BUSINESSPHOTOSIDE_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
   String signatureSalesFromServer = "SIGNATURESALES_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
   String signatureCustomerFromServer = "SIGNATURECUSTOMER_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
   final picker = ImagePicker();
@@ -268,45 +314,102 @@ class _CustomerPageState extends State<CustomerPage> {
     });
   }
 
-  // getImageBuilding from camera
-  Future getImageBuildingFromCamera() async {
+  // // getImageBuilding from camera
+  // Future getImageBuildingFromCamera() async {
+  //   final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
+  //   var nows = DateTime.now();
+  //   String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
+  //   var renamedFile = await File(pickedFile.path).rename(
+  //       '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/BUILDING_' +
+  //           dateNow.toString() +
+  //           '_' +
+  //           '.jpg');
+  //   setState(() {
+  //     if (pickedFile != null) {
+  //       _imageBuilding = renamedFile;
+  //     } else {
+  //       print('No image selected.');
+  //     }
+  //   });
+  // }
+  //
+  // // getImageBuilding from gallery
+  // Future getImageBuildingFromGallery() async {
+  //   final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
+  //   var nows = DateTime.now();
+  //   String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
+  //   var renamedFile = await File(pickedFile.path).rename(
+  //       '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/BUILDING_' +
+  //           dateNow.toString() +
+  //           '_' +
+  //           '.jpg');
+  //   setState(() {
+  //     if (pickedFile != null) {
+  //       _imageBuilding = renamedFile;
+  //     } else {
+  //       print('No image selected.');
+  //     }
+  //   });
+  // }
+
+  // UploadBuilding(File imageFile) async {
+  //   var stream =
+  //   new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+  //   var length = await imageFile.length();
+  //   var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+  //   var request = new http.MultipartRequest("POST", uri);
+  //   var multipartFile = new http.MultipartFile('file', stream, length,
+  //       filename: basename(imageFile.path));
+  //   //contentType: new MediaType('image', 'png'));
+  //   request.files.add(multipartFile);
+  //   var response = await request.send();
+  //   print(response.statusCode);
+  //   response.stream.transform(utf8.decoder).listen((value) {
+  //     print(value);
+  //     buildingFromServer = value.replaceAll("\"", "");
+  //   });
+  // }
+
+  // getImageBusinessPhotoFront from camera
+  Future getImageBusinessPhotoFrontFromCamera() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
-        '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/BUILDING_' +
+        '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/BUSINESSPHOTOFRONT_' +
             dateNow.toString() +
             '_' +
             '.jpg');
     setState(() {
       if (pickedFile != null) {
-        _imageBuilding = renamedFile;
+        _imageBusinessPhotoFront = renamedFile;
       } else {
         print('No image selected.');
       }
     });
   }
 
-  // getImageBuilding from gallery
-  Future getImageBuildingFromGallery() async {
+  // getImageBusinessPhotoFront from gallery
+  Future getImageBusinessPhotoFrontFromGallery() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
-        '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/BUILDING_' +
+        '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/BUSINESSPHOTOFRONT_' +
             dateNow.toString() +
             '_' +
             '.jpg');
     setState(() {
       if (pickedFile != null) {
-        _imageBuilding = renamedFile;
+        _imageBusinessPhotoFront = renamedFile;
       } else {
         print('No image selected.');
       }
     });
   }
 
-  UploadBuilding(File imageFile) async {
+  // uploadBusinessPhotoFront
+  UploadBusinessPhotoFront(File imageFile) async {
     var stream =
     new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
@@ -320,7 +423,121 @@ class _CustomerPageState extends State<CustomerPage> {
     print(response.statusCode);
     response.stream.transform(utf8.decoder).listen((value) {
       print(value);
-      buildingFromServer = value.replaceAll("\"", "");
+      businessPhotoFrontFromServer = value.replaceAll("\"", "");
+    });
+  }
+
+  // getImageBusinessPhotoInside from camera
+  Future getImageBusinessPhotoInsideFromCamera() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
+    var nows = DateTime.now();
+    String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
+    var renamedFile = await File(pickedFile.path).rename(
+        '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/BUSINESSPHOTOINSIDE_' +
+            dateNow.toString() +
+            '_' +
+            '.jpg');
+    setState(() {
+      if (pickedFile != null) {
+        _imageBusinessPhotoInside = renamedFile;
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  // getImageBusinessPhotoInside from gallery
+  Future getImageBusinessPhotoInsideFromGallery() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
+    var nows = DateTime.now();
+    String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
+    var renamedFile = await File(pickedFile.path).rename(
+        '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/BUSINESSPHOTOINSIDE_' +
+            dateNow.toString() +
+            '_' +
+            '.jpg');
+    setState(() {
+      if (pickedFile != null) {
+        _imageBusinessPhotoInside = renamedFile;
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  // uploadBusinessPhotoInside
+  UploadBusinessPhotoInside(File imageFile) async {
+    var stream =
+    new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var length = await imageFile.length();
+    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var request = new http.MultipartRequest("POST", uri);
+    var multipartFile = new http.MultipartFile('file', stream, length,
+        filename: basename(imageFile.path));
+    //contentType: new MediaType('image', 'png'));
+    request.files.add(multipartFile);
+    var response = await request.send();
+    print(response.statusCode);
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
+      businessPhotoInsideFromServer = value.replaceAll("\"", "");
+    });
+  }
+
+  // getImageBusinessPhotoSide from camera
+  Future getImageBusinessPhotoSideFromCamera() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
+    var nows = DateTime.now();
+    String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
+    var renamedFile = await File(pickedFile.path).rename(
+        '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/BUSINESSPHOTOSIDE_' +
+            dateNow.toString() +
+            '_' +
+            '.jpg');
+    setState(() {
+      if (pickedFile != null) {
+        _imageBusinessPhotoSide = renamedFile;
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  // getImageBusinessPhotoSide from gallery
+  Future getImageBusinessPhotoSideFromGallery() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
+    var nows = DateTime.now();
+    String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
+    var renamedFile = await File(pickedFile.path).rename(
+        '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/BUSINESSPHOTOSIDE_' +
+            dateNow.toString() +
+            '_' +
+            '.jpg');
+    setState(() {
+      if (pickedFile != null) {
+        _imageBusinessPhotoSide = renamedFile;
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  // uploadBusinessPhotoSide
+  UploadBusinessPhotoSide(File imageFile) async {
+    var stream =
+    new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var length = await imageFile.length();
+    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var request = new http.MultipartRequest("POST", uri);
+    var multipartFile = new http.MultipartFile('file', stream, length,
+        filename: basename(imageFile.path));
+    //contentType: new MediaType('image', 'png'));
+    request.files.add(multipartFile);
+    var response = await request.send();
+    print(response.statusCode);
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
+      businessPhotoSideFromServer = value.replaceAll("\"", "");
     });
   }
 
@@ -691,8 +908,10 @@ class _CustomerPageState extends State<CustomerPage> {
       String businessunitCustomer,
       String salesmanCustomer,
       String websiteCustomer,
-      bool buttonloc,
-      Position getLoc,
+      String longitudeCustomer,
+      String latitudeCustomer,
+      // bool buttonloc,
+      // Position getLoc,
 
       //Company
       String nameCompany,
@@ -758,11 +977,16 @@ class _CustomerPageState extends State<CustomerPage> {
           "FotoNPWP": "$npwpFromServer",
           "FotoKTP": "$ktpFromServer",
           "FotoSIUP": "$siupFromServer",
-          "FotoGedung": "$buildingFromServer",
+          // "FotoGedung": "$buildingFromServer",
           "CustSignature": "$signatureCustomerFromServer",
           "SalesSignature": "$signatureSalesFromServer",
-          "Long": " ${buttonloc == true ? _currentPosition.longitude.toString() : 0}",
-          "Lat": "${buttonloc == true ? _currentPosition.latitude.toString() : 0}",
+          // "Long": " ${buttonloc == true ? longitudeData.toString() : 0}",
+          "Long": " $longitudeCustomer",
+          "Lat": "$latitudeCustomer",
+          // "Lat": "${buttonloc == true ? latitudeData.toString() : 0}",
+          "FotoGedung1": "$businessPhotoFrontFromServer",
+          "FotoGedung2": "$businessPhotoInsideFromServer",
+          "FotoGedung3": "$businessPhotoSideFromServer",
           "CreatedBy": 1,
           "CreatedDate": "2021-04-05T14:56:48.57",
           "TaxAddresses": [
@@ -803,57 +1027,37 @@ class _CustomerPageState extends State<CustomerPage> {
       throw Exception("Failed");
     }
   }
-
-  // Position  _currentPosition = Position();
-  Position  _currentPosition;
-  String latitudeData = "";
-  String longitudeData = "";
-  _determinePosition() async {
-    // await Future.delayed(Duration(seconds: 1));
-    bool serviceEnabled;
-    LocationPermission permission;
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high, forceAndroidLocationManager: true,).then((Position position) {
-      setState(() {
-        _currentPosition = position;
-        latitudeData = "${position.latitude}";
-        longitudeData = "${position.longitude}";
-      });
-    }).catchError((e){
-      print(e);
-    });
-  }
-
-
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(widget.name);
-    getSegment();
-    getCategory();
-    getClass();
-    getPriceGroup();
-    getCompanyStatus();
-    getCurrency();
-    getBusinessUnit();
-    getSalesOffice();
+    print(widget.name);getSegment();getCategory();getClass();getPriceGroup();
+    getCompanyStatus();getCurrency();getBusinessUnit();getSalesOffice();
     _signaturecontrollersales.addListener(() => print('Value changed'));
     _signaturecontrollercustomer.addListener(() => print('Value changed'));
-    _determinePosition();
+    // _determinePosition();
+    loadLongLatFromSharedPrefs();
+    print("Ini Jalanya : $streetName");
+    _salesmanControllerCustomer.text = widget.name;
+    //autofill Company Address
+    _streetControllerCompany.text = widget.streetName;
+    _cityControllerCompany.text = widget.city;
+    _countryControllerCompany.text = widget.countrys;
+    _stateControllerCompany.text = widget.state;
+    _zipCodeControllerCompany.text = widget.zipCode;
+    //autofill Tax Address
+    _streetControllerTax.text = widget.streetName;
+    _cityControllerTax.text = widget.city;
+    _countryControllerTax.text = widget.countrys;
+    _stateControllerTax.text = widget.state;
+    _zipCodeControllerTax.text = widget.zipCode;
+    //autofill Delivery Address
+    _streetControllerDelivery.text = widget.streetName;
+    _cityControllerDelivery.text = widget.city;
+    _countryControllerDelivery.text = widget.countrys;
+    _stateControllerDelivery.text = widget.state;
+    _zipCodeControllerDelivery.text = widget.zipCode;
+    _longitudeControllerDelivery.text = widget.longitudeData;
+    _latitudeControllerDelivery.text = widget.latitudeData;
   }
 
   String text = 'Press To Load';
@@ -863,9 +1067,11 @@ class _CustomerPageState extends State<CustomerPage> {
   Widget build(BuildContext context) {
 
     print("ini customer page");
-
     final focus = FocusNode();
 
+    print("Inilah jalanya WB : $streetName");
+
+    var ktpFormatter = new MaskTextInputFormatter(mask: '################', filter: { "#": RegExp(r'[0-9]') });
     var npwpFormatter = new MaskTextInputFormatter(mask: '##.###.###.#-###.###', filter: { "#": RegExp(r'[0-9]') });
     var phoneFormatter = new MaskTextInputFormatter(mask: '#### #### ####', filter: { "#": RegExp(r'[0-9]') });
 
@@ -1011,25 +1217,25 @@ class _CustomerPageState extends State<CustomerPage> {
                   SizedBox(
                     width: 10,
                   ),
-                  DropdownButton(
-                    hint: Text("Select Sales Office"),
-                    value: _valSalesOffice,
-                    items: _dataSalesOffice.map((item) {
-                      return DropdownMenuItem(
-                        child: Text(item['NameSO'] ?? "loading.."),
-                        value: item['NameSO'],
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _valSalesOffice = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
+                    DropdownButton(
+                      hint: Text("Select Sales Office"),
+                      value: _valSalesOffice,
+                      items: _dataSalesOffice.map((item) {
+                        return DropdownMenuItem(
+                          child: Text(item['NameSO'] ?? "loading.."),
+                          value: item['NameSO'],
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _valSalesOffice = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
               ),
 
               //Business Unit
@@ -1351,11 +1557,14 @@ class _CustomerPageState extends State<CustomerPage> {
                   Container(
                     child: Expanded(
                       child: TextFormField(
+                        inputFormatters: [
+                          ktpFormatter
+                        ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter KTP!!';
                           }
-                          if(!(value.length > 16)&& value.isNotEmpty){
+                          if(!(value.length > 15)&& value.isNotEmpty){
                             return "KTP number less than 16 digits!!";
                           }
                           return null;
@@ -1627,9 +1836,8 @@ class _CustomerPageState extends State<CustomerPage> {
                 ],
               ),
               SizedBox(
-                height: 10,
+                height: 30,
               ),
-
               Divider(
                 color: Colors.black,
                 height: 0,
@@ -2263,15 +2471,9 @@ class _CustomerPageState extends State<CustomerPage> {
                       Container(
                         child: Expanded(
                           child: TextFormField(
-                            // validator: (value) {
-                            //   if (value == null || value.isEmpty) {
-                            //     return 'Please enter Delivery Street!!';
-                            //   }
-                            //   return null;
-                            // },
                             textCapitalization: TextCapitalization.words,
                             textAlign: TextAlign.center,
-                            controller: _streetControllerDelivery,
+                            controller:  _streetControllerDelivery,
                             keyboardType: TextInputType.text,
                             autofocus: false,
                             decoration: InputDecoration(
@@ -2454,12 +2656,48 @@ class _CustomerPageState extends State<CustomerPage> {
                 ],
               ),
 
+              SizedBox(height: 20,),
+
+              //Longlat label
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      Text("Longitude"),
+                      SizedBox(height: 8,),
+                      Container(
+                        width: 150,
+                        child: TextFormField(
+                          controller: _longitudeControllerDelivery,
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(width: 20,),
+                  Column(
+                    children: [
+                      Text("Latitude"),
+                      SizedBox(height: 8,),
+                      Container(
+                        width: 150,
+                        child: TextFormField(
+                          controller: _latitudeControllerDelivery,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+
+              SizedBox(height: 20,),
+
               //Location label
               Row(
                 children: <Widget>[
                   Container(
                     child: Text(
-                      "Location               :   ",
+                      "Your Current\nLocation               :   ",
                     ),
                   ),
                   FlipCard(
@@ -2469,13 +2707,18 @@ class _CustomerPageState extends State<CustomerPage> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(
-                                "Longitude : $longitudeData",
-                                textAlign: TextAlign.start,
+                              Padding(
+                                padding: const EdgeInsets.all(6.0),
+                                child: Text(
+                                  "Longitude : $longitudeData",
+                                  textAlign: TextAlign.start,
+                                ),
                               ),
-                              SizedBox(height: 8,),
-                              Text(
-                                "Latitude : $latitudeData",
+                              Padding(
+                                padding: const EdgeInsets.all(6.0),
+                                child: Text(
+                                  "Latitude : $latitudeData",
+                                ),
                               ),
                             ],
                           )
@@ -2483,7 +2726,17 @@ class _CustomerPageState extends State<CustomerPage> {
                       ),
                     ),
                     back: Card(
-                      child: Container(),
+                      child: Container(
+                        width: 199,
+                        height: 100,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: AutoSizeText(
+                            addressDetail,
+                            maxLines: 10,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   // Container(
@@ -2511,41 +2764,6 @@ class _CustomerPageState extends State<CustomerPage> {
               ),
               SizedBox(height: 10,),
 
-              //Longlat label
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    children: [
-                      Text("Longitude"),
-                      SizedBox(height: 8,),
-                      Container(
-                        width: 150,
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            hintText: "$longitudeData",
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(width: 20,),
-                  Column(
-                    children: [
-                      Text("Latitude"),
-                      SizedBox(height: 8,),
-                      Container(
-                        width: 150,
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            hintText: "$latitudeData",
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
               SizedBox(height: 10,),
 
               SizedBox(
@@ -2809,7 +3027,81 @@ class _CustomerPageState extends State<CustomerPage> {
                       width: 5,
                     ),
 
-                    //Upload BUILDING
+                    // //Upload BUILDING
+                    // FlipCard(
+                    //   front: Card(
+                    //     child: Container(
+                    //       height: 200,
+                    //       width: 150,
+                    //       child: ListView(
+                    //         children: [
+                    //           Column(
+                    //             children: [
+                    //               SizedBox(
+                    //                 height: 10,
+                    //               ),
+                    //               Center(
+                    //                 child: _imageBuilding == null
+                    //                     ? Text("Building")
+                    //                     : Image.file(
+                    //                   _imageBuilding,
+                    //                   fit: BoxFit.cover,
+                    //                 ),
+                    //               ),
+                    //               SizedBox(
+                    //                 height: 10,
+                    //               ),
+                    //             ],
+                    //           ),
+                    //           FloatingActionButton(
+                    //             onPressed: getImageBuildingFromCamera,
+                    //             tooltip: 'Pick Image',
+                    //             child: Icon(Icons.add_a_photo),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    //   back: Card(
+                    //     child: Container(
+                    //       height: 200,
+                    //       width: 150,
+                    //       child: ListView(
+                    //         children: [
+                    //           Column(
+                    //             children: [
+                    //               SizedBox(
+                    //                 height: 10,
+                    //               ),
+                    //               Center(
+                    //                 child: _imageBuilding == null
+                    //                     ? Text("Building")
+                    //                     : Image.file(
+                    //                   _imageBuilding,
+                    //                   fit: BoxFit.cover,
+                    //                 ),
+                    //               ),
+                    //               SizedBox(
+                    //                 height: 10,
+                    //               ),
+                    //             ],
+                    //           ),
+                    //           FloatingActionButton(
+                    //             onPressed: getImageBuildingFromGallery,
+                    //             tooltip: 'Pick Image',
+                    //             child: Icon(Icons.photo_album),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    //
+                    // SizedBox(
+                    //   width: 5,
+                    // ),
+
+                    //Upload Business photo front
                     FlipCard(
                       front: Card(
                         child: Container(
@@ -2823,10 +3115,10 @@ class _CustomerPageState extends State<CustomerPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageBuilding == null
-                                        ? Text("Building")
+                                    child: _imageBusinessPhotoFront == null
+                                        ? Text("Business Photo Front")
                                         : Image.file(
-                                      _imageBuilding,
+                                      _imageBusinessPhotoFront,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -2836,7 +3128,7 @@ class _CustomerPageState extends State<CustomerPage> {
                                 ],
                               ),
                               FloatingActionButton(
-                                onPressed: getImageBuildingFromCamera,
+                                onPressed: getImageBusinessPhotoFrontFromCamera,
                                 tooltip: 'Pick Image',
                                 child: Icon(Icons.add_a_photo),
                               ),
@@ -2856,10 +3148,10 @@ class _CustomerPageState extends State<CustomerPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageBuilding == null
-                                        ? Text("Building")
+                                    child: _imageBusinessPhotoFront == null
+                                        ? Text("Business Photo Front")
                                         : Image.file(
-                                      _imageBuilding,
+                                      _imageBusinessPhotoFront,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -2869,7 +3161,155 @@ class _CustomerPageState extends State<CustomerPage> {
                                 ],
                               ),
                               FloatingActionButton(
-                                onPressed: getImageBuildingFromGallery,
+                                onPressed: getImageBusinessPhotoFrontFromGallery,
+                                tooltip: 'Pick Image',
+                                child: Icon(Icons.photo_album),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: 5,
+                    ),
+
+                    //Upload Business photo side
+                    FlipCard(
+                      front: Card(
+                        child: Container(
+                          height: 200,
+                          width: 150,
+                          child: ListView(
+                            children: [
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Center(
+                                    child: _imageBusinessPhotoSide == null
+                                        ? Text("Business Photo Side")
+                                        : Image.file(
+                                      _imageBusinessPhotoSide,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              ),
+                              FloatingActionButton(
+                                onPressed: getImageBusinessPhotoSideFromCamera,
+                                tooltip: 'Pick Image',
+                                child: Icon(Icons.add_a_photo),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      back: Card(
+                        child: Container(
+                          height: 200,
+                          width: 150,
+                          child: ListView(
+                            children: [
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Center(
+                                    child: _imageBusinessPhotoSide == null
+                                        ? Text("Business Photo Side")
+                                        : Image.file(
+                                      _imageBusinessPhotoSide,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              ),
+                              FloatingActionButton(
+                                onPressed: getImageBusinessPhotoSideFromGallery,
+                                tooltip: 'Pick Image',
+                                child: Icon(Icons.photo_album),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: 5,
+                    ),
+
+                    //Upload Business photo inside
+                    FlipCard(
+                      front: Card(
+                        child: Container(
+                          height: 200,
+                          width: 150,
+                          child: ListView(
+                            children: [
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Center(
+                                    child: _imageBusinessPhotoInside == null
+                                        ? Text("Business Photo Inside")
+                                        : Image.file(
+                                      _imageBusinessPhotoInside,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              ),
+                              FloatingActionButton(
+                                onPressed: getImageBusinessPhotoInsideFromCamera,
+                                tooltip: 'Pick Image',
+                                child: Icon(Icons.add_a_photo),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      back: Card(
+                        child: Container(
+                          height: 200,
+                          width: 150,
+                          child: ListView(
+                            children: [
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Center(
+                                    child: _imageBusinessPhotoInside == null
+                                        ? Text("Business Photo Back")
+                                        : Image.file(
+                                      _imageBusinessPhotoInside,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              ),
+                              FloatingActionButton(
+                                onPressed: getImageBusinessPhotoInsideFromGallery,
                                 tooltip: 'Pick Image',
                                 child: Icon(Icons.photo_album),
                               ),
@@ -3022,7 +3462,10 @@ class _CustomerPageState extends State<CustomerPage> {
                     await UploadKTP(_imageKTP);
                     await UploadNPWP(_imageNPWP);
                     await UploadSIUP(_imageSIUP);
-                    await UploadBuilding(_imageBuilding);
+                    // await UploadBuilding(_imageBuilding);
+                    await UploadBusinessPhotoFront(_imageBusinessPhotoFront);
+                    await UploadBusinessPhotoInside(_imageBusinessPhotoInside);
+                    await UploadBusinessPhotoSide(_imageBusinessPhotoSide);
                     DataSignSales = await _signaturecontrollersales.toPngBytes();
                     await UploadSignatureSales(
                         DataSignSales, signatureSalesFromServer);
@@ -3050,8 +3493,10 @@ class _CustomerPageState extends State<CustomerPage> {
                       _valBusinessUnit,
                       _salesmanControllerCustomer.text,
                       _websiteControllerCustomer.text,
-                      locationVal,
-                      _currentPosition,
+                      _longitudeControllerDelivery.text,
+                      _latitudeControllerDelivery.text,
+                      // locationVal,
+                      // _currentPosition,
 
                       //Company
                       _nameControllerCompany.text,

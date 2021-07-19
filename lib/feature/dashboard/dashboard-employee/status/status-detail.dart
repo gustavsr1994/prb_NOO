@@ -332,11 +332,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.emailAddress ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.emailAddress ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -369,11 +371,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.nPWP ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.nPWP ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -389,9 +393,11 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.kTP ?? "",
-                style: TextStyle(fontSize: 17, color: Colors.black54),
+              Flexible(
+                child: Text(
+                  data.kTP ?? "",
+                  style: TextStyle(fontSize: 17, color: Colors.black54),
+                ),
               ),
             ],
           ),
@@ -406,11 +412,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.currency ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.currency ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -446,11 +454,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.salesman ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.salesman ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -530,11 +540,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataCompanyAddress.name ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataCompanyAddress.name ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -550,11 +562,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataCompanyAddress.streetName ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataCompanyAddress.streetName ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -570,11 +584,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataCompanyAddress.city ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataCompanyAddress.city ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -590,11 +606,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataCompanyAddress.country ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataCompanyAddress.country ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -610,11 +628,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataCompanyAddress.state ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataCompanyAddress.state ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -630,11 +650,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataCompanyAddress.zipCode.toString(),
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataCompanyAddress.zipCode.toString(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -671,11 +693,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataTAXAddress.name ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataTAXAddress.name ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -691,11 +715,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataTAXAddress.streetName ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataTAXAddress.streetName ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -711,11 +737,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataTAXAddress.city ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataTAXAddress.city ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -731,11 +759,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataTAXAddress.country ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataTAXAddress.country ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -751,11 +781,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataTAXAddress.state ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataTAXAddress.state ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -771,11 +803,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataTAXAddress.zipCode.toString(),
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataTAXAddress.zipCode.toString(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -812,11 +846,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataDeliveryAddress.name ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataDeliveryAddress.name ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -832,11 +868,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataDeliveryAddress.streetName ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataDeliveryAddress.streetName ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -852,11 +890,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataDeliveryAddress.city ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataDeliveryAddress.city ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -872,11 +912,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataDeliveryAddress.country ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataDeliveryAddress.country ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -892,11 +934,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataDeliveryAddress.state ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataDeliveryAddress.state ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -912,11 +956,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataDeliveryAddress.zipCode.toString(),
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataDeliveryAddress.zipCode.toString(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -1068,10 +1114,11 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
+          //widget foto gedung depan
           Row(
             children: [
               Text(
-                "Foto Gedung         :       ",
+                "Foto Gedung\nDepan                    :      ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
@@ -1086,12 +1133,12 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                       await showDialog(
                         context: context,
                         builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung}",
+                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung1}",
                         ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung}",
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung1}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1100,6 +1147,98 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                             value: loadingProgress.expectedTotalBytes != null
                                 ? loadingProgress.cumulativeBytesLoaded /
                                     loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //widget foto gedung samping
+          Row(
+            children: [
+              Text(
+                "Foto Gedung\nSamping                :      ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Container(
+                  height: 100,
+                  child:
+                  // data.fotoGedung != null ? Container():
+                  InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) => Image.network(
+                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung2}",
+                        ),
+                      );
+                    },
+                    child: Image.network(
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung2}",
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //widget foto gedung dalam
+          Row(
+            children: [
+              Text(
+                "Foto Gedung\nDalam                   :       ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Container(
+                  height: 100,
+                  child:
+                  // data.fotoGedung != null ? Container():
+                  InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) => Image.network(
+                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung3}",
+                        ),
+                      );
+                    },
+                    child: Image.network(
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung3}",
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes
                                 : null,
                           ),
                         );

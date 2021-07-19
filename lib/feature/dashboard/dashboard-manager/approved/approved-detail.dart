@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:commons/commons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +111,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
       appBar: AppBar(
         backgroundColor: Colors.white60,
         title: Text(
-          "Status Detail",
+          "Approved Detail",
           style: TextStyle(
             color: Colors.blue,
           ),
@@ -128,11 +129,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.custName ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.custName ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -148,11 +151,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.brandName ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.brandName ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -168,11 +173,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.category ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.category ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -188,11 +195,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                ":     ${data.segment}" ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  ":     ${data.segment}" ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -208,11 +217,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                ":     ${data.subSegment}" ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  ":     ${data.subSegment}" ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -228,11 +239,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.selectclass ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.selectclass ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -248,11 +261,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.phoneNo ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.phoneNo ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -268,11 +283,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.companyStatus ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.companyStatus ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -288,11 +305,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.faxNo ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.faxNo ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -308,11 +327,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.contactPerson ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.contactPerson ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -328,11 +349,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.emailAddress ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.emailAddress ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -348,9 +371,11 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.website ?? "",
-                style: TextStyle(fontSize: 17, color: Colors.black54),
+              Flexible(
+                child: Text(
+                  data.website ?? "",
+                  style: TextStyle(fontSize: 17, color: Colors.black54),
+                ),
               ),
             ],
           ),
@@ -365,11 +390,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.nPWP ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.nPWP ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -385,9 +412,11 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.kTP ?? "",
-                style: TextStyle(fontSize: 17, color: Colors.black54),
+              Flexible(
+                child: Text(
+                  data.kTP ?? "",
+                  style: TextStyle(fontSize: 17, color: Colors.black54),
+                ),
               ),
             ],
           ),
@@ -402,11 +431,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.currency ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.currency ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -422,11 +453,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.priceGroup ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.priceGroup ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -442,11 +475,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.salesman ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.salesman ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -462,11 +497,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.salesOffice ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.salesOffice ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -482,11 +519,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.businessUnit ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.businessUnit ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -522,11 +561,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataCompanyAddress.name ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataCompanyAddress.name ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -542,11 +583,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataCompanyAddress.streetName ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataCompanyAddress.streetName ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -562,11 +605,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataCompanyAddress.city ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataCompanyAddress.city ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -582,11 +627,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataCompanyAddress.country ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataCompanyAddress.country ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -602,11 +649,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataCompanyAddress.state ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataCompanyAddress.state ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -622,11 +671,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataCompanyAddress.zipCode.toString(),
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataCompanyAddress.zipCode.toString(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -659,11 +710,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataTAXAddress.name ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataTAXAddress.name ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -679,11 +732,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataTAXAddress.streetName ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataTAXAddress.streetName ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -699,11 +754,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataTAXAddress.city ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataTAXAddress.city ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -719,11 +776,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataTAXAddress.country ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataTAXAddress.country ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -739,11 +798,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataTAXAddress.state ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataTAXAddress.state ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -759,11 +820,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataTAXAddress.zipCode.toString(),
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataTAXAddress.zipCode.toString(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -796,11 +859,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataDeliveryAddress.name ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataDeliveryAddress.name ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -816,11 +881,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataDeliveryAddress.streetName ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataDeliveryAddress.streetName ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -836,11 +903,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataDeliveryAddress.city ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataDeliveryAddress.city ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -856,11 +925,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataDeliveryAddress.country ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataDeliveryAddress.country ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -876,11 +947,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataDeliveryAddress.state ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataDeliveryAddress.state ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -896,11 +969,13 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                dataDeliveryAddress.zipCode.toString(),
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  dataDeliveryAddress.zipCode.toString(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -922,34 +997,36 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Container(
-                  height: 100,
-                  // child: data.fotoNPWP != null ? Container() : "null" == data.fotoNPWP ? Container():
-                  child: InkWell(
-                    onTap: () async {
-                      await showDialog(
-                        context: context,
-                        builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
-                        ),
-                      );
-                    },
-                    child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes
-                                : null,
+              Flexible(
+                child: Container(
+                    height: 100,
+                    // child: data.fotoNPWP != null ? Container() : "null" == data.fotoNPWP ? Container():
+                    child: InkWell(
+                      onTap: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (_) => Image.network(
+                            "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
                           ),
                         );
                       },
-                    ),
-                  )),
+                      child: Image.network(
+                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes
+                                  : null,
+                            ),
+                          );
+                        },
+                      ),
+                    )),
+              ),
             ],
           ),
           SizedBox(
@@ -963,33 +1040,35 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Container(
-                height: 100,
-                child:
-                // data.fotoKTP != null ? Container():
-                InkWell(
-                  onTap: () async {
-                    await showDialog(
-                      context: context,
-                      builder: (_) => Image.network(
-                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
-                      ),
-                    );
-                  },
-                  child: Image.network(
-                    "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
-                              : null,
+              Flexible(
+                child: Container(
+                  height: 100,
+                  child:
+                  // data.fotoKTP != null ? Container():
+                  InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) => Image.network(
+                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
                         ),
                       );
                     },
+                    child: Image.network(
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -1006,33 +1085,35 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Container(
-                height: 100,
-                child:
-                // data.fotoSIUP != null ? Container():
-                InkWell(
-                  onTap: () async {
-                    await showDialog(
-                      context: context,
-                      builder: (_) => Image.network(
-                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoSIUP}",
-                      ),
-                    );
-                  },
-                  child: Image.network(
-                    "http://119.18.157.236:8893//api/Files/GetFiles?fileName=${data.fotoSIUP}",
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
-                              : null,
+              Flexible(
+                child: Container(
+                  height: 100,
+                  child:
+                  // data.fotoSIUP != null ? Container():
+                  InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) => Image.network(
+                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoSIUP}",
                         ),
                       );
                     },
+                    child: Image.network(
+                      "http://119.18.157.236:8893//api/Files/GetFiles?fileName=${data.fotoSIUP}",
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -1041,41 +1122,136 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           SizedBox(
             height: 10,
           ),
+          //widget foto gedung depan
           Row(
             children: [
               Text(
-                "Foto Gedung         :       ",
+                "Foto Gedung\nDepan                     :       ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
-              Container(
-                height: 100,
-                child:
-                // data.fotoGedung != null ? Container():
-                InkWell(
-                  onTap: () async {
-                    await showDialog(
-                      context: context,
-                      builder: (_) => Image.network(
-                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung}",
-                      ),
-                    );
-                  },
-                  child: Image.network(
-                    "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung}",
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
-                              : null,
+              Flexible(
+                child: Container(
+                  height: 100,
+                  child:
+                  // data.fotoGedung != null ? Container():
+                  InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) => Image.network(
+                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung1}",
                         ),
                       );
                     },
+                    child: Image.network(
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung1}",
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //widget foto gedung samping
+          Row(
+            children: [
+              Text(
+                "Foto Gedung\nSamping                 :       ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Container(
+                  height: 100,
+                  child:
+                  // data.fotoGedung != null ? Container():
+                  InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) => Image.network(
+                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung2}",
+                        ),
+                      );
+                    },
+                    child: Image.network(
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung2}",
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //widget foto gedung dalam
+          Row(
+            children: [
+              Text(
+                "Foto Gedung\nDalam                     :       ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Container(
+                  height: 100,
+                  child:
+                  // data.fotoGedung != null ? Container():
+                  InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) => Image.network(
+                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung3}",
+                        ),
+                      );
+                    },
+                    child: Image.network(
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung3}",
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -1188,12 +1364,15 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.remark ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54,
+              Flexible(
+                child: AutoSizeText(
+                  data.remark ?? "",
+                  maxLines: 4,
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -1211,12 +1390,14 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 padding: EdgeInsets.fromLTRB(98, 0, 20, 0),
                 child: Text(":"),
               ),
-              Text(
-                data.status ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.status ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],

@@ -26,6 +26,44 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
         MaterialPageRoute(builder: (context) => SplashPage()), (Route<dynamic>route) => false);
   }
 
+  String longitudeData = "";
+  String latitudeData = "";
+  String addressDetail = "";
+  String streetName = "";
+  String city = "";
+  String countrys = "";
+  String state = "";
+  String zipCode = "";
+  String salesmanId = "";
+
+  loadLongLatFromSharedPrefs() async{
+    SharedPreferences prefs =await SharedPreferences.getInstance();
+    setState(() {
+      streetName = (prefs.getString("getStreetName")??"");
+      city = (prefs.getString("getCity")??"");
+      countrys = (prefs.getString("getCountry")??"");
+      state = (prefs.getString("getState")??"");
+      zipCode = (prefs.getString("getZipCode")??"");
+      longitudeData = (prefs.getString("getLongitude")??"");
+      latitudeData = (prefs.getString("getLatitude")??"");
+      addressDetail = (prefs.getString("getAddressDetail")??"");
+      print("ini loadlonglat: $longitudeData");
+      print("Ini addressDetail: $addressDetail");
+      print("ini detail street: $streetName");
+      print("ini detail city: $city");
+      print("ini detail country: $countrys");
+      print("ini detail state: $state");
+      print("ini detail zipcode: $zipCode");
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadLongLatFromSharedPrefs();
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -66,7 +104,17 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
     }
 
     final List pages = [
-      CustomerPage(name: widget.username),
+      CustomerPage(
+        name: widget.username,
+        zipCode: zipCode,
+        streetName: streetName,
+        longitudeData: longitudeData,
+        countrys: countrys,
+        city: city,
+        state: state,
+        addressDetail: addressDetail,
+        latitudeData: latitudeData,
+      ),
       StatusPage(name: widget.username),
     ];
 
