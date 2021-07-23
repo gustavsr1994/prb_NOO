@@ -45,8 +45,21 @@ class Status {
   String approved1;
   String approved2;
   String approved3;
+  String siup;
+  String sppkp;
 
-  Status({this.id, this.custName, this.brandName, this.category, this.segment, this.subSegment, this.selectclass, this.phoneNo, this.companyStatus, this.faxNo, this.contactPerson, this.emailAddress, this.website, this.nPWP, this.kTP, this.currency, this.priceGroup, this.salesman, this.salesOffice, this.businessUnit, this.notes, this.fotoNPWP, this.fotoKTP, this.fotoSIUP, this.fotoGedung, this.fotoGedung1, this.fotoGedung2, this.fotoGedung3, this.custSignature, this.salesSignature, this.approval1Signature, this.approval2Signature, this.approval3Signature, this.imported, this.long, this.lat, this.approval1, this.approval2, this.approval3, this.status, this.createdBy, this.remark, this.createdDate, this.approved1, this.approved2, this.approved3});
+  Status({
+    this.id, this.custName, this.brandName, this.category, this.segment,
+    this.subSegment, this.selectclass, this.phoneNo, this.companyStatus,
+    this.faxNo, this.contactPerson, this.emailAddress, this.website, this.nPWP,
+    this.kTP, this.currency, this.priceGroup, this.salesman, this.salesOffice,
+    this.businessUnit, this.notes, this.fotoNPWP, this.fotoKTP, this.fotoSIUP,
+    this.fotoGedung, this.fotoGedung1, this.fotoGedung2, this.fotoGedung3,
+    this.custSignature, this.salesSignature, this.approval1Signature,
+    this.approval2Signature, this.approval3Signature, this.imported, this.long,
+    this.lat, this.approval1, this.approval2, this.approval3, this.status,
+    this.createdBy, this.remark, this.createdDate, this.approved1,
+    this.approved2, this.approved3, this.siup, this.sppkp});
 
   Status.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -95,6 +108,8 @@ class Status {
     approved1 = json['Approved1'];
     approved2 = json['Approved2'];
     approved3 = json['Approved3'];
+    siup = json['SIUP'];
+    sppkp = json['SPPKP'];
   }
 
   Map<String, dynamic> toJson() {
@@ -145,6 +160,8 @@ class Status {
     data['Approved1'] = this.approved1;
     data['Approved2'] = this.approved2;
     data['Approved3'] = this.approved3;
+    data['SIUP'] = this.siup;
+    data['SPPKP'] = this.sppkp;
     return data;
   }
 }

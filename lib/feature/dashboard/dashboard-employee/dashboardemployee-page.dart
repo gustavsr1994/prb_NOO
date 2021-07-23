@@ -22,7 +22,7 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs?.clear();
     Navigator.pushAndRemoveUntil(
-        context, 
+        context,
         MaterialPageRoute(builder: (context) => SplashPage()), (Route<dynamic>route) => false);
   }
 
@@ -119,10 +119,8 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
     ];
 
     print("Ini bottom nav");
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-          bottomNavigationBar: BottomNavigationBar(
+    return Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
             elevation: 50,
             backgroundColor: Color(0xFFF0F0F0),
             unselectedItemColor: Colors.black,
@@ -172,8 +170,7 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
               ),
             ],
           ),
-          body: pages[_selectedItemIndex]
-      ),
-    );
+          body: pages[_selectedItemIndex??""]
+      );
   }
 }

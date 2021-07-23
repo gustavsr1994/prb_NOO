@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:prb_app/base/base-url.dart';
+import 'package:prb_app/feature/dashboard/dashboard-employee/status/status-edit-page.dart';
 import 'package:prb_app/model/address.dart';
 import 'package:prb_app/model/approval.dart';
 import 'package:prb_app/model/status.dart';
@@ -31,17 +32,92 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
   Address dataCompanyAddress = new Address();
   Address dataDeliveryAddress = new Address();
   Address dataTAXAddress = new Address();
+  String statusApproval;
+  String statusRejected = "Rejected";
+  String statusDataApprovalDetail;
+  Widget _buttonIconEdit(){
+    return statusApproval == statusRejected ? InkWell(
+        child: Icon(
+          Icons.edit,
+          color: Colors.black,
+        ),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    StatusEditPage(
+                      //Customer form
+                      id: widget.id,
+                      custName: data.custName,
+                      brandName: data.brandName,
+                      category: data.category,
+                      distributionChannels: data.segment,
+                      channelSegmentation: data.subSegment,
+                      selectClass: data.selectclass,
+                      phoneNo: data.phoneNo,
+                      companyStatus: data.companyStatus,
+                      faxNo: data.faxNo,
+                      contactPerson: data.contactPerson,
+                      emailAddress: data.emailAddress,
+                      website: data.website,
+                      npwp: data.nPWP,
+                      ktp: data.kTP,
+                      siup:data.siup,
+                      sppkp:data.sppkp,
+                      currency: data.currency,
+                      priceGroup: data.priceGroup,
+                      salesman: data.salesman,
+                      salesOffice: data.salesOffice,
+                      businessUnit: data.businessUnit,
 
-  List<Approval> _dataApprovalDetail = [];
-  void getStatusDetail() async {
+                      //Company Address
+                      companyName: dataCompanyAddress.name,
+                      companyStreetName: dataCompanyAddress.streetName,
+                      companyCity: dataCompanyAddress.city,
+                      companyState: dataCompanyAddress.state,
+                      companyCountry: dataCompanyAddress.country,
+                      companyZipCode: dataCompanyAddress.zipCode.toString(),
+
+                      //tax address
+                      taxName: dataTAXAddress.name,
+                      taxStreetName: dataTAXAddress.streetName,
+                      taxCity: dataTAXAddress.city,
+                      taxState: dataTAXAddress.state,
+                      taxCountry: dataTAXAddress.country,
+                      taxZipCode: dataTAXAddress.zipCode.toString(),
+
+                      //delivery address
+                      deliveryName: dataDeliveryAddress.name,
+                      deliveryStreetName: dataDeliveryAddress.streetName,
+                      deliveryCity: dataDeliveryAddress.city,
+                      deliveryState: dataDeliveryAddress.state,
+                      deliveryCountry: dataDeliveryAddress.country,
+                      deliveryZipCode: dataDeliveryAddress.zipCode.toString(),
+
+                      //attachment
+                      fotoktp: data.fotoKTP,
+                      fotonpwp: data.fotoNPWP,
+                      fotonib: data.fotoSIUP,
+                      fotosppkp: data.fotoGedung3,
+                      fotofrontview: data.fotoGedung1,
+                      fotoinsideview: data.fotoGedung2,
+
+                    )),
+          );
+        }
+    ):Container();}
+  void getStatusDetail() async  {
     String usernameAuth = 'test';
     String passwordAuth = 'test456';
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    var urlGetApprovalDetail =
-        "http://119.18.157.236:8893/api/NOOCustTables/" + widget.id.toString();
+    var urlGetApprovalDetail = "http://119.18.157.236:8893/api/NOOCustTables/" + widget.id.toString();
     Response r = await http.get(Uri.parse(urlGetApprovalDetail), headers: <String,String>{'authorization': basicAuth});
+    var dataApprovalDetail = json.decode(r.body);
+    statusDataApprovalDetail = dataApprovalDetail["Status"].toString();
+    print("Yes yes3: ${dataApprovalDetail["Status"]}");
     print(r.statusCode);
     print(r.body);
     final listData = json.decode(r.body);
@@ -51,6 +127,8 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
     print(urlGetApprovalDetail);
     setState(() {
       data = Status.fromJson(listData);
+      statusApproval = statusDataApprovalDetail;
+      print("Yes 3x : $statusApproval");
     });
     setState(() {
       dataCompanyAddress = Address.fromJson(DataCompany);
@@ -62,19 +140,6 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
       dataTAXAddress = Address.fromJson(DataTAX);
     });
   }
-
-  // UploadSignatureApproval(imageFile, String namaFile) async {
-  //   var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
-  //   var request = new http.MultipartRequest("POST", uri);
-  //   request.files.add(
-  //       http.MultipartFile.fromBytes('file', imageFile, filename: namaFile));
-  //   var response = await request.send();
-  //   print(response.statusCode);
-  //   response.stream.transform(utf8.decoder).listen((value) {
-  //     print(value);
-  //     signatureApprovalFromServer = value.replaceAll("\"", "");
-  //   });
-  // }
 
   var iduser = 0;
 
@@ -98,6 +163,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
     exportBackgroundColor: Colors.white,
   );
 
+
   @override
   void initState() {
     // TODO: implement initState
@@ -113,11 +179,17 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white60,
-        title: Text(
-          "Status Detail",
-          style: TextStyle(
-            color: Colors.blue,
-          ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Status Detail",
+              style: TextStyle(
+                color: Colors.blue,
+              ),
+            ),
+            _buttonIconEdit(),
+          ],
         ),
       ),
       body: ListView(
@@ -434,11 +506,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.priceGroup ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.priceGroup ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -496,11 +570,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.businessUnit ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.businessUnit ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -535,7 +611,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           Row(
             children: [
               Text(
-                "Name                        :    ",
+                "Name                        :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
@@ -598,17 +674,18 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
+          //widget state
           Row(
             children: [
               Text(
-                "Country                     :     ",
+                "State                         :      ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Flexible(
                 child: Text(
-                  dataCompanyAddress.country ?? "",
+                  dataCompanyAddress.state ?? "",
                   style: TextStyle(
                     fontSize: 17,
                     color: Colors.black54,
@@ -620,17 +697,18 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
+          //widget country
           Row(
             children: [
               Text(
-                "State                         :     ",
+                "Country                    :      ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Flexible(
                 child: Text(
-                  dataCompanyAddress.state ?? "",
+                  dataCompanyAddress.country ?? "",
                   style: TextStyle(
                     fontSize: 17,
                     color: Colors.black54,
@@ -751,28 +829,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
-          Row(
-            children: [
-              Text(
-                "Country                     :    ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  dataTAXAddress.country ?? "",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
+          //widget state
           Row(
             children: [
               Text(
@@ -784,6 +841,29 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
               Flexible(
                 child: Text(
                   dataTAXAddress.state ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //widget country
+          Row(
+            children: [
+              Text(
+                "Country                     :    ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  dataTAXAddress.country ?? "",
                   style: TextStyle(
                     fontSize: 17,
                     color: Colors.black54,
@@ -904,28 +984,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
-          Row(
-            children: [
-              Text(
-                "Country                     :    ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  dataDeliveryAddress.country ?? "",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
+          //widget state
           Row(
             children: [
               Text(
@@ -937,6 +996,29 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
               Flexible(
                 child: Text(
                   dataDeliveryAddress.state ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //widget country
+          Row(
+            children: [
+              Text(
+                "Country                     :    ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  dataDeliveryAddress.country ?? "",
                   style: TextStyle(
                     fontSize: 17,
                     color: Colors.black54,
@@ -1114,6 +1196,52 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
+          //widget foto SPPKP
+          Row(
+            children: [
+              Text(
+                "Foto SPPKP          :      ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Container(
+                  height: 100,
+                  child:
+                  // data.fotoGedung != null ? Container():
+                  InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) => Image.network(
+                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung3}",
+                        ),
+                      );
+                    },
+                    child: Image.network(
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung3}",
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
           //widget foto gedung depan
           Row(
             children: [
@@ -1160,11 +1288,11 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
-          //widget foto gedung samping
+          //widget foto gedung dalam
           Row(
             children: [
               Text(
-                "Foto Gedung\nSamping                :      ",
+                "Foto Gedung\nDalam                   :       ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
@@ -1185,52 +1313,6 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                     },
                     child: Image.network(
                       "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung2}",
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes
-                                : null,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          //widget foto gedung dalam
-          Row(
-            children: [
-              Text(
-                "Foto Gedung\nDalam                   :       ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Container(
-                  height: 100,
-                  child:
-                  // data.fotoGedung != null ? Container():
-                  InkWell(
-                    onTap: () async {
-                      await showDialog(
-                        context: context,
-                        builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung3}",
-                        ),
-                      );
-                    },
-                    child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung3}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;

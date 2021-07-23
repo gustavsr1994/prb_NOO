@@ -21,6 +21,8 @@ class _LoginPageState extends State<LoginPage> {
   String txtMsg = '';
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+
   processLogin(String username, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String usernameAuth = 'test';
@@ -93,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (context) => DashboardEmployeePage(
-                      username: user.name,
+                      username: user?.name??"",
                     )),
             (Route<dynamic> route) => false);
         // Navigator.push(

@@ -5,36 +5,74 @@ import 'dart:typed_data';
 import 'package:async/async.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:commons/commons.dart';
-import 'package:custom_switch/custom_switch.dart';
-import 'package:easy_alert/easy_alert.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:path/path.dart';
+import 'package:prb_app/model/address.dart';
+import 'package:prb_app/model/status.dart';
 import 'file:///C:/Users/mz002/StudioProjects/prb_NOO/lib/feature/dashboard/dashboard-employee/dashboardemployee-page.dart';
 import 'package:signature/signature.dart';
 
 
-class CustomerPage extends StatefulWidget {
+class StatusEditPage extends StatefulWidget {
+  //autofil edit reject customer form
+  int id; String custName; String brandName; String category;
+  String distributionChannels; String channelSegmentation; String selectClass;
+  String phoneNo; String companyStatus; String faxNo; String contactPerson;
+  String emailAddress; String website; String npwp; String ktp;
+  String currency; String priceGroup; String salesman; String salesOffice;
+  String businessUnit; String siup; String sppkp;
 
-  String name;
-  String longitudeData;
-  String latitudeData;
-  String addressDetail;
-  String streetName;
-  String city;
-  String countrys;
-  String state;
+  //autofil edit reject company address form
+  String companyName; String companyStreetName; String companyCity;
+  String companyState; String companyCountry; String companyZipCode;
+
+  //autofil edit reject tax address form
+  String taxName; String taxStreetName; String taxCity;
+  String taxState; String taxCountry; String taxZipCode;
+
+  //autofil edit reject delivery address form
+  String deliveryName; String deliveryStreetName; String deliveryCity;
+  String deliveryState; String deliveryCountry; String deliveryZipCode;
+
+
+  String fotoktp; String fotonpwp; String fotonib; String fotosppkp;
+  String fotofrontview; String fotoinsideview;
+  String longitudeData; String latitudeData; String addressDetail;
+  String streetName; String city; String countrys; String state;
   String zipCode;
-  CustomerPage({
+  StatusEditPage({
     Key key,
-    this.name,
+    this.id,
+    //customer form
+    this.custName, this.brandName, this.category, this.distributionChannels,
+    this.channelSegmentation, this.selectClass, this.phoneNo, this.companyStatus,
+    this.faxNo, this.contactPerson, this.emailAddress, this.website,
+    this.npwp, this.ktp, this.currency, this.priceGroup, this.salesman,
+    this.salesOffice, this.businessUnit, this.sppkp, this.siup,
+
+    //company address form
+    this.companyName, this.companyStreetName, this.companyCity, this.companyState,
+    this.companyCountry, this.companyZipCode,
+
+    //tax address form
+    this.taxName, this.taxStreetName, this.taxCity, this.taxState,
+    this.taxCountry, this.taxZipCode,
+
+    //delivery address form
+    this.deliveryName, this.deliveryStreetName, this.deliveryCity, this.deliveryState,
+    this.deliveryCountry, this.deliveryZipCode,
+
+    //attachment
+    this.fotoktp, this.fotonpwp, this.fotonib, this.fotosppkp, this.fotofrontview, this.fotoinsideview,
+
+    //address and delivery form
     this.longitudeData,
     this.latitudeData,
     this.addressDetail,
@@ -45,10 +83,11 @@ class CustomerPage extends StatefulWidget {
     this.zipCode,
   }) : super(key: key);
   @override
-  _CustomerPageState createState() => _CustomerPageState();
+  _StatusEditPageState createState() => _StatusEditPageState();
 }
 
-class _CustomerPageState extends State<CustomerPage> {
+class _StatusEditPageState extends State<StatusEditPage> {
+
 
   final _formkey = GlobalKey<FormState>();
 
@@ -105,7 +144,6 @@ class _CustomerPageState extends State<CustomerPage> {
   loadLongLatFromSharedPrefs() async{
     SharedPreferences prefs =await SharedPreferences.getInstance();
     setState(() {
-      salesmanId = widget.name;
       streetName = (prefs.getString("getStreetName")??"");
       city = (prefs.getString("getCity")??"");
       countrys = (prefs.getString("getCountry")??"");
@@ -124,7 +162,7 @@ class _CustomerPageState extends State<CustomerPage> {
     });
   }
 
-
+  var isImageCaptured = false;
   File _imageKTP;
   File _imageNPWP;
   File _imageSIUP;
@@ -161,6 +199,7 @@ class _CustomerPageState extends State<CustomerPage> {
     setState(() {
       if (pickedFile != null) {
         _imageKTP = renamedFile;
+        isImageCaptured = true;
       } else {
         print('No image selected.');
       }
@@ -217,6 +256,7 @@ class _CustomerPageState extends State<CustomerPage> {
     setState(() {
       if (pickedFile != null) {
         _imageNPWP = renamedFile;
+        isImageCaptured = true;
       } else {
         print('No image selected.');
       }
@@ -273,6 +313,7 @@ class _CustomerPageState extends State<CustomerPage> {
     setState(() {
       if (pickedFile != null) {
         _imageSIUP = renamedFile;
+        isImageCaptured = true;
       } else {
         print('No image selected.');
       }
@@ -385,6 +426,7 @@ class _CustomerPageState extends State<CustomerPage> {
     setState(() {
       if (pickedFile != null) {
         _imageBusinessPhotoFront = renamedFile;
+        isImageCaptured = true;
       } else {
         print('No image selected.');
       }
@@ -442,6 +484,7 @@ class _CustomerPageState extends State<CustomerPage> {
     setState(() {
       if (pickedFile != null) {
         _imageBusinessPhotoInside = renamedFile;
+        isImageCaptured = true;
       } else {
         print('No image selected.');
       }
@@ -499,6 +542,7 @@ class _CustomerPageState extends State<CustomerPage> {
     setState(() {
       if (pickedFile != null) {
         _imageSPPKP = renamedFile;
+        isImageCaptured = true;
       } else {
         print('No image selected.');
       }
@@ -888,14 +932,6 @@ class _CustomerPageState extends State<CustomerPage> {
     exportBackgroundColor: Colors.blue,
   );
 
-  String userIDPrefs = "";
-  loadUserIDFromSharedPrefs()async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      userIDPrefs = (prefs.getString("iduser")??"");
-    });
-  }
-
   //Proses di submit button
   processSubmitCustomerForm(
       //Customer
@@ -1001,7 +1037,7 @@ class _CustomerPageState extends State<CustomerPage> {
           "FotoGedung1": "$businessPhotoFrontFromServer",
           "FotoGedung2": "$businessPhotoInsideFromServer",
           "FotoGedung3": "$sppkpFromServer",
-          "CreatedBy": "$userIDPrefs",
+          "CreatedBy": 1,
           "CreatedDate": "2021-04-05T14:56:48.57",
           "TaxAddresses": [
             {
@@ -1044,36 +1080,61 @@ class _CustomerPageState extends State<CustomerPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadUserIDFromSharedPrefs();
-    print(widget.name);getSegment();getCategory();getClass();getPriceGroup();
-    getCompanyStatus();getCurrency();getBusinessUnit();getSalesOffice();
+    getSegment();
+    getCategory();
+    getClass();
+    getPriceGroup();
+    getCompanyStatus();
+    getCurrency();
+    getBusinessUnit();
+    getSalesOffice();
     _signaturecontrollersales.addListener(() => print('Value changed'));
     _signaturecontrollercustomer.addListener(() => print('Value changed'));
-    // _determinePosition();
     loadLongLatFromSharedPrefs();
-    print("Ini Jalanya : $streetName");
-    _salesmanControllerCustomer.text = widget.name;
+    print("uy ini foto: ${widget.fotoktp}");
+
+    //autofill customer form
+    _customerNameControllerCustomer.text = widget.custName;
+    _brandNameControllerCustomer.text = widget.brandName;
+    _contactPersonControllerCustomer.text = widget.contactPerson;
+    _ktpControllerCustomer.text = widget.ktp;
+    _npwpControllerCustomer.text = widget.npwp;
+    _siupControllerCustomer.text = widget.siup;
+    _sppkpControllerCustomer.text = widget.sppkp;
+    _salesmanControllerCustomer.text = widget.salesman;
+    _phoneControllerCustomer.text = widget.phoneNo;
+    _faxControllerCustomer.text = widget.faxNo;
+    _emailAddressControllerCustomer.text = widget.emailAddress;
+    _websiteControllerCustomer.text = widget.website;
     //autofill Company Address
-    _streetControllerCompany.text = widget.streetName;
-    _cityControllerCompany.text = widget.city;
-    _countryControllerCompany.text = widget.countrys;
-    _stateControllerCompany.text = widget.state;
-    _zipCodeControllerCompany.text = widget.zipCode;
+    _nameControllerCompany.text = widget.companyName;
+    _streetControllerCompany.text = widget.companyStreetName;
+    _cityControllerCompany.text = widget.companyCity;
+    _countryControllerCompany.text = widget.companyCountry;
+    _stateControllerCompany.text = widget.companyState;
+    _zipCodeControllerCompany.text = widget.companyZipCode;
     //autofill Tax Address
-    _streetControllerTax.text = widget.streetName;
-    _cityControllerTax.text = widget.city;
-    _countryControllerTax.text = widget.countrys;
-    _stateControllerTax.text = widget.state;
-    _zipCodeControllerTax.text = widget.zipCode;
+    _nameControllerTax.text = widget.taxName;
+    _streetControllerTax.text = widget.taxStreetName;
+    _cityControllerTax.text = widget.taxCity;
+    _countryControllerTax.text = widget.taxCountry;
+    _stateControllerTax.text = widget.taxState;
+    _zipCodeControllerTax.text = widget.taxZipCode;
     //autofill Delivery Address
-    _streetControllerDelivery.text = widget.streetName;
-    _cityControllerDelivery.text = widget.city;
-    _countryControllerDelivery.text = widget.countrys;
-    _stateControllerDelivery.text = widget.state;
-    _zipCodeControllerDelivery.text = widget.zipCode;
+    _nameControllerDelivery.text = widget.deliveryName;
+    _streetControllerDelivery.text = widget.deliveryStreetName;
+    _cityControllerDelivery.text = widget.deliveryCity;
+    _countryControllerDelivery.text = widget.deliveryCountry;
+    _stateControllerDelivery.text = widget.deliveryState;
+    _zipCodeControllerDelivery.text = widget.deliveryZipCode;
     _longitudeControllerDelivery.text = widget.longitudeData;
     _latitudeControllerDelivery.text = widget.latitudeData;
+
+    // var autoFillKTP = Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotoKtp}",);
+    // //attachment
+    // _imageKTP = File("$autoFillKTP");
   }
+
 
   String text = 'Press To Load';
   bool status = false;
@@ -1094,7 +1155,7 @@ class _CustomerPageState extends State<CustomerPage> {
       appBar: AppBar(
         backgroundColor: Colors.white60,
         title: Text(
-          "NOO Form",
+          "Edit Form",
           style: TextStyle(
             color: Colors.blue,
             fontWeight: FontWeight.bold,
@@ -1105,7 +1166,7 @@ class _CustomerPageState extends State<CustomerPage> {
             padding: const EdgeInsets.all(20.0),
             child: Center(
               child: Text(
-                widget.name??"",
+                "",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -1232,25 +1293,25 @@ class _CustomerPageState extends State<CustomerPage> {
                   SizedBox(
                     width: 10,
                   ),
-                    DropdownButton(
-                      hint: Text("Select Sales Office"),
-                      value: _valSalesOffice,
-                      items: _dataSalesOffice.map((item) {
-                        return DropdownMenuItem(
-                          child: Text(item['NameSO'] ?? "loading.."),
-                          value: item['NameSO'],
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _valSalesOffice = value;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
+                  DropdownButton(
+                    hint: Text("Select Sales Office"),
+                    value: _valSalesOffice,
+                    items: _dataSalesOffice.map((item) {
+                      return DropdownMenuItem(
+                        child: Text(item['NameSO'] ?? "loading.."),
+                        value: item['NameSO'],
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _valSalesOffice = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
               ),
 
               //Business Unit
@@ -2903,27 +2964,24 @@ class _CustomerPageState extends State<CustomerPage> {
                           width: 150,
                           child: ListView(
                             children: [
-
                               Column(
                                 children: [
                                   SizedBox(
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageKTP == null
-                                        ? Text("KTP")
-                                        : Column(
-                                          children: [
-                                            Text("KTP"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                      _imageKTP,
-                                      fit: BoxFit.cover,
-//                                  width: 150,
-//                                  height: 80,
-                                    ),
-                                          ],
+                                    child:Column(
+                                      children: [
+                                        Text("KTP"),
+                                        SizedBox(height: 10,),
+                                        isImageCaptured?Image.file(
+                                          _imageKTP,
+                                          fit: BoxFit.cover,
+                                        ):Image.network(
+                                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotoktp}",
                                         ),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -2932,6 +2990,7 @@ class _CustomerPageState extends State<CustomerPage> {
                               ),
                               FloatingActionButton(
                                 onPressed: getImageKTPFromCamera,
+                                    // isImageCaptured = true;
                                 tooltip: 'Pick Image',
                                 child: Icon(Icons.add_a_photo),
                               ),
@@ -2945,27 +3004,24 @@ class _CustomerPageState extends State<CustomerPage> {
                           width: 150,
                           child: ListView(
                             children: [
-
                               Column(
                                 children: [
                                   SizedBox(
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageKTP == null
-                                        ? Text("KTP")
-                                        : Column(
-                                          children: [
-                                            Text("KTP"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                      _imageKTP,
-                                      fit: BoxFit.cover,
-//                                  width: 150,
-//                                  height: 80,
-                                    ),
-                                          ],
+                                    child: Column(
+                                      children: [
+                                        Text("KTP"),
+                                        SizedBox(height: 10,),
+                                        isImageCaptured?Image.file(
+                                          _imageKTP,
+                                          fit: BoxFit.cover,
+                                        ):Image.network(
+                                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotoktp}",
                                         ),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3000,20 +3056,16 @@ class _CustomerPageState extends State<CustomerPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageNPWP == null
-                                        ? Text("NPWP")
-                                        : Column(
-                                          children: [
-                                            Text("NPWP"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                      _imageNPWP,
-                                      fit: BoxFit.cover,
-//                                  width: 150,
-//                                  height: 80,
+                                    child: Column(
+                                      children: [
+                                        Text("NPWP"),
+                                        SizedBox(height: 10,),
+                                        isImageCaptured?Image.file(
+                                          _imageNPWP,
+                                          fit: BoxFit.cover,
+                                        ):Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotonpwp}",),
+                                      ],
                                     ),
-                                          ],
-                                        ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3041,20 +3093,16 @@ class _CustomerPageState extends State<CustomerPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageNPWP == null
-                                        ? Text("NPWP")
-                                        : Column(
-                                          children: [
-                                            Text("NPWP"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                      _imageNPWP,
-                                      fit: BoxFit.cover,
-//                                  width: 150,
-//                                  height: 80,
+                                    child: Column(
+                                      children: [
+                                        Text("NPWP"),
+                                        SizedBox(height: 10,),
+                                        isImageCaptured?Image.file(
+                                          _imageNPWP,
+                                          fit: BoxFit.cover,
+                                        ):Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotonpwp}",)
+                                      ],
                                     ),
-                                          ],
-                                        ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3089,20 +3137,16 @@ class _CustomerPageState extends State<CustomerPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageSIUP == null
-                                        ? Text("NIB")
-                                        : Column(
-                                          children: [
-                                            Text("NIB"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                      _imageSIUP,
-                                      fit: BoxFit.cover,
-//                                  width: 150,
-//                                  height: 80,
+                                    child: Column(
+                                      children: [
+                                        Text("NIB"),
+                                        SizedBox(height: 10,),
+                                        isImageCaptured?Image.file(
+                                          _imageSIUP,
+                                          fit: BoxFit.cover,
+                                        ):Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotonib}"),
+                                      ],
                                     ),
-                                          ],
-                                        ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3130,18 +3174,16 @@ class _CustomerPageState extends State<CustomerPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageSIUP == null
-                                        ? Text("NIB")
-                                        : Column(
-                                          children: [
-                                            Text("NIB"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                              _imageSIUP,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ],
-                                        ),
+                                    child: Column(
+                                      children: [
+                                        Text("NIB"),
+                                        SizedBox(height: 10,),
+                                        isImageCaptured?Image.file(
+                                          _imageSIUP,
+                                          fit: BoxFit.cover,
+                                        ):Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotonib}"),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3177,18 +3219,16 @@ class _CustomerPageState extends State<CustomerPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageSPPKP == null
-                                        ? Text("SPPKP")
-                                        : Column(
-                                          children: [
-                                            Text("SPPKP"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                              _imageSPPKP,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ],
-                                        ),
+                                    child: Column(
+                                      children: [
+                                        Text("SPPKP"),
+                                        SizedBox(height: 10,),
+                                        isImageCaptured?Image.file(
+                                          _imageSPPKP,
+                                          fit: BoxFit.cover,
+                                        ):Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotosppkp}"),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3216,18 +3256,16 @@ class _CustomerPageState extends State<CustomerPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageSPPKP == null
-                                        ? Text("SPPKP")
-                                        : Column(
-                                          children: [
-                                            Text("SPPKP"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                      _imageSPPKP,
-                                      fit: BoxFit.cover,
+                                    child: Column(
+                                      children: [
+                                        Text("SPPKP"),
+                                        SizedBox(height: 10,),
+                                        isImageCaptured?Image.file(
+                                          _imageSPPKP,
+                                          fit: BoxFit.cover,
+                                        ):Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotosppkp}"),
+                                      ],
                                     ),
-                                          ],
-                                        ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3263,18 +3301,16 @@ class _CustomerPageState extends State<CustomerPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageBusinessPhotoFront == null
-                                        ? Text("Front View")
-                                        : Column(
-                                          children: [
-                                            Text("Front View"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                              _imageBusinessPhotoFront,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ],
-                                        ),
+                                    child: Column(
+                                      children: [
+                                        Text("Front View"),
+                                        SizedBox(height: 10,),
+                                        isImageCaptured?Image.file(
+                                          _imageBusinessPhotoFront,
+                                          fit: BoxFit.cover,
+                                        ):Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotofrontview}"),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3302,18 +3338,16 @@ class _CustomerPageState extends State<CustomerPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageBusinessPhotoFront == null
-                                        ? Text("Front View")
-                                        : Column(
-                                          children: [
-                                            Text("Front View"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                      _imageBusinessPhotoFront,
-                                      fit: BoxFit.cover,
+                                    child: Column(
+                                      children: [
+                                        Text("Front View"),
+                                        SizedBox(height: 10,),
+                                        isImageCaptured?Image.file(
+                                          _imageBusinessPhotoFront,
+                                          fit: BoxFit.cover,
+                                        ):Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotofrontview}"),
+                                      ],
                                     ),
-                                          ],
-                                        ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3349,18 +3383,16 @@ class _CustomerPageState extends State<CustomerPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageBusinessPhotoInside == null
-                                        ? Text("Inside View")
-                                        : Column(
-                                          children: [
-                                            Text("Inside View"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                              _imageBusinessPhotoInside,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ],
-                                        ),
+                                    child: Column(
+                                      children: [
+                                        Text("Inside View"),
+                                        SizedBox(height: 10,),
+                                        isImageCaptured?Image.file(
+                                          _imageBusinessPhotoInside,
+                                          fit: BoxFit.cover,
+                                        ):Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotoinsideview}"),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3388,18 +3420,16 @@ class _CustomerPageState extends State<CustomerPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageBusinessPhotoInside == null
-                                        ? Text("Inside View")
-                                        : Column(
-                                          children: [
-                                            Text("Inside View"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                              _imageBusinessPhotoInside,
-                                              fit: BoxFit.cover,
+                                    child: Column(
+                                      children: [
+                                        Text("Inside View"),
+                                        SizedBox(height: 10,),
+                                        isImageCaptured?Image.file(
+                                          _imageBusinessPhotoInside,
+                                          fit: BoxFit.cover,
+                                        ):Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotoinsideview}"),
+                                      ],
                                     ),
-                                          ],
-                                        ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3545,7 +3575,7 @@ class _CustomerPageState extends State<CustomerPage> {
                                   //Clear Canvass
                                   // ignore: deprecated_member_use
                                   RaisedButton(
-                                    color: Colors.blue,
+                                      color: Colors.blue,
                                       child: Text(
                                         "Clear",
                                         style: TextStyle(
@@ -3553,9 +3583,9 @@ class _CustomerPageState extends State<CustomerPage> {
                                         ),
                                       ),
                                       onPressed: () {
-                                      setState(() =>
-                                          _signaturecontrollercustomer.clear());
-                                    }),
+                                        setState(() =>
+                                            _signaturecontrollercustomer.clear());
+                                      }),
                                   // IconButton(
                                   //     icon: const Icon(
                                   //       Icons.clear,

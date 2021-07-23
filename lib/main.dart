@@ -55,8 +55,8 @@ class _MyAppState extends State<MyApp> {
       latitudeData = "${position.latitude}";
       streetName = street;
       city = subAdministrativeArea;
-      countrys = administrativeArea;
-      state = country;
+      state = administrativeArea;
+      countrys = country;
       zipCode = postalCode;
       addressDetail = address;
       prefs.setString("getStreetName", streetName);

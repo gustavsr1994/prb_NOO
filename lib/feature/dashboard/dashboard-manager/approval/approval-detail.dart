@@ -669,28 +669,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
             SizedBox(
               height: 10,
             ),
-            Row(
-              children: [
-                Text(
-                  "Country                     :     ",
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    dataCompanyAddress.country ?? "",
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
+            //widget state
             Row(
               children: [
                 Text(
@@ -702,6 +681,29 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 Flexible(
                   child: Text(
                     dataCompanyAddress.state ?? "",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            //widget country
+            Row(
+              children: [
+                Text(
+                  "Country                     :     ",
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    dataCompanyAddress.country ?? "",
                     style: TextStyle(
                       fontSize: 17,
                       color: Colors.black54,
@@ -822,28 +824,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
             SizedBox(
               height: 10,
             ),
-            Row(
-              children: [
-                Text(
-                  "Country                     :    ",
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    dataTAXAddress.country ?? "",
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
+            //widget state
             Row(
               children: [
                 Text(
@@ -855,6 +836,29 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 Flexible(
                   child: Text(
                     dataTAXAddress.state ?? "",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            //widget country
+            Row(
+              children: [
+                Text(
+                  "Country                     :    ",
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    dataTAXAddress.country ?? "",
                     style: TextStyle(
                       fontSize: 17,
                       color: Colors.black54,
@@ -975,28 +979,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
             SizedBox(
               height: 10,
             ),
-            Row(
-              children: [
-                Text(
-                  "Country                     :    ",
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    dataDeliveryAddress.country ?? "",
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
+            //widget state
             Row(
               children: [
                 Text(
@@ -1008,6 +991,29 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 Flexible(
                   child: Text(
                     dataDeliveryAddress.state ?? "",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            //widget country
+            Row(
+              children: [
+                Text(
+                  "Country                     :    ",
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    dataDeliveryAddress.country ?? "",
                     style: TextStyle(
                       fontSize: 17,
                       color: Colors.black54,
@@ -1184,7 +1190,52 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
             SizedBox(
               height: 10,
             ),
-
+            //foto SPPKP
+            Row(
+              children: [
+                Text(
+                  "Foto SPPKP           :      ",
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+                Flexible(
+                  child: Container(
+                    height: 100,
+                    child:
+                    // data.fotoGedung != null ? Container():
+                    InkWell(
+                      onTap: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (_) => Image.network(
+                            "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${dataApproval.fotoGedung3}",
+                          ),
+                        );
+                      },
+                      child: Image.network(
+                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${dataApproval.fotoGedung3}",
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes
+                                  : null,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
             //foto gedung depan
             Row(
               children: [
@@ -1231,11 +1282,11 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
             SizedBox(
               height: 10,
             ),
-            //foto gedung samping
+            //foto gedung dalam
             Row(
               children: [
                 Text(
-                  "Foto Gedung\nSamping                 :      ",
+                  "Foto Gedung\nDalam                     :       ",
                   style: TextStyle(
                     fontSize: 17,
                   ),
@@ -1256,52 +1307,6 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                       },
                       child: Image.network(
                         "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${dataApproval.fotoGedung2}",
-                        loadingBuilder: (BuildContext context, Widget child,
-                            ImageChunkEvent loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes
-                                  : null,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            //foto gedung dalam
-            Row(
-              children: [
-                Text(
-                  "Foto Gedung\nDalam                     :       ",
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-                Flexible(
-                  child: Container(
-                    height: 100,
-                    child:
-                    // data.fotoGedung != null ? Container():
-                    InkWell(
-                      onTap: () async {
-                        await showDialog(
-                          context: context,
-                          builder: (_) => Image.network(
-                            "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${dataApproval.fotoGedung3}",
-                          ),
-                        );
-                      },
-                      child: Image.network(
-                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${dataApproval.fotoGedung3}",
                         loadingBuilder: (BuildContext context, Widget child,
                             ImageChunkEvent loadingProgress) {
                           if (loadingProgress == null) return child;
