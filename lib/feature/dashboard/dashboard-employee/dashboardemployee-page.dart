@@ -8,7 +8,8 @@ import 'customer/customer-page.dart';
 
 class DashboardEmployeePage extends StatefulWidget {
   String username;
-  DashboardEmployeePage({Key key, this.username}) : super(key: key);
+  int iduser;
+  DashboardEmployeePage({Key key, this.username, this.iduser}) : super(key: key);
 
   @override
   _DashboardEmployeePageState createState() => _DashboardEmployeePageState();
@@ -106,6 +107,7 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
     final List pages = [
       CustomerPage(
         name: widget.username,
+        iduser: widget.iduser,
         zipCode: zipCode,
         streetName: streetName,
         longitudeData: longitudeData,
@@ -116,6 +118,16 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
         latitudeData: latitudeData,
       ),
       StatusPage(name: widget.username),
+      InkWell(
+        child: Icon(
+          Icons.logout,
+        ),
+        onTap: () {
+          setState(() {
+            showAlertDialog(context);
+          });
+        },
+      ),
     ];
 
     print("Ini bottom nav");

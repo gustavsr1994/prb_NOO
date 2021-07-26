@@ -32,8 +32,10 @@ class CustomerPage extends StatefulWidget {
   String countrys;
   String state;
   String zipCode;
+  int iduser;
   CustomerPage({
     Key key,
+    this.iduser,
     this.name,
     this.longitudeData,
     this.latitudeData,
@@ -874,28 +876,8 @@ class _CustomerPageState extends State<CustomerPage> {
     exportBackgroundColor: Colors.white,
   );
 
-  //SignatureController ASM
-  final SignatureController _signaturecontrollerasm = SignatureController(
-    penStrokeWidth: 1,
-    penColor: Colors.red,
-    exportBackgroundColor: Colors.blue,
-  );
 
-  //SignatureController BMACA
-  final SignatureController _signaturecontrollerbmaca = SignatureController(
-    penStrokeWidth: 1,
-    penColor: Colors.red,
-    exportBackgroundColor: Colors.blue,
-  );
-
-  String userIDPrefs = "";
-  loadUserIDFromSharedPrefs()async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      userIDPrefs = (prefs.getString("iduser")??"");
-    });
-  }
-
+  String idUserFromLogin = "";
   //Proses di submit button
   processSubmitCustomerForm(
       //Customer
@@ -1001,7 +983,7 @@ class _CustomerPageState extends State<CustomerPage> {
           "FotoGedung1": "$businessPhotoFrontFromServer",
           "FotoGedung2": "$businessPhotoInsideFromServer",
           "FotoGedung3": "$sppkpFromServer",
-          "CreatedBy": "$userIDPrefs",
+          "CreatedBy": "$idUserFromLogin",
           "CreatedDate": "2021-04-05T14:56:48.57",
           "TaxAddresses": [
             {
@@ -1044,7 +1026,8 @@ class _CustomerPageState extends State<CustomerPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadUserIDFromSharedPrefs();
+    idUserFromLogin = widget.iduser.toString();
+    print("INI IDUSER : $idUserFromLogin");
     print(widget.name);getSegment();getCategory();getClass();getPriceGroup();
     getCompanyStatus();getCurrency();getBusinessUnit();getSalesOffice();
     _signaturecontrollersales.addListener(() => print('Value changed'));
@@ -1106,6 +1089,17 @@ class _CustomerPageState extends State<CustomerPage> {
             child: Center(
               child: Text(
                 widget.name??"",
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Center(
+              child: Text(
+                idUserFromLogin.toString()??"",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -2841,24 +2835,6 @@ class _CustomerPageState extends State<CustomerPage> {
                       ),
                     ),
                   ),
-                  // Container(
-                  //   height: 25,
-                  //   width: 65,
-                  //   child: CustomSwitch(
-                  //     activeColor: Colors.green,
-                  //     value: locationVal,
-                  //     onChanged: (value){
-                  //       print("VALUE : $value");
-                  //       setState(() {
-                  //         locationVal = true;
-                  //         _determinePosition();
-                  //         print(locationVal);
-                  //         print(value);
-                  //
-                  //       });
-                  //     },
-                  //   ),
-                  // ),
                   Text(
                       ""
                   )

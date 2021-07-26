@@ -17,10 +17,12 @@ import 'package:http/http.dart';
 
 class StatusDetailPage extends StatefulWidget {
   int id;
+  String userid;
 
   StatusDetailPage({
     Key key,
     this.id,
+    this.userid,
   });
 
   @override
@@ -48,6 +50,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                 builder: (context) =>
                     StatusEditPage(
                       //Customer form
+                      userid: widget.userid,
                       id: widget.id,
                       custName: data.custName,
                       brandName: data.brandName,
@@ -72,28 +75,36 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                       businessUnit: data.businessUnit,
 
                       //Company Address
+                      companyID: dataCompanyAddress.id,
                       companyName: dataCompanyAddress.name,
                       companyStreetName: dataCompanyAddress.streetName,
                       companyCity: dataCompanyAddress.city,
                       companyState: dataCompanyAddress.state,
                       companyCountry: dataCompanyAddress.country,
                       companyZipCode: dataCompanyAddress.zipCode.toString(),
+                      companyParentID: dataCompanyAddress.parentId,
 
                       //tax address
+                      taxID: dataTAXAddress.id,
                       taxName: dataTAXAddress.name,
                       taxStreetName: dataTAXAddress.streetName,
                       taxCity: dataTAXAddress.city,
                       taxState: dataTAXAddress.state,
                       taxCountry: dataTAXAddress.country,
                       taxZipCode: dataTAXAddress.zipCode.toString(),
+                      taxParentID: dataTAXAddress.parentId,
 
                       //delivery address
+                      deliveryID: dataDeliveryAddress.id,
                       deliveryName: dataDeliveryAddress.name,
                       deliveryStreetName: dataDeliveryAddress.streetName,
                       deliveryCity: dataDeliveryAddress.city,
                       deliveryState: dataDeliveryAddress.state,
                       deliveryCountry: dataDeliveryAddress.country,
                       deliveryZipCode: dataDeliveryAddress.zipCode.toString(),
+                      autoLatitudeData: data.lat,
+                      autoLongitudeData: data.long,
+                      deliveryParentID: dataDeliveryAddress.parentId,
 
                       //attachment
                       fotoktp: data.fotoKTP,
@@ -1488,14 +1499,16 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              AutoSizeText(
-                data.remark ?? "",
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54,
+              Flexible(
+                child: AutoSizeText(
+                  data.remark ?? "",
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],

@@ -7,6 +7,8 @@ class Address {
   String state;
   int zipCode;
   int parentId;
+  String long;
+  String lat;
 
   Address(
       {this.id,
@@ -16,7 +18,10 @@ class Address {
         this.country,
         this.state,
         this.zipCode,
-        this.parentId});
+        this.parentId,
+        this.long,
+        this.lat,
+      });
 
   Address.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -27,6 +32,9 @@ class Address {
     state = json['State'];
     zipCode = json['ZipCode'];
     parentId = json['ParentId'];
+    long = json['Long'];
+    lat = json['Lat'];
+
   }
 
   Map<String, dynamic> toJson() {
@@ -39,6 +47,8 @@ class Address {
     data['State'] = this.state;
     data['ZipCode'] = this.zipCode;
     data['ParentId'] = this.parentId;
+    data['Long'] = this.long;
+    data['Lat'] = this.lat;
     return data;
   }
 }

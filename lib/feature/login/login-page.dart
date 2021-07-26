@@ -75,6 +75,8 @@ class _LoginPageState extends State<LoginPage> {
     print("cek ini");
     print(user.id);
     prefs.setInt("iduser", user.id);
+    var iduser = (prefs.getInt("iduser"));
+    print("GOMU_GOMU NO PISTOL IDUSER : $iduser ");
     print(user.username);
     print(user.name);
     print(jsonLogin.body.toString());
@@ -95,8 +97,9 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (context) => DashboardEmployeePage(
-                      username: user?.name??"",
-                    )),
+                  username: user?.name??"",
+                  iduser: iduser,
+                )),
             (Route<dynamic> route) => false);
         // Navigator.push(
         //     context,

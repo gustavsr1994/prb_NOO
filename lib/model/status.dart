@@ -110,6 +110,7 @@ class Status {
     approved3 = json['Approved3'];
     siup = json['SIUP'];
     sppkp = json['SPPKP'];
+
   }
 
   Map<String, dynamic> toJson() {

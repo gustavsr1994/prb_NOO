@@ -19,6 +19,7 @@ class _StatusPageState extends State<StatusPage> {
 
   List data;
 
+  String userId = "";
   Future<String> getData() async {
     String usernameAuth = 'test';
     String passwordAuth = 'test456';
@@ -27,7 +28,7 @@ class _StatusPageState extends State<StatusPage> {
     print(basicAuth);
     var urlGetApproval = "http://119.18.157.236:8893/Api/FindNOObyUserId/";
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String userId = prefs.getInt("iduser").toString();
+    userId = prefs.getInt("iduser").toString();
     print(urlGetApproval + userId);
     Response r = await get(Uri.parse(urlGetApproval + userId),headers: <String,String>{'authorization': basicAuth});
     print(r.statusCode);
@@ -73,6 +74,7 @@ class _StatusPageState extends State<StatusPage> {
     print(listData);
     listData;
     getData();
+    userId;
   }
 
   @override
@@ -227,6 +229,7 @@ class _StatusPageState extends State<StatusPage> {
                                             builder: (context) =>
                                                 StatusDetailPage(
                                                   id: data[index]["id"],
+                                                  userid: userId,
                                                 )),
                                       );
                                     }),
