@@ -54,7 +54,7 @@ class _ApprovedPageState extends State<ApprovedPage> {
     // monitor network fetch
     await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use loadFailed(),if no data return,use LoadNodata()
-    data.add((data.length+1).toString());
+    // data.add({});
     if(mounted)
       setState(() {
         getData();
@@ -66,6 +66,7 @@ class _ApprovedPageState extends State<ApprovedPage> {
     // TODO: implement initState
     super.initState();
     // getApproval();
+    _onLoading();
     print("dibawah ini adalah list data card");
     print(listData);
     listData;
@@ -146,7 +147,7 @@ class _ApprovedPageState extends State<ApprovedPage> {
                           padding: EdgeInsets.all(6),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Name : " + data[index]["CustName"],
+                            "Name :  ${data[index]["CustName"]}"  ,
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               color: Colors.blue,
@@ -158,7 +159,7 @@ class _ApprovedPageState extends State<ApprovedPage> {
                           padding: EdgeInsets.all(6),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Date : " + data[index]["CreatedDate"],
+                            "Date : ${data[index]["CreatedDate"]}",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontSize: 12,
@@ -170,7 +171,7 @@ class _ApprovedPageState extends State<ApprovedPage> {
                           padding: EdgeInsets.all(6),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            data[index]["Status"],
+                            data[index]["Status"]??"",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               color: Colors.blue,
@@ -212,7 +213,7 @@ class _ApprovedPageState extends State<ApprovedPage> {
                                 height: 30,
                                 child: InkWell(
                                     child: Text(
-                                      "APPROVED DETAILS",
+                                      "DETAILS",
                                       style: TextStyle(
                                         color: Colors.blue,
                                       ),
@@ -224,8 +225,10 @@ class _ApprovedPageState extends State<ApprovedPage> {
                                             builder: (context) =>
                                                 ApprovalDetailPage(
                                                   id: data[index]["id"],
-                                                )),
-                                      );
+                                                ))).then((value) {setState(() {
+                                                  _onRefresh();
+                                                  _onLoading();
+                                                });});
                                     }),
                               ),
                             ),

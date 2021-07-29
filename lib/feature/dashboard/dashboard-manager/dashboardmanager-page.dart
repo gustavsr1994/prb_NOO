@@ -71,6 +71,16 @@ class _DashboardManagerPageState extends State<DashboardManagerPage> {
     final List pages = [
       ApprovalPage(name: widget.username, Role: widget.Role,),
       ApprovedPage(name: widget.username, Role: widget.Role),
+      InkWell(
+        child: Icon(
+          Icons.logout,
+        ),
+        onTap: () {
+          setState(() {
+            showAlertDialog(context);
+          });
+        },
+      ),
     ];
 
     print("Ini bottom nav");

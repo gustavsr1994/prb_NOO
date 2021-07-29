@@ -5,13 +5,10 @@ import 'dart:typed_data';
 import 'package:async/async.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:commons/commons.dart';
-import 'package:custom_switch/custom_switch.dart';
-import 'package:easy_alert/easy_alert.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -761,7 +758,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
   bool pricegroupContains(String pricegroup) {
     for (int i = 0; i < _dataPriceGroup.length; i++) {
-      if (pricegroup == _dataPriceGroup[i]["NAME"]) return true;
+      if (pricegroup == _dataPriceGroup[i]["GROUPID"]) return true;
     }
     return false;
   }
@@ -1089,17 +1086,6 @@ class _CustomerPageState extends State<CustomerPage> {
             child: Center(
               child: Text(
                 widget.name??"",
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Center(
-              child: Text(
-                idUserFromLogin.toString()??"",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -1494,8 +1480,8 @@ class _CustomerPageState extends State<CustomerPage> {
                     value: _valPriceGroup,
                     items: _dataPriceGroup.map((item) {
                       return DropdownMenuItem(
-                        child: Text(item['NAME'] ?? "loading.."),
-                        value: item['NAME'],
+                        child: Text(item['GROUPID'] ?? "loading.."),
+                        value: item['GROUPID'],
                       );
                     }).toList(),
                     onChanged: (value) {
@@ -1659,9 +1645,9 @@ class _CustomerPageState extends State<CustomerPage> {
                     child: Expanded(
                       child: TextFormField(
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter SIUP!!';
-                          }
+                          // if (value == null || value.isEmpty) {
+                          //   return 'Please enter SIUP!!';
+                          // }
                           // if(!(value.length > 15)&& value.isNotEmpty){
                           //   return "NPWP number less than 15 digits!!";
                           // }
@@ -1702,9 +1688,9 @@ class _CustomerPageState extends State<CustomerPage> {
                     child: Expanded(
                       child: TextFormField(
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter SPPKP!!';
-                          }
+                          // if (value == null || value.isEmpty) {
+                          //   return 'Please enter SPPKP!!';
+                          // }
                           // if(!(value.length > 15)&& value.isNotEmpty){
                           //   return "NPWP number less than 15 digits!!";
                           // }
@@ -3416,51 +3402,107 @@ class _CustomerPageState extends State<CustomerPage> {
               ),
 
               //FlipCard
-              Card(
-                color: Colors.grey,
-                child: Container(
-                  width: 350,
+              Container(
+                height: 300,
+                child: Card(
+                  color: Colors.grey,
                   child: FlipCard(
+                    alignment: Alignment.topCenter,
                     direction: FlipDirection.HORIZONTAL,
                     speed: 1000,
                     onFlipDone: (status) {
                       print(status);
                     },
-                    front: Container(
-                      child: Column(
-                        children: [
-                          SizedBox(height: 10,),
-                          Text(
-                            "Sales",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
+                    front: Column(
+                      children: [
+                        SizedBox(height: 10,),
+                        Text(
+                          "Sales",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Card(
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          child: Card(
                             child: Signature(
                               controller: _signaturecontrollersales,
-                              height: 300,
+                              height: 200,
                               backgroundColor: Colors.white,
                             ),
                           ),
-                          //Oke dan button clear
-                          Container(
-                            decoration: const BoxDecoration(
-                              color: Colors.black,
+                        ),
+                        //Oke dan button clear
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.black,
+                          ),
+                          child: Container(
+                            width: 355,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                //Clear Canvass
+                                // ignore: deprecated_member_use
+                                RaisedButton(
+                                  color: Colors.blue,
+                                  child: Text(
+                                    "Clear",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    setState(() => _signaturecontrollersales.clear());
+                                  },
+                                ),
+                              ],
                             ),
-                            child: Container(
-                              width: 355,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                mainAxisSize: MainAxisSize.max,
-                                children: <Widget>[
-                                  //Clear Canvass
-                                  // ignore: deprecated_member_use
-                                  RaisedButton(
-                                    color: Colors.blue,
+                          ),
+                        ),
+                      ],
+                    ),
+                    back: Column(
+                      children: [
+                        SizedBox(height: 10,),
+                        Text(
+                          "Customer",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          child: Card(
+                            child: Signature(
+                              controller: _signaturecontrollercustomer,
+                              height: 200,
+                              backgroundColor: Colors.white,
+                            ),
+                          ),
+                        ),
+                        //Oke dan button clear
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.black,
+                          ),
+                          child: Container(
+                            width: 355,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                //Clear Canvass
+                                // ignore: deprecated_member_use
+                                RaisedButton(
+                                  color: Colors.blue,
                                     child: Text(
                                       "Clear",
                                       style: TextStyle(
@@ -3468,85 +3510,23 @@ class _CustomerPageState extends State<CustomerPage> {
                                       ),
                                     ),
                                     onPressed: () {
-                                      setState(() => _signaturecontrollersales.clear());
-                                    },
-                                    // child: IconButton(
-                                    //     icon: const Icon(
-                                    //       Icons.clear,
-                                    //       color: Colors.blue,
-                                    //     ),
-                                    //     onPressed: () {
-                                    //       setState(() =>
-                                    //           _signaturecontrollersales.clear());
-                                    //     }),
-                                  ),
-                                ],
-                              ),
+                                    setState(() =>
+                                        _signaturecontrollercustomer.clear());
+                                  }),
+                                // IconButton(
+                                //     icon: const Icon(
+                                //       Icons.clear,
+                                //       color: Colors.blue,
+                                //     ),
+                                //     onPressed: () {
+                                //       setState(() =>
+                                //           _signaturecontrollercustomer.clear());
+                                //     }),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    back: Container(
-                      child: Column(
-                        children: [
-                          SizedBox(height: 10,),
-                          Text(
-                            "Customer",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Card(
-                            child: Signature(
-                              controller: _signaturecontrollercustomer,
-                              height: 300,
-                              backgroundColor: Colors.white,
-                            ),
-                          ),
-                          //Oke dan button clear
-                          Container(
-                            decoration: const BoxDecoration(
-                              color: Colors.black,
-                            ),
-                            child: Container(
-                              width: 355,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                mainAxisSize: MainAxisSize.max,
-                                children: <Widget>[
-                                  //Clear Canvass
-                                  // ignore: deprecated_member_use
-                                  RaisedButton(
-                                    color: Colors.blue,
-                                      child: Text(
-                                        "Clear",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                      setState(() =>
-                                          _signaturecontrollercustomer.clear());
-                                    }),
-                                  // IconButton(
-                                  //     icon: const Icon(
-                                  //       Icons.clear,
-                                  //       color: Colors.blue,
-                                  //     ),
-                                  //     onPressed: () {
-                                  //       setState(() =>
-                                  //           _signaturecontrollercustomer.clear());
-                                  //     }),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -3561,11 +3541,10 @@ class _CustomerPageState extends State<CustomerPage> {
                     print("Ini proses submit");
                     await UploadKTP(_imageKTP);
                     await UploadNPWP(_imageNPWP);
-                    await UploadSIUP(_imageSIUP);
-                    // await UploadBuilding(_imageBuilding);
+                    if(_imageSIUP!=null)await UploadSIUP(_imageSIUP);
+                    if(_imageSPPKP!=null)await UploadSPPKP(_imageSPPKP);
                     await UploadBusinessPhotoFront(_imageBusinessPhotoFront);
                     await UploadBusinessPhotoInside(_imageBusinessPhotoInside);
-                    await UploadSPPKP(_imageSPPKP);
                     DataSignSales = await _signaturecontrollersales.toPngBytes();
                     await UploadSignatureSales(
                         DataSignSales, signatureSalesFromServer);
@@ -3630,8 +3609,7 @@ class _CustomerPageState extends State<CustomerPage> {
                     );
                     Navigator.push(
                       context,
-                      new MaterialPageRoute(builder: (context) => new DashboardEmployeePage()),
-                    );
+                      new MaterialPageRoute(builder: (context) => new DashboardEmployeePage()));
                   }
                 },
                 child: Text(

@@ -13,7 +13,7 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="prb_app"
+        android:label="Mobile NOO"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/launcher_icon">
 

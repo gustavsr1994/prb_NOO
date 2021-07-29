@@ -1286,7 +1286,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
             Row(
               children: [
                 Text(
-                  "Foto Gedung\nDalam                     :       ",
+                  "Foto Gedung\nDalam                     :      ",
                   style: TextStyle(
                     fontSize: 17,
                   ),
@@ -1325,6 +1325,95 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 ),
               ],
             ),
+            SizedBox(height: 10),
+            //foto Customer Signature
+            Row(
+              children: [
+                Text(
+                  "Customer\nSignature               :      ",
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+                Flexible(
+                  child: Container(
+                    height: 100,
+                    child:
+                    // data.fotoGedung != null ? Container():
+                    InkWell(
+                      onTap: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (_) => Image.network(
+                            "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${dataApproval.custSignature}",
+                          ),
+                        );
+                      },
+                      child: Image.network(
+                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${dataApproval.custSignature}",
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes
+                                  : null,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            //foto Sales Signature
+            Row(
+              children: [
+                Text(
+                  "Sales\nSignature               :      ",
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+                Flexible(
+                  child: Container(
+                    height: 100,
+                    child:
+                    // data.fotoGedung != null ? Container():
+                    InkWell(
+                      onTap: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (_) => Image.network(
+                            "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${dataApproval.salesSignature}",
+                          ),
+                        );
+                      },
+                      child: Image.network(
+                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${dataApproval.salesSignature}",
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes
+                                  : null,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
             Row(
               children: [
                 Text(

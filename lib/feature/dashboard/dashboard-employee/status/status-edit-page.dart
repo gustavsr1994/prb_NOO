@@ -1754,15 +1754,15 @@ class _StatusEditPageState extends State<StatusEditPage> {
                   Container(
                     child: Expanded(
                       child: TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter SIUP!!';
-                          }
+                        // validator: (value) {
+                        //   if (value == null || value.isEmpty) {
+                        //     return 'Please enter SIUP!!';
+                        //   }
                           // if(!(value.length > 15)&& value.isNotEmpty){
                           //   return "NPWP number less than 15 digits!!";
                           // }
-                          return null;
-                        },
+                          // return null;
+                        // },
                         textAlign: TextAlign.center,
                         controller: _siupControllerCustomer,
                         keyboardType: TextInputType.number,
@@ -1797,15 +1797,15 @@ class _StatusEditPageState extends State<StatusEditPage> {
                   Container(
                     child: Expanded(
                       child: TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter SPPKP!!';
-                          }
-                          // if(!(value.length > 15)&& value.isNotEmpty){
-                          //   return "NPWP number less than 15 digits!!";
-                          // }
-                          return null;
-                        },
+                        // validator: (value) {
+                        //   if (value == null || value.isEmpty) {
+                        //     return 'Please enter SPPKP!!';
+                        //   }
+                        //   // if(!(value.length > 15)&& value.isNotEmpty){
+                        //   //   return "NPWP number less than 15 digits!!";
+                        //   // }
+                        //   return null;
+                        // },
                         textAlign: TextAlign.center,
                         controller: _sppkpControllerCustomer,
                         keyboardType: TextInputType.number,
@@ -3718,11 +3718,10 @@ class _StatusEditPageState extends State<StatusEditPage> {
                     print("Ini proses submit");
                     await UploadKTP(_imageKTP);
                     await UploadNPWP(_imageNPWP);
-                    await UploadSIUP(_imageSIUP);
-                    // await UploadBuilding(_imageBuilding);
+                    if(_imageSIUP!=null)await UploadSIUP(_imageSIUP);
+                    if(_imageSPPKP!=null)await UploadSPPKP(_imageSPPKP);
                     await UploadBusinessPhotoFront(_imageBusinessPhotoFront);
                     await UploadBusinessPhotoInside(_imageBusinessPhotoInside);
-                    await UploadSPPKP(_imageSPPKP);
                     DataSignSales = await _signaturecontrollersales.toPngBytes();
                     await UploadSignatureSales(
                         DataSignSales, signatureSalesFromServer);

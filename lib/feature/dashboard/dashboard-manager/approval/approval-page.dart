@@ -64,7 +64,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
     // monitor network fetch
     await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use loadFailed(),if no data return,use LoadNodata()
-    data.add((data.length+1).toString());
+    // data.add({});
     if(mounted)
       setState(() {
         getData();
@@ -72,9 +72,16 @@ class _ApprovalPageState extends State<ApprovalPage> {
     _refreshController.loadComplete();
   }
 
+  refresh(){
+    setState(() {
+      _onRefresh();
+      _onLoading();
+    });
+  }
   void initState() {
     // TODO: implement initState
     super.initState();
+    refresh();
     // getApproval();
     print("dibawah ini adalah list data card");
     print(listData);
@@ -146,6 +153,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
             child: new ListView.builder(
               itemCount: data == null ? 0 : data.length,
               itemBuilder: (BuildContext context, int index) {
+                print("xxData : $data");
                 return new Container(
                   padding: EdgeInsets.all(7),
                   child: Card(
@@ -158,7 +166,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                           padding: EdgeInsets.all(6),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Name : " + data[index]["CustName"],
+                            "Name : ${data[index]["CustName"]}" ,
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               color: Colors.blue,
@@ -170,7 +178,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                           padding: EdgeInsets.all(6),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Date : " + data[index]["CreatedDate"],
+                            "Date : ${data[index]["CreatedDate"]}",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontSize: 12,
@@ -182,7 +190,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                           padding: EdgeInsets.all(6),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            data[index]["Status"],
+                            data[index]["Status"]??"",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               color: Colors.blue,
@@ -224,7 +232,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                 height: 30,
                                 child: InkWell(
                                     child: Text(
-                                      "VIEW DETAILS",
+                                      "DETAILS",
                                       style: TextStyle(
                                         color: Colors.blue,
                                       ),
@@ -233,11 +241,14 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                ApprovalDetailPage(
-                                                  id: data[index]["id"],
-                                                )),
-                                      );
+                                            builder: (context) => ApprovalDetailPage(
+                                              id: data[index]["id"],
+                                            )
+                                        )
+                                      ).then((value) {setState(() {
+                                        _onRefresh();
+                                        _onLoading();
+                                      });});
                                     }),
                               ),
                             ),
