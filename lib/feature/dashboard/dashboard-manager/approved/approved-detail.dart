@@ -168,6 +168,50 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
+                "Sales Office             :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.salesOffice ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "Business Unit          :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.businessUnit ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
                 "Category                  :     ",
                 style: TextStyle(
                   fontSize: 17,
@@ -256,28 +300,6 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Phone No                 :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  data.phoneNo ?? "",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
                 "Company Status     :     ",
                 style: TextStyle(
                   fontSize: 17,
@@ -300,14 +322,36 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "Fax No                      :     ",
+                "Currency                   :     ",
                 style: TextStyle(
                   fontSize: 17,
                 ),
               ),
               Flexible(
                 child: Text(
-                  data.faxNo ?? "",
+                  data.currency ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "Price Group              :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.priceGroup ?? "",
                   style: TextStyle(
                     fontSize: 17,
                     color: Colors.black54,
@@ -330,6 +374,135 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               Flexible(
                 child: Text(
                   data.contactPerson ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "KTP                           :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.kTP ?? "",
+                  style: TextStyle(fontSize: 17, color: Colors.black54),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "NPWP                       :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.nPWP ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "SIUP                          :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.siup ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "SPPKP                      :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.sppkp ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "Phone No                 :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.phoneNo ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Text(
+                "Fax No                      :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.faxNo ?? "",
                   style: TextStyle(
                     fontSize: 17,
                     color: Colors.black54,
@@ -385,91 +558,6 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
           Row(
             children: [
               Text(
-                "NPWP                       :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  data.nPWP ?? "",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "KTP                           :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  data.kTP ?? "",
-                  style: TextStyle(fontSize: 17, color: Colors.black54),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "Currency                   :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  data.currency ?? "",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "Price Group              :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  data.priceGroup ?? "",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
                 "Salesman                 :     ",
                 style: TextStyle(
                   fontSize: 17,
@@ -478,50 +566,6 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               Flexible(
                 child: Text(
                   data.salesman ?? "",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "Sales Office              :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  data.salesOffice ?? "",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "Business Unit           :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  data.businessUnit ?? "",
                   style: TextStyle(
                     fontSize: 17,
                     color: Colors.black54,

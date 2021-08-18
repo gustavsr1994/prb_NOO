@@ -6,10 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:prb_app/base/base-url.dart';
 import 'package:prb_app/feature/dashboard/dashboard-employee/status/status-edit-page.dart';
 import 'package:prb_app/model/address.dart';
 import 'package:prb_app/model/approval.dart';
+import 'package:prb_app/model/approvalstatus.dart';
 import 'package:prb_app/model/status.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
@@ -37,8 +37,10 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
   String statusApproval;
   String statusRejected = "Rejected";
   String statusDataApprovalDetail;
-  Widget _buttonIconEdit(){
-    return statusApproval == statusRejected ? InkWell(
+
+  Widget _buttonIconEdit() {
+    return statusApproval == statusRejected
+        ? InkWell(
         child: Icon(
           Icons.edit,
           color: Colors.black,
@@ -66,8 +68,8 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                       website: data.website,
                       npwp: data.nPWP,
                       ktp: data.kTP,
-                      siup:data.siup,
-                      sppkp:data.sppkp,
+                      siup: data.siup,
+                      sppkp: data.sppkp,
                       currency: data.currency,
                       priceGroup: data.priceGroup,
                       salesman: data.salesman,
@@ -101,7 +103,8 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                       deliveryCity: dataDeliveryAddress.city,
                       deliveryState: dataDeliveryAddress.state,
                       deliveryCountry: dataDeliveryAddress.country,
-                      deliveryZipCode: dataDeliveryAddress.zipCode.toString(),
+                      deliveryZipCode:
+                      dataDeliveryAddress.zipCode.toString(),
                       autoLatitudeData: data.lat,
                       autoLongitudeData: data.long,
                       deliveryParentID: dataDeliveryAddress.parentId,
@@ -113,19 +116,20 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                       fotosppkp: data.fotoGedung3,
                       fotofrontview: data.fotoGedung1,
                       fotoinsideview: data.fotoGedung2,
-
                     )),
           );
-        }
-    ):Container();}
-  void getStatusDetail() async  {
+        })
+        : Container();
+  }
+
+  void getStatusDetail() async {
     String usernameAuth = 'test';
     String passwordAuth = 'test456';
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
     var urlGetApprovalDetail = "http://119.18.157.236:8893/api/NOOCustTables/" + widget.id.toString();
-    Response r = await http.get(Uri.parse(urlGetApprovalDetail), headers: <String,String>{'authorization': basicAuth});
+    Response r = await http.get(Uri.parse(urlGetApprovalDetail), headers: <String, String>{'authorization': basicAuth});
     var dataApprovalDetail = json.decode(r.body);
     statusDataApprovalDetail = dataApprovalDetail["Status"].toString();
     print("Yes yes3: ${dataApprovalDetail["Status"]}");
@@ -152,6 +156,27 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
     });
   }
 
+  List listdataApprovalStatus = [];
+  Future<String> getDataApprovalStatus() async {
+    String usernameAuth = 'test';
+    String passwordAuth = 'test456';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
+    print(basicAuth);
+    var urlGetApprovalStatus = "http://119.18.157.236:8893/api/Approval/"+widget.id.toString();
+    print(urlGetApprovalStatus);
+    Response r = await get(Uri.parse(urlGetApprovalStatus), headers: <String, String>{'authorization': basicAuth});
+    // var dataApproval = json.decode(r.body.toString());
+    // idNOO = dataApproval["id"].toString();
+    print(r.statusCode);
+    print(r.body);
+    this.setState(() {
+      print("ABC");
+      listdataApprovalStatus = jsonDecode(r.body);
+      // data.addAll(jsonDecode(r.body));
+    });
+  }
+
   var iduser = 0;
 
   void getSharedPrefs() async {
@@ -167,6 +192,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
   String signatureApprovalFromServer = "SIGNATUREAPPROVAL_" +
       DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) +
       "_.jpg";
+
   //SignatureController Sales
   final SignatureController _signaturecontrollerapproval = SignatureController(
     penStrokeWidth: 1,
@@ -174,13 +200,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
     exportBackgroundColor: Colors.white,
   );
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getStatusDetail();
     print(widget.id);
+    getDataApprovalStatus();
   }
 
   @override
@@ -207,6 +233,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
         shrinkWrap: true,
         padding: EdgeInsets.all(20),
         children: [
+          //customer name
           Row(
             children: [
               Text(
@@ -215,11 +242,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.custName ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.custName ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -227,6 +256,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
+          //Brand name
           Row(
             children: [
               Text(
@@ -235,11 +265,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.brandName ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.brandName ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -247,6 +279,53 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
+          //sales office
+          Row(
+            children: [
+              Text(
+                "Sales Office             :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.salesOffice ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //business unit
+          Row(
+            children: [
+              Text(
+                "Business Unit          :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.businessUnit ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //category
           Row(
             children: [
               Text(
@@ -255,11 +334,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.category ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.category ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -267,6 +348,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
+          //distribution channel
           Row(
             children: [
               Text(
@@ -275,11 +357,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                ":     ${data.segment}" ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  ":     ${data.segment}" ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -287,6 +371,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
+          //channel segmentation
           Row(
             children: [
               Text(
@@ -295,11 +380,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                ":     ${data.subSegment}" ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  ":     ${data.subSegment}" ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -307,6 +394,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
+          //class
           Row(
             children: [
               Text(
@@ -315,11 +403,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.selectclass ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
+              Flexible(
+                child: Text(
+                  data.selectclass ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],
@@ -327,26 +417,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
-          Row(
-            children: [
-              Text(
-                "Phone No                 :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Text(
-                data.phoneNo ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
+          //company status
           Row(
             children: [
               Text(
@@ -355,29 +426,9 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                   fontSize: 17,
                 ),
               ),
-              Text(
-                data.companyStatus ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "Fax No                      :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
               Flexible(
                 child: Text(
-                  data.faxNo ?? "",
+                  data.companyStatus ?? "",
                   style: TextStyle(
                     fontSize: 17,
                     color: Colors.black54,
@@ -389,106 +440,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
-          Row(
-            children: [
-              Text(
-                "Contact Person       :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Text(
-                data.contactPerson ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "Email Address         :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  data.emailAddress ?? "",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "Website                    :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Text(
-                data.website ?? "",
-                style: TextStyle(fontSize: 17, color: Colors.black54),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "NPWP                       :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  data.nPWP ?? "",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "KTP                           :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  data.kTP ?? "",
-                  style: TextStyle(fontSize: 17, color: Colors.black54),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
+          //currency
           Row(
             children: [
               Text(
@@ -511,6 +463,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
+          //price group
           Row(
             children: [
               Text(
@@ -533,6 +486,205 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
+          //contact person
+          Row(
+            children: [
+              Text(
+                "Contact Person       :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.contactPerson ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //ktp
+          Row(
+            children: [
+              Text(
+                "KTP                           :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.kTP ?? "",
+                  style: TextStyle(fontSize: 17, color: Colors.black54),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //npwp
+          Row(
+            children: [
+              Text(
+                "NPWP                       :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.nPWP ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //siup
+          Row(
+            children: [
+              Text(
+                "SIUP                          :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.siup ?? "",
+                  style: TextStyle(fontSize: 17, color: Colors.black54),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //sppkp
+          Row(
+            children: [
+              Text(
+                "SPPKP                      :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.sppkp ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //phone no
+          Row(
+            children: [
+              Text(
+                "Phone No                 :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.phoneNo ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //fax no
+          Row(
+            children: [
+              Text(
+                "Fax No                      :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.faxNo ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //email address
+          Row(
+            children: [
+              Text(
+                "Email Address         :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.emailAddress ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //website
+          Row(
+            children: [
+              Text(
+                "Website                    :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  data.website ?? "",
+                  style: TextStyle(fontSize: 17, color: Colors.black54),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //salesman
           Row(
             children: [
               Text(
@@ -551,51 +703,6 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                 ),
               ),
             ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "Sales Office              :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Text(
-                data.salesOffice ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "Business Unit           :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  data.businessUnit ?? "",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
           ),
           SizedBox(
             height: 30,
@@ -1075,6 +1182,56 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
+          //foto ktp
+          Row(
+            children: [
+              Text(
+                "Foto KTP                 :     ",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Flexible(
+                child: Container(
+                  height: 100,
+                  child:
+                  // data.fotoKTP != null ? Container():
+                  InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) =>
+                            Image.network(
+                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                                  .fotoKTP}",
+                            ),
+                      );
+                    },
+                    child: Image.network(
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                          .fotoKTP}",
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          //foto npwp
           Row(
             children: [
               Text(
@@ -1091,13 +1248,16 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                       onTap: () async {
                         await showDialog(
                           context: context,
-                          builder: (_) => Image.network(
-                            "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
-                          ),
+                          builder: (_) =>
+                              Image.network(
+                                "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                                    .fotoNPWP}",
+                              ),
                         );
                       },
                       child: Image.network(
-                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
+                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                            .fotoNPWP}",
                         // BaseUrl.urlFile+data.fotoNPWP,
                         loadingBuilder: (BuildContext context, Widget child,
                             ImageChunkEvent loadingProgress) {
@@ -1106,7 +1266,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                             child: CircularProgressIndicator(
                               value: loadingProgress.expectedTotalBytes != null
                                   ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes
+                                  loadingProgress.expectedTotalBytes
                                   : null,
                             ),
                           );
@@ -1119,51 +1279,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
-          Row(
-            children: [
-              Text(
-                "Foto KTP                 :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Container(
-                  height: 100,
-                  child:
-                      // data.fotoKTP != null ? Container():
-                      InkWell(
-                    onTap: () async {
-                      await showDialog(
-                        context: context,
-                        builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
-                        ),
-                      );
-                    },
-                    child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
-                                : null,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
+          //foto siup
           Row(
             children: [
               Text(
@@ -1176,18 +1292,21 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                 child: Container(
                   height: 100,
                   child:
-                      // data.fotoSIUP != null ? Container():
-                      InkWell(
+                  // data.fotoSIUP != null ? Container():
+                  InkWell(
                     onTap: () async {
                       await showDialog(
                         context: context,
-                        builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoSIUP}",
-                        ),
+                        builder: (_) =>
+                            Image.network(
+                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                                  .fotoSIUP}",
+                            ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893//api/Files/GetFiles?fileName=${data.fotoSIUP}",
+                      "http://119.18.157.236:8893//api/Files/GetFiles?fileName=${data
+                          .fotoSIUP}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1195,7 +1314,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                           child: CircularProgressIndicator(
                             value: loadingProgress.expectedTotalBytes != null
                                 ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
+                                loadingProgress.expectedTotalBytes
                                 : null,
                           ),
                         );
@@ -1227,13 +1346,16 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                     onTap: () async {
                       await showDialog(
                         context: context,
-                        builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung3}",
-                        ),
+                        builder: (_) =>
+                            Image.network(
+                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                                  .fotoGedung3}",
+                            ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung3}",
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                          .fotoGedung3}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1268,18 +1390,21 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                 child: Container(
                   height: 100,
                   child:
-                      // data.fotoGedung != null ? Container():
-                      InkWell(
+                  // data.fotoGedung != null ? Container():
+                  InkWell(
                     onTap: () async {
                       await showDialog(
                         context: context,
-                        builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung1}",
-                        ),
+                        builder: (_) =>
+                            Image.network(
+                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                                  .fotoGedung1}",
+                            ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung1}",
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                          .fotoGedung1}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1287,7 +1412,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                           child: CircularProgressIndicator(
                             value: loadingProgress.expectedTotalBytes != null
                                 ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
+                                loadingProgress.expectedTotalBytes
                                 : null,
                           ),
                         );
@@ -1319,13 +1444,16 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                     onTap: () async {
                       await showDialog(
                         context: context,
-                        builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung2}",
-                        ),
+                        builder: (_) =>
+                            Image.network(
+                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                                  .fotoGedung2}",
+                            ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung2}",
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                          .fotoGedung2}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1366,13 +1494,16 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                     onTap: () async {
                       await showDialog(
                         context: context,
-                        builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.custSignature}",
-                        ),
+                        builder: (_) =>
+                            Image.network(
+                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                                  .custSignature}",
+                            ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.custSignature}",
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                          .custSignature}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1413,13 +1544,16 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                     onTap: () async {
                       await showDialog(
                         context: context,
-                        builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.salesSignature}",
-                        ),
+                        builder: (_) =>
+                            Image.network(
+                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                                  .salesSignature}",
+                            ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.salesSignature}",
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                          .salesSignature}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1460,13 +1594,16 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                     onTap: () async {
                       await showDialog(
                         context: context,
-                        builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.approval1Signature}",
-                        ),
+                        builder: (_) =>
+                            Image.network(
+                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                                  .approval1Signature}",
+                            ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.approval1Signature}",
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                          .approval1Signature}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1474,7 +1611,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                           child: CircularProgressIndicator(
                             value: loadingProgress.expectedTotalBytes != null
                                 ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
+                                loadingProgress.expectedTotalBytes
                                 : null,
                           ),
                         );
@@ -1508,13 +1645,16 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                     onTap: () async {
                       await showDialog(
                         context: context,
-                        builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.approval2Signature}",
-                        ),
+                        builder: (_) =>
+                            Image.network(
+                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                                  .approval2Signature}",
+                            ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.approval2Signature}",
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                          .approval2Signature}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1522,7 +1662,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                           child: CircularProgressIndicator(
                             value: loadingProgress.expectedTotalBytes != null
                                 ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
+                                loadingProgress.expectedTotalBytes
                                 : null,
                           ),
                         );
@@ -1556,13 +1696,16 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                     onTap: () async {
                       await showDialog(
                         context: context,
-                        builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.approval3Signature}",
-                        ),
+                        builder: (_) =>
+                            Image.network(
+                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                                  .approval3Signature}",
+                            ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.approval3Signature}",
+                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                          .approval3Signature}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1621,12 +1764,67 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                 padding: EdgeInsets.fromLTRB(98, 0, 20, 0),
                 child: Text(":"),
               ),
-              Text(
-                data.status ?? "",
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54,
+              InkWell(
+                onTap: () {
+                  showDialog(
+                      context: context, builder: (BuildContext context) {
+                    return Dialog(
+                      child: Container(
+                        height: 250,
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Text("Status Approval Detail"),
+                                Container(
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: listdataApprovalStatus.length,
+                                    itemBuilder: (BuildContext context, int index) {
+                                      print("xxData: $listdataApprovalStatus");
+                                      return new Container(
+                                        padding: EdgeInsets.all(7),
+                                        child: Card(
+                                          elevation: 3,
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.all(6),
+                                                alignment: Alignment.centerLeft,
+                                                child: Text(
+                                                  "Name : ${listdataApprovalStatus[index]['Level']}\n"
+                                                      "Status: ${listdataApprovalStatus[index]['Status']}",
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                    color: Colors.blue,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  });
+                },
+                child: Text(
+                  data.status ?? "",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ],

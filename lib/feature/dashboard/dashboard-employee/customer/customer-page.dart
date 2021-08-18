@@ -5,15 +5,17 @@ import 'dart:typed_data';
 import 'package:async/async.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:commons/commons.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'file:///C:/Users/mz002/StudioProjects/prb_NOO/lib/feature/dashboard/dashboard-employee/dashboardemployee-page.dart';
 import 'package:signature/signature.dart';
 
@@ -30,6 +32,8 @@ class CustomerPage extends StatefulWidget {
   String state;
   String zipCode;
   int iduser;
+  String so;
+  String bu;
   CustomerPage({
     Key key,
     this.iduser,
@@ -42,6 +46,8 @@ class CustomerPage extends StatefulWidget {
     this.state,
     this.countrys,
     this.zipCode,
+    this.so,
+    this.bu,
   }) : super(key: key);
   @override
   _CustomerPageState createState() => _CustomerPageState();
@@ -168,6 +174,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
   // getImageKTP From Galery
   Future getImageKTPFromGalery() async {
+    // ignore: deprecated_member_use
     final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality:20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
@@ -205,6 +212,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
   // getImageNPWP from camera
   Future getImageNPWPFromCamera() async {
+    // ignore: deprecated_member_use
     final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
@@ -224,6 +232,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
   // getImageNPWP from galery
   Future getImageNPWPFromGallery() async {
+    // ignore: deprecated_member_use
     final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
@@ -261,6 +270,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
   // getImageSIUP from camera
   Future getImageSIUPFromCamera() async {
+    // ignore: deprecated_member_use
     final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
@@ -280,6 +290,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
   // getImageSIUP from gallery
   Future getImageSIUPFromGallery() async {
+    // ignore: deprecated_member_use
     final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
@@ -373,6 +384,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
   // getImageBusinessPhotoFront from camera
   Future getImageBusinessPhotoFrontFromCamera() async {
+    // ignore: deprecated_member_use
     final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
@@ -392,6 +404,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
   // getImageBusinessPhotoFront from gallery
   Future getImageBusinessPhotoFrontFromGallery() async {
+    // ignore: deprecated_member_use
     final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
@@ -430,6 +443,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
   // getImageBusinessPhotoInside from camera
   Future getImageBusinessPhotoInsideFromCamera() async {
+    // ignore: deprecated_member_use
     final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
@@ -449,6 +463,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
   // getImageBusinessPhotoInside from gallery
   Future getImageBusinessPhotoInsideFromGallery() async {
+    // ignore: deprecated_member_use
     final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
@@ -487,6 +502,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
   // getImageSPPKP from camera
   Future getImageSPPKP() async {
+    // ignore: deprecated_member_use
     final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
@@ -506,6 +522,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
   // getImageSPPKP from gallery
   Future getImageSPPKPFromGallery() async {
+    // ignore: deprecated_member_use
     final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
@@ -607,7 +624,6 @@ class _CustomerPageState extends State<CustomerPage> {
   }
 
   //Hit API Dropdown Segmen dan SubSegment
-  var urlGetSegment = "http://119.18.157.236:8893/Api/CustSegment";
   var urlGetSubSegment = "http://119.18.157.236:8893/Api/CustSubSegment";
   String _valSegment, _valSubSegment;
 
@@ -620,6 +636,7 @@ class _CustomerPageState extends State<CustomerPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
+    var urlGetSegment = "http://119.18.157.236:8893/Api/CustSegment?bu=${widget.bu}";
     final response = await http.get(Uri.parse(urlGetSegment),headers: <String,String>{'authorization': basicAuth}); //untuk melakukan request ke webservice
     var listData = jsonDecode(response.body); //lalu kita decode hasil datanya
     print(urlGetSegment);
@@ -732,7 +749,6 @@ class _CustomerPageState extends State<CustomerPage> {
   }
 
   //hit api PriceGroup
-  var urlGetPriceGroup = "http://119.18.157.236:8893/Api/CustPriceGroup";
   String _valPriceGroup;
 
   // ignore: deprecated_member_use
@@ -744,6 +760,7 @@ class _CustomerPageState extends State<CustomerPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
+    var urlGetPriceGroup = "http://119.18.157.236:8893/Api/CustPriceGroup?so=${widget.so}&bu=${widget.bu}";
     final response = await http.get(Uri.parse(urlGetPriceGroup),headers: <String,String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetPriceGroup);
@@ -1496,7 +1513,6 @@ class _CustomerPageState extends State<CustomerPage> {
               SizedBox(
                 height: 10,
               ),
-
               //Contact Person
               Row(
                 children: <Widget>[
@@ -1617,92 +1633,6 @@ class _CustomerPageState extends State<CustomerPage> {
                         decoration: InputDecoration(
                           isDense: true,
                           hintText: 'NPWP',
-                          filled: true,
-                          contentPadding: EdgeInsets.all(5),
-//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-
-              //SIUP
-              Row(
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      "SIUP                     :",
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    child: Expanded(
-                      child: TextFormField(
-                        validator: (value) {
-                          // if (value == null || value.isEmpty) {
-                          //   return 'Please enter SIUP!!';
-                          // }
-                          // if(!(value.length > 15)&& value.isNotEmpty){
-                          //   return "NPWP number less than 15 digits!!";
-                          // }
-                          return null;
-                        },
-                        textAlign: TextAlign.center,
-                        controller: _siupControllerCustomer,
-                        keyboardType: TextInputType.number,
-                        autofocus: false,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          hintText: 'SIUP',
-                          filled: true,
-                          contentPadding: EdgeInsets.all(5),
-//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-
-              //SPPKP
-              Row(
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      "SPPKP                 :",
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    child: Expanded(
-                      child: TextFormField(
-                        validator: (value) {
-                          // if (value == null || value.isEmpty) {
-                          //   return 'Please enter SPPKP!!';
-                          // }
-                          // if(!(value.length > 15)&& value.isNotEmpty){
-                          //   return "NPWP number less than 15 digits!!";
-                          // }
-                          return null;
-                        },
-                        textAlign: TextAlign.center,
-                        controller: _sppkpControllerCustomer,
-                        keyboardType: TextInputType.number,
-                        autofocus: false,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          hintText: 'SPPKP',
                           filled: true,
                           contentPadding: EdgeInsets.all(5),
 //                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
@@ -1844,7 +1774,7 @@ class _CustomerPageState extends State<CustomerPage> {
                 children: <Widget>[
                   Container(
                     child: Text(
-                      "Website                :",
+                      "Website               :",
                     ),
                   ),
                   SizedBox(
@@ -1884,7 +1814,7 @@ class _CustomerPageState extends State<CustomerPage> {
                 children: <Widget>[
                   Container(
                     child: Text(
-                      "Salesman             :",
+                      "Salesman            :",
                     ),
                   ),
                   SizedBox(

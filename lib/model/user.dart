@@ -5,6 +5,8 @@ class User {
   String role;
   String lastLogin;
   int approvalRole;
+  String so;
+  String bu;
 
   User(
       {this.id,
@@ -12,6 +14,8 @@ class User {
         this.name,
         this.role,
         this.lastLogin,
+        this.so,
+        this.bu,
         this.approvalRole});
 
   User.fromJson(Map<String, dynamic> json) {
@@ -21,6 +25,8 @@ class User {
     role = json['Role'];
     lastLogin = json['LastLogin'];
     approvalRole = json['ApprovalRole'];
+    so = json['SO'];
+    bu = json["BU"];
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +37,8 @@ class User {
     data['Role'] = this.role;
     data['LastLogin'] = this.lastLogin;
     data['ApprovalRole'] = this.approvalRole;
+    data['SO'] = this.so;
+    data['BU'] = this.bu;
     return data;
   }
 }

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:commons/commons.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:prb_app/base/base-url.dart';
+import 'package:http/http.dart';
 import 'package:prb_app/model/user.dart';
 import 'package:progress_bars/circle_progress_bar/circle_progress_bar.dart';
 import 'package:progress_indicator_button/progress_button.dart';
@@ -22,7 +22,6 @@ class _LoginPageState extends State<LoginPage> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-
   processLogin(String username, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String usernameAuth = 'test';
@@ -31,17 +30,15 @@ class _LoginPageState extends State<LoginPage> {
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
 
-    var urlPostLogin = "http://119.18.157.236:8893/Api/Login?username=$username&password=${password.replaceAll("#", "%23")}";
-    Response r = await post(urlPostLogin,
-        headers: <String, String>{'authorization': basicAuth}
-        );
+    var urlPostLogin =
+        "http://119.18.157.236:8893/Api/Login?username=$username&password=${password.replaceAll("#", "%23")}&playerId=$playerid";
+    Response r = await post(Uri.parse(urlPostLogin),
+        headers: <String, String>{'authorization': basicAuth});
     print(r.statusCode);
     print(r.body);
     print("Ini urlPostLogin okay : $urlPostLogin");
-    var jsonLogin = await post(
-        urlPostLogin,
-        headers: <String, String>{'authorization': basicAuth}
-        );
+    var jsonLogin = await post(Uri.parse(urlPostLogin),
+        headers: <String, String>{'authorization': basicAuth});
     if (jsonLogin.body.toString().isEmpty) {
       print("Aduh gagal login dong");
       // Show Dialog
@@ -97,9 +94,11 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (context) => DashboardEmployeePage(
-                  username: user?.name??"",
-                  iduser: iduser,
-                )),
+                      username: user?.username ?? "",
+                      iduser: iduser,
+                      so: user?.so,
+                      bu: user?.bu,
+                    )),
             (Route<dynamic> route) => false);
         // Navigator.push(
         //     context,
@@ -114,16 +113,10 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (context) => DashboardManagerPage(
-                      username: user.name,
+                      username: user.username,
                       Role: dataLogin['Role'],
                     )),
             (Route<dynamic> route) => false);
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => DashboardManagerPage(),
-        //     )
-        // );// As manager
       } else {
         throw Exception("Gagal Login");
       }
@@ -136,6 +129,7 @@ class _LoginPageState extends State<LoginPage> {
 
   //Untuk enable-disable password
   bool _obscureText = true;
+
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
@@ -144,10 +138,25 @@ class _LoginPageState extends State<LoginPage> {
 
   bool isLoading = false;
 
+  String playerid;
+
+  getPlayerIDFromSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      playerid = (prefs.getString("getPlayerID") ?? "");
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getPlayerIDFromSharedPrefs();
+  }
+
   @override
   Widget build(BuildContext context) {
     print("Ini Login Page");
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(

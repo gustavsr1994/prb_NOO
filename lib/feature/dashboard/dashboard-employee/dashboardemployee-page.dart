@@ -9,7 +9,9 @@ import 'customer/customer-page.dart';
 class DashboardEmployeePage extends StatefulWidget {
   String username;
   int iduser;
-  DashboardEmployeePage({Key key, this.username, this.iduser}) : super(key: key);
+  String so;
+  String bu;
+  DashboardEmployeePage({Key key, this.username, this.iduser, this.bu, this.so}) : super(key: key);
 
   @override
   _DashboardEmployeePageState createState() => _DashboardEmployeePageState();
@@ -116,6 +118,8 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
         state: state,
         addressDetail: addressDetail,
         latitudeData: latitudeData,
+        so: widget.so,
+        bu: widget.bu,
       ),
       StatusPage(name: widget.username),
       InkWell(

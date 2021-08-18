@@ -19,21 +19,24 @@ class ApprovedPage extends StatefulWidget {
 
 class _ApprovedPageState extends State<ApprovedPage> {
 
-  List data;
+  List data = [];
+  int page = 1;
 
   Future<String> getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userId = prefs.getInt("iduser").toString();
     String usernameAuth = 'test';
     String passwordAuth = 'test456';
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    var urlGetApproved = "http://119.18.157.236:8893/Api/ApprovedNOO/";
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String userId = prefs.getInt("iduser").toString();
-    print(urlGetApproved + userId);
-    final response = await http.get(Uri.parse(urlGetApproved + userId),headers: <String,String>{'authorization': basicAuth});
+    var urlGetApproved = "http://119.18.157.236:8893/api/ApprovedNOO/$userId?page=$page";
+    print(urlGetApproved);
+    final response = await http.get(Uri.parse(urlGetApproved),headers: <String,String>{'authorization': basicAuth});
+    // data.addAll(jsonDecode(response.body));
     this.setState(() {
       data = jsonDecode(response.body);
+      // data.addAll(jsonDecode(response.body));
     });
   }
 
@@ -46,6 +49,7 @@ class _ApprovedPageState extends State<ApprovedPage> {
     // monitor network fetch
     await Future.delayed(Duration(milliseconds: 1000));
     getData();
+    page = page - 1;
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
   }
@@ -58,6 +62,7 @@ class _ApprovedPageState extends State<ApprovedPage> {
     if(mounted)
       setState(() {
         getData();
+        page = page + 1;
       });
     _refreshController.loadComplete();
   }
@@ -66,7 +71,7 @@ class _ApprovedPageState extends State<ApprovedPage> {
     // TODO: implement initState
     super.initState();
     // getApproval();
-    _onLoading();
+    // _onLoading();
     print("dibawah ini adalah list data card");
     print(listData);
     listData;
@@ -104,7 +109,7 @@ class _ApprovedPageState extends State<ApprovedPage> {
         body: new Container(
           child: SmartRefresher(
             enablePullDown: true,
-            enablePullUp: false,
+            enablePullUp: true,
             header: WaterDropHeader(),
             footer: CustomFooter(
               builder: (BuildContext context,LoadStatus mode) {

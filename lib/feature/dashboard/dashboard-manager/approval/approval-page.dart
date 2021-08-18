@@ -19,7 +19,8 @@ class ApprovalPage extends StatefulWidget {
 }
 
 class _ApprovalPageState extends State<ApprovalPage> {
-  List data;
+  List data = [];
+  int page = 1;
   Future<String> getData() async {
     String usernameAuth = 'test';
     String passwordAuth = 'test456';
@@ -32,14 +33,16 @@ class _ApprovalPageState extends State<ApprovalPage> {
     String userId = prefs.getInt("iduser").toString();
     if (widget.Role == "1"){
       print("ini url get approval");
-      urlGetApproval="http://119.18.157.236:8893/api/FindApproval/";
-       response = await http.get(Uri.parse(urlGetApproval + userId),headers: <String,String>{'authorization': basicAuth});
+      urlGetApproval="http://119.18.157.236:8893/api/FindApproval/$userId?page=$page";
+       response = await http.get(Uri.parse(urlGetApproval),headers: <String,String>{'authorization': basicAuth});
+       print(urlGetApproval);
     }
     else if (widget.Role == "2"){
-      urlGetApproval="http://119.18.157.236:8893/api/ViewAllCust";
+      urlGetApproval="http://119.18.157.236:8893/api/ViewAllCust?page=$page";
       response = await http.get(Uri.parse(urlGetApproval), headers: <String,String>{'authorization': basicAuth});
     }
-    print(urlGetApproval + userId);
+    // print(urlGetApproval + userId);
+    // data.addAll(jsonDecode(response.body));
     this.setState(() {
       data = jsonDecode(response.body);
     });
@@ -47,7 +50,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
 
   // var urlGetApproval = "http://119.18.157.236:8893/api/FindApproval/";
 
-  List<Widget> listData = [];
+  // List<Widget> listData = [];
 
   RefreshController _refreshController =
   RefreshController(initialRefresh: false);
@@ -56,6 +59,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
     // monitor network fetch
     await Future.delayed(Duration(milliseconds: 1000));
     getData();
+    page = page - 1;
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
   }
@@ -68,6 +72,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
     if(mounted)
       setState(() {
         getData();
+        page = page + 1;
       });
     _refreshController.loadComplete();
   }
@@ -82,10 +87,11 @@ class _ApprovalPageState extends State<ApprovalPage> {
     // TODO: implement initState
     super.initState();
     refresh();
+    _onRefresh();
     // getApproval();
     print("dibawah ini adalah list data card");
-    print(listData);
-    listData;
+    // print(listData);
+    // listData;
     getData();
 
   }
@@ -121,7 +127,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
         body: new Container(
           child: SmartRefresher(
             enablePullDown: true,
-            enablePullUp: false,
+            enablePullUp: true,
             header: WaterDropHeader(),
             footer: CustomFooter(
               builder: (BuildContext context,LoadStatus mode) {
@@ -243,6 +249,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                         MaterialPageRoute(
                                             builder: (context) => ApprovalDetailPage(
                                               id: data[index]["id"],
+                                              role: widget.Role,
                                             )
                                         )
                                       ).then((value) {setState(() {

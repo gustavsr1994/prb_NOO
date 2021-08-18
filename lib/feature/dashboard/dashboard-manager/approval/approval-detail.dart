@@ -17,10 +17,12 @@ import '../dashboardmanager-page.dart';
 
 class ApprovalDetailPage extends StatefulWidget {
   int id;
+  String role;
 
   ApprovalDetailPage({
     Key key,
     this.id,
+    this.role,
   });
 
   @override
@@ -147,6 +149,171 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
     print(widget.id);
   }
 
+  Widget _textApprovalSignature(){
+    return widget.role != "2" ? Row(
+      children: [
+        Text(
+          "Approval\nSignature               : ",
+          style: TextStyle(
+            fontSize: 17,
+          ),
+        ),
+      ],
+    ):Container();
+  }
+
+  Widget _canvassApprovalSignature(){
+    return widget.role != "2" ? Container(
+      child: Column(
+        children: [
+          Text(""),
+          SizedBox(
+            height: 10,
+          ),
+          Card(
+            child: Signature(
+              controller: _signaturecontrollerapproval,
+              height: 300,
+              backgroundColor: Colors.white,
+            ),
+          ),
+          //Oke dan button clear
+          Container(
+            decoration: const BoxDecoration(
+              color: Colors.black,
+            ),
+            child: Container(
+              width: 355,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[],
+              ),
+            ),
+          ),
+          //Clear Canvass
+          IconButton(
+              icon: const Icon(Icons.clear),
+              onPressed: () {
+                setState(() => _signaturecontrollerapproval.clear());
+              }),
+        ],
+      ),
+    ):Container();
+  }
+
+  Widget _remarkApproval(){
+    return widget.role != "2" ? Row(
+      children: [
+        Text(
+          "Remark                     :    ",
+          style: TextStyle(fontSize: 17),
+        ),
+        Container(
+          child: Expanded(
+            child: AutoSizeTextField(
+              keyboardType: TextInputType.text,
+              controller: _remarkController,
+              maxLines: 3,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 11),
+                isDense: true,
+              ),
+            ),
+          ),
+        )
+      ],
+    ):Container();
+  }
+
+  Widget _statusApproval(){
+    return widget.role != "2" ? Row(
+      children: [
+        Text(
+          "Status",
+          style: TextStyle(
+            fontSize: 17,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(98, 0, 20, 0),
+          child: Text(":"),
+        ),
+        Text(
+          dataApproval.status ?? "",
+          style: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
+            color: Colors.black54,
+          ),
+        ),
+      ],
+    ):Container();
+  }
+
+  Widget _buttonApproveReject(){
+    return widget.role != "2" ? Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          // ignore: deprecated_member_use
+          RaisedButton(
+            color: Colors.blue,
+            onPressed: () async {
+              print("Ini proses approval");
+              DataSign = await _signaturecontrollerapproval.toPngBytes();
+              UploadSignatureApproval(
+                  DataSign, signatureApprovalFromServer);
+              await getSharedPrefs();
+              processApprovalButton(
+                  widget.id, "1", iduser, signatureApprovalFromServer,_remarkController.text
+              );
+              Navigator.pop(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DashboardManagerPage()));
+              // Navigator.pop(context);
+              successDialog(
+                context,
+                "Success",
+              );
+            },
+            child: Text(
+              "Approve",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 20,
+          ),
+          //Button Reject
+          // ignore: deprecated_member_use
+          RaisedButton(
+            color: Colors.blue,
+            onPressed: () {
+              getSharedPrefs();
+              processRejectButton(
+                  widget.id, 0, iduser, _remarkController.text);
+              Navigator.pop(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DashboardManagerPage()));
+              infoDialog(context, "Rejected");
+            },
+            child: Text(
+              "Reject",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          )
+        ],
+      ),
+    ):Container();
+  }
+
   @override
   Widget build(BuildContext context) {
     print("ini approval detail");
@@ -200,6 +367,50 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 Flexible(
                   child: Text(
                     dataApproval.brandName ?? "",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Text(
+                  "Sales Office             :     ",
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    dataApproval.salesOffice ?? "",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Text(
+                  "Business Unit          :     ",
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    dataApproval.businessUnit ?? "",
                     style: TextStyle(
                       fontSize: 17,
                       color: Colors.black54,
@@ -302,28 +513,6 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
             Row(
               children: [
                 Text(
-                  "Phone No                 :     ",
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    dataApproval.phoneNo ?? "",
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Text(
                   "Company Status     :     ",
                   style: TextStyle(
                     fontSize: 17,
@@ -346,14 +535,36 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
             Row(
               children: [
                 Text(
-                  "Fax No                      :     ",
+                  "Currency                   :     ",
                   style: TextStyle(
                     fontSize: 17,
                   ),
                 ),
                 Flexible(
                   child: Text(
-                    dataApproval.faxNo ?? "",
+                    dataApproval.currency ?? "",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Text(
+                  "Price Group              :     ",
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    dataApproval.priceGroup ?? "",
                     style: TextStyle(
                       fontSize: 17,
                       color: Colors.black54,
@@ -376,6 +587,135 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                 Flexible(
                   child: Text(
                     dataApproval.contactPerson ?? "",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Text(
+                  "KTP                           :     ",
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    dataApproval.kTP ?? "",
+                    style: TextStyle(fontSize: 17, color: Colors.black54),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Text(
+                  "NPWP                       :     ",
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    dataApproval.nPWP ?? "",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Text(
+                  "SIUP                          :     ",
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    dataApproval.siup?? "",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Text(
+                  "SPPKP                      :     ",
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    dataApproval.sppkp?? "",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Text(
+                  "Phone No                 :     ",
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    dataApproval.phoneNo ?? "",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Text(
+                  "Fax No                      :     ",
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    dataApproval.faxNo ?? "",
                     style: TextStyle(
                       fontSize: 17,
                       color: Colors.black54,
@@ -431,91 +771,6 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
             Row(
               children: [
                 Text(
-                  "NPWP                       :     ",
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    dataApproval.nPWP ?? "",
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Text(
-                  "KTP                           :     ",
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    dataApproval.kTP ?? "",
-                    style: TextStyle(fontSize: 17, color: Colors.black54),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Text(
-                  "Currency                   :     ",
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    dataApproval.currency ?? "",
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Text(
-                  "Price Group              :     ",
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    dataApproval.priceGroup ?? "",
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Text(
                   "Salesman                 :     ",
                   style: TextStyle(
                     fontSize: 17,
@@ -535,50 +790,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
             SizedBox(
               height: 10,
             ),
-            Row(
-              children: [
-                Text(
-                  "Sales Office              :     ",
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    dataApproval.salesOffice ?? "",
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Text(
-                  "Business Unit           :     ",
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    dataApproval.businessUnit ?? "",
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
+
             SizedBox(
               height: 30,
             ),
@@ -1414,168 +1626,23 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ],
             ),
             SizedBox(height: 10),
-            Row(
-              children: [
-                Text(
-                  "Approval\nSignature               : ",
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-              ],
-            ),
+            _textApprovalSignature(),
             SizedBox(
               height: 10,
             ),
-            Container(
-              child: Column(
-                children: [
-                  Text(""),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Card(
-                    child: Signature(
-                      controller: _signaturecontrollerapproval,
-                      height: 300,
-                      backgroundColor: Colors.white,
-                    ),
-                  ),
-                  //Oke dan button clear
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.black,
-                    ),
-                    child: Container(
-                      width: 355,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[],
-                      ),
-                    ),
-                  ),
-                  //Clear Canvass
-                  IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: () {
-                        setState(() => _signaturecontrollerapproval.clear());
-                      }),
-                ],
-              ),
-            ),
+            _canvassApprovalSignature(),
             SizedBox(
               height: 10,
             ),
-            Row(
-              children: [
-                Text(
-                  "Remark                     :    ",
-                  style: TextStyle(fontSize: 17),
-                ),
-                Container(
-                  child: Expanded(
-                    child: AutoSizeTextField(
-                      keyboardType: TextInputType.text,
-                      controller: _remarkController,
-                      maxLines: 3,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 11),
-                        isDense: true,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
+            _remarkApproval(),
             SizedBox(
               height: 15,
             ),
-            Row(
-              children: [
-                Text(
-                  "Status",
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(98, 0, 20, 0),
-                  child: Text(":"),
-                ),
-                Text(
-                  dataApproval.status ?? "",
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54,
-                  ),
-                ),
-              ],
-            ),
+            _statusApproval(),
             SizedBox(
               height: 20,
             ),
-            Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  // ignore: deprecated_member_use
-                  RaisedButton(
-                    color: Colors.blue,
-                    onPressed: () async {
-                      print("Ini proses approval");
-                      DataSign = await _signaturecontrollerapproval.toPngBytes();
-                      UploadSignatureApproval(
-                          DataSign, signatureApprovalFromServer);
-                      await getSharedPrefs();
-                      processApprovalButton(
-                          widget.id, "1", iduser, signatureApprovalFromServer,_remarkController.text
-                      );
-                      Navigator.pop(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DashboardManagerPage()));
-                      // Navigator.pop(context);
-                      successDialog(
-                        context,
-                        "Success",
-                      );
-                    },
-                    child: Text(
-                      "Approve",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  //Button Reject
-                  // ignore: deprecated_member_use
-                  RaisedButton(
-                    color: Colors.blue,
-                    onPressed: () {
-                      getSharedPrefs();
-                      processRejectButton(
-                          widget.id, 0, iduser, _remarkController.text);
-                      Navigator.pop(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DashboardManagerPage()));
-                      infoDialog(context, "Rejected");
-                    },
-                    child: Text(
-                      "Reject",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            )
+            _buttonApproveReject(),
           ],
         ),
       ),

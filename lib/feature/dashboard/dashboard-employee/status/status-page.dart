@@ -1,80 +1,84 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:prb_app/feature/dashboard/dashboard-employee/status/status-detail.dart';
+import 'package:prb_app/model/approvalstatus.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:http/http.dart' as http;
 
 class StatusPage extends StatefulWidget {
   String name;
+
   StatusPage({Key key, this.name}) : super(key: key);
+
   @override
   _StatusPageState createState() => _StatusPageState();
 }
 
 class _StatusPageState extends State<StatusPage> {
-
-  List data;
-
+  List data = [];
   String userId = "";
+  int page = 1;
+  String idNOO;
   Future<String> getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userId = prefs.getInt("iduser").toString();
     String usernameAuth = 'test';
     String passwordAuth = 'test456';
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    var urlGetApproval = "http://119.18.157.236:8893/Api/FindNOObyUserId/";
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    userId = prefs.getInt("iduser").toString();
-    print(urlGetApproval + userId);
-    Response r = await get(Uri.parse(urlGetApproval + userId),headers: <String,String>{'authorization': basicAuth});
+    var urlGetApproval = "http://119.18.157.236:8893/Api/FindNOObyUserId/$userId?page=$page";
+    print(urlGetApproval);
+    Response r = await get(Uri.parse(urlGetApproval), headers: <String, String>{'authorization': basicAuth});
+    // var dataApproval = json.decode(r.body.toString());
+    // idNOO = dataApproval["id"].toString();
     print(r.statusCode);
     print(r.body);
     this.setState(() {
       print("XYZ");
+      print("Dibawah xyx: $idNOO");
       data = jsonDecode(r.body);
+      // data.addAll(jsonDecode(r.body));
     });
   }
 
-  var urlGetApproval = "http://119.18.157.236:8893/Api/FindNOObyUserId/";
+  RefreshController _refreshController = RefreshController(initialRefresh: false);
 
-  List<Widget> listData = [];
-
-  RefreshController _refreshController =
-  RefreshController(initialRefresh: false);
-
-  void _onRefresh() async{
+  void _onRefresh() async {
     // monitor network fetch
     await Future.delayed(Duration(milliseconds: 1000));
     getData();
+    page = page - 1;
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
   }
 
-  void _onLoading() async{
+  void _onLoading() async {
     // monitor network fetch
     await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use loadFailed(),if no data return,use LoadNodata()
     // data.add({});
-    if(mounted)
+    // data.add((data.length).toString());
+    if (mounted)
       setState(() {
         getData();
+        page = page + 1;
       });
     _refreshController.loadComplete();
   }
+
+  ApprovalStatus dataApprovalStatus = new ApprovalStatus();
+  var urlGetApprovalDetail = "http://192.168.0.13:8893/api/Approval/10390";
 
 
   void initState() {
     // TODO: implement initState
     super.initState();
-    _onLoading();
-    // getApproval();
+    // _onLoading();
     print("dibawah ini adalah list data card");
-    print(listData);
-    listData;
     print("initState getData: ${getData()}");
     getData();
     userId;
@@ -83,7 +87,6 @@ class _StatusPageState extends State<StatusPage> {
   @override
   Widget build(BuildContext context) {
     print("Ini Status Page");
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white60,
@@ -99,7 +102,7 @@ class _StatusPageState extends State<StatusPage> {
               padding: const EdgeInsets.all(20.0),
               child: Center(
                 child: Text(
-                  widget.name??"",
+                  widget.name ?? "",
                   style: TextStyle(
                     color: Colors.black,
                   ),
@@ -111,29 +114,25 @@ class _StatusPageState extends State<StatusPage> {
         body: new Container(
           child: SmartRefresher(
             enablePullDown: true,
-            enablePullUp: false,
+            enablePullUp: true,
             header: WaterDropHeader(),
             footer: CustomFooter(
-              builder: (BuildContext context,LoadStatus mode) {
+              builder: (BuildContext context, LoadStatus mode) {
                 Widget body;
-                if(mode==LoadStatus.idle) {
+                if (mode == LoadStatus.idle) {
                   body = Text("pull up load");
-                }
-                else if(mode==LoadStatus.loading){
-                  body =  CupertinoActivityIndicator();
-                }
-                else if(mode == LoadStatus.failed){
+                } else if (mode == LoadStatus.loading) {
+                  body = CupertinoActivityIndicator();
+                } else if (mode == LoadStatus.failed) {
                   body = Text("Load Failed!Click retry!");
-                }
-                else if(mode == LoadStatus.canLoading){
+                } else if (mode == LoadStatus.canLoading) {
                   body = Text("release to load more");
-                }
-                else{
+                } else {
                   body = Text("No more Data");
                 }
                 return Container(
                   height: 55.0,
-                  child: Center(child:body),
+                  child: Center(child: body),
                 );
               },
             ),
@@ -141,7 +140,8 @@ class _StatusPageState extends State<StatusPage> {
             onRefresh: _onRefresh,
             onLoading: _onLoading,
             child: new ListView.builder(
-              itemCount: data == null ? 0 : data.length,
+              shrinkWrap: true,
+              itemCount: data.length,
               itemBuilder: (BuildContext context, int index) {
                 print("xxData: $data");
                 return new Container(
@@ -155,7 +155,7 @@ class _StatusPageState extends State<StatusPage> {
                           padding: EdgeInsets.all(6),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Name : ${data[index]["CustName"]}" ,
+                            "Name : ${data[index]['CustName']}",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               color: Colors.blue,
@@ -167,7 +167,7 @@ class _StatusPageState extends State<StatusPage> {
                           padding: EdgeInsets.all(6),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Date : ${data[index]["CreatedDate"]}"  ,
+                            "Date : ${data[index]["CreatedDate"]}",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontSize: 12,
@@ -175,11 +175,14 @@ class _StatusPageState extends State<StatusPage> {
                             ),
                           ),
                         ),
+
                         Container(
                           padding: EdgeInsets.all(6),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            data[index] == null ? "halo jul" : data[index]["Status"] ?? "okeh",
+                            data[index] == null
+                                ? "halo jul"
+                                : data[index]["Status"] ?? "okeh",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               color: Colors.blue,
@@ -228,16 +231,18 @@ class _StatusPageState extends State<StatusPage> {
                                     ),
                                     onTap: () {
                                       Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                StatusDetailPage(
-                                                  id: data[index]["id"],
-                                                  userid: userId,
-                                                ))).then((value) {setState(() {
-                                                  _onRefresh();
-                                                  _onLoading();
-                                                });});
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  StatusDetailPage(
+                                                    id: data[index]["id"],
+                                                    userid: userId,
+                                                  ))).then((value) {
+                                        setState(() {
+                                          _onRefresh();
+                                          _onLoading();
+                                        });
+                                      });
                                     }),
                               ),
                             ),
