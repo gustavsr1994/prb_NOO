@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:prb_app/base/base-url.dart';
 import 'package:prb_app/model/Approval.dart';
 import 'package:prb_app/model/user.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -33,12 +34,12 @@ class _ApprovalPageState extends State<ApprovalPage> {
     String userId = prefs.getInt("iduser").toString();
     if (widget.Role == "1"){
       print("ini url get approval");
-      urlGetApproval="http://119.18.157.236:8893/api/FindApproval/$userId?page=$page";
+      urlGetApproval=baseURL+"FindApproval/$userId?page=$page";
        response = await http.get(Uri.parse(urlGetApproval),headers: <String,String>{'authorization': basicAuth});
        print(urlGetApproval);
     }
     else if (widget.Role == "2"){
-      urlGetApproval="http://119.18.157.236:8893/api/ViewAllCust?page=$page";
+      urlGetApproval=baseURL+"ViewAllCust?page=$page";
       response = await http.get(Uri.parse(urlGetApproval), headers: <String,String>{'authorization': basicAuth});
     }
     // print(urlGetApproval + userId);
@@ -47,10 +48,6 @@ class _ApprovalPageState extends State<ApprovalPage> {
       data = jsonDecode(response.body);
     });
   }
-
-  // var urlGetApproval = "http://119.18.157.236:8893/api/FindApproval/";
-
-  // List<Widget> listData = [];
 
   RefreshController _refreshController =
   RefreshController(initialRefresh: false);
@@ -76,23 +73,14 @@ class _ApprovalPageState extends State<ApprovalPage> {
       });
     _refreshController.loadComplete();
   }
-
-  refresh(){
-    setState(() {
-      _onRefresh();
-      _onLoading();
-    });
-  }
   void initState() {
     // TODO: implement initState
     super.initState();
-    refresh();
+    _onLoading();
     _onRefresh();
-    // getApproval();
     print("dibawah ini adalah list data card");
     // print(listData);
     // listData;
-    getData();
 
   }
 
@@ -253,8 +241,8 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                             )
                                         )
                                       ).then((value) {setState(() {
-                                        _onRefresh();
                                         _onLoading();
+                                        _onRefresh();
                                       });});
                                     }),
                               ),

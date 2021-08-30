@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prb_app/feature/dashboard/dashboard-employee/status/status-page.dart';
 import 'package:prb_app/feature/splash/splash-page.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
@@ -12,6 +13,7 @@ class DashboardEmployeePage extends StatefulWidget {
   String so;
   String bu;
   DashboardEmployeePage({Key key, this.username, this.iduser, this.bu, this.so}) : super(key: key);
+
 
   @override
   _DashboardEmployeePageState createState() => _DashboardEmployeePageState();
@@ -60,11 +62,32 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
     });
   }
 
+  RefreshController _refreshController = RefreshController(initialRefresh: false);
+
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    // data.add({});
+    // data.add((data.length).toString());
+    if (mounted)
+    _refreshController.loadComplete();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     loadLongLatFromSharedPrefs();
+    _onRefresh();
+    _onLoading();
   }
 
   @override
@@ -121,16 +144,10 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
         so: widget.so,
         bu: widget.bu,
       ),
-      StatusPage(name: widget.username),
-      InkWell(
-        child: Icon(
-          Icons.logout,
-        ),
-        onTap: () {
-          setState(() {
-            showAlertDialog(context);
-          });
-        },
+      StatusPage(
+        name: widget.username,
+        so: widget.so,
+        bu: widget.bu,
       ),
     ];
 
@@ -166,22 +183,6 @@ class _DashboardEmployeePageState extends State<DashboardEmployeePage> {
                   ),
                 ),
                 icon: Icon(Icons.book,
-                ),
-              ),
-              BottomNavigationBarItem(
-                // ignore: deprecated_member_use
-                title: Text("Logout",
-                  textAlign: TextAlign.center,
-                ),
-                icon: InkWell(
-                  child: Icon(
-                    Icons.logout,
-                  ),
-                  onTap: () {
-                        setState(() {
-                          showAlertDialog(context);
-                        });
-                  },
                 ),
               ),
             ],

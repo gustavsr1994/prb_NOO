@@ -14,6 +14,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:path/path.dart';
+import 'package:prb_app/base/base-url.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'file:///C:/Users/mz002/StudioProjects/prb_NOO/lib/feature/dashboard/dashboard-employee/dashboardemployee-page.dart';
 import 'package:signature/signature.dart';
@@ -47,9 +48,11 @@ class StatusEditPage extends StatefulWidget {
   String fotofrontview; String fotoinsideview;
   String autoLongitudeData; String autoLatitudeData; String addressDetail;
   String streetName; String city; String countrys; String state;
-  String zipCode;
+  String zipCode; String so; String bu;
   StatusEditPage({
     Key key,
+    this.so,
+    this.bu,
     this.userid,
     this.id,
     //customer form
@@ -228,7 +231,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
     var stream =
     new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var uri = Uri.parse(baseURL+"Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -284,7 +287,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
     var stream =
     new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var uri = Uri.parse(baseURL+"Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -340,7 +343,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
     var stream =
     new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var uri = Uri.parse(baseURL+"Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -353,62 +356,6 @@ class _StatusEditPageState extends State<StatusEditPage> {
       siupFromServer = value.replaceAll("\"", "");
     });
   }
-
-  // // getImageBuilding from camera
-  // Future getImageBuildingFromCamera() async {
-  //   final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
-  //   var nows = DateTime.now();
-  //   String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
-  //   var renamedFile = await File(pickedFile.path).rename(
-  //       '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/BUILDING_' +
-  //           dateNow.toString() +
-  //           '_' +
-  //           '.jpg');
-  //   setState(() {
-  //     if (pickedFile != null) {
-  //       _imageBuilding = renamedFile;
-  //     } else {
-  //       print('No image selected.');
-  //     }
-  //   });
-  // }
-  //
-  // // getImageBuilding from gallery
-  // Future getImageBuildingFromGallery() async {
-  //   final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
-  //   var nows = DateTime.now();
-  //   String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
-  //   var renamedFile = await File(pickedFile.path).rename(
-  //       '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/BUILDING_' +
-  //           dateNow.toString() +
-  //           '_' +
-  //           '.jpg');
-  //   setState(() {
-  //     if (pickedFile != null) {
-  //       _imageBuilding = renamedFile;
-  //     } else {
-  //       print('No image selected.');
-  //     }
-  //   });
-  // }
-
-  // UploadBuilding(File imageFile) async {
-  //   var stream =
-  //   new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-  //   var length = await imageFile.length();
-  //   var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
-  //   var request = new http.MultipartRequest("POST", uri);
-  //   var multipartFile = new http.MultipartFile('file', stream, length,
-  //       filename: basename(imageFile.path));
-  //   //contentType: new MediaType('image', 'png'));
-  //   request.files.add(multipartFile);
-  //   var response = await request.send();
-  //   print(response.statusCode);
-  //   response.stream.transform(utf8.decoder).listen((value) {
-  //     print(value);
-  //     buildingFromServer = value.replaceAll("\"", "");
-  //   });
-  // }
 
   // getImageBusinessPhotoFront from camera
   Future getImageBusinessPhotoFrontFromCamera() async {
@@ -453,7 +400,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
     var stream =
     new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var uri = Uri.parse(baseURL+"Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -510,7 +457,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
     var stream =
     new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var uri = Uri.parse(baseURL+"Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -567,7 +514,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
     var stream =
     new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var uri = Uri.parse(baseURL+"Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -584,7 +531,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
   UploadSignatureSales(imageFile, String namaFile) async {
     //var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     //var length = await imageFile.length();
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var uri = Uri.parse(baseURL+"Upload");
     var request = new http.MultipartRequest("POST", uri);
     //var multipartFile = new http.MultipartFile.fromBytes('file', imageFile,
     //filename: namaFile);
@@ -600,7 +547,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
   }
 
   UploadSignatureCustomer(imageFile, String namaFile) async {
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var uri = Uri.parse(baseURL+"Upload");
     var request = new http.MultipartRequest("POST", uri);
     request.files.add(
         http.MultipartFile.fromBytes('file', imageFile, filename: namaFile));
@@ -613,7 +560,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
   }
 
   //hit api Category
-  var urlGetCategory = "http://119.18.157.236:8893/Api/CustCategory";
+  var urlGetCategory = baseURL+"CustCategory";
   String _valCategory;
 
 
@@ -646,8 +593,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
   }
 
   //Hit API Dropdown Segmen dan SubSegment
-  var urlGetSegment = "http://119.18.157.236:8893/Api/CustSegment";
-  var urlGetSubSegment = "http://119.18.157.236:8893/Api/CustSubSegment";
+  var urlGetSubSegment = baseURL+"CustSubSegment";
   String _valSegment, _valSubSegment;
 
   // ignore: deprecated_member_use
@@ -659,6 +605,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
+    var urlGetSegment = baseURL+"CustSegment?bu=${widget.bu}";
     final response = await http.get(Uri.parse(urlGetSegment),headers: <String,String>{'authorization': basicAuth}); //untuk melakukan request ke webservice
     var listData = jsonDecode(response.body); //lalu kita decode hasil datanya
     print(urlGetSegment);
@@ -709,7 +656,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
   }
 
   //hit api Class
-  var urlGetClass = "http://119.18.157.236:8893/Api/CustClass";
+  var urlGetClass = baseURL+"CustClass";
   String _valClass;
   bool _selectedClass = false;
   List<dynamic> _dataClass = List();
@@ -740,7 +687,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
   }
 
   //hit api CompanyStatus
-  var urlGetCompanyStatus = "http://119.18.157.236:8893/Api/CustCompanyChain";
+  var urlGetCompanyStatus = baseURL+"CustCompanyChain";
   String _valCompanyStatus;
   bool _selectedCompanyStatus = false;
   List<dynamic> _dataCompanyStatus = List();
@@ -771,7 +718,6 @@ class _StatusEditPageState extends State<StatusEditPage> {
   }
 
   //hit api PriceGroup
-  var urlGetPriceGroup = "http://119.18.157.236:8893/Api/CustPriceGroup";
   String _valPriceGroup;
 
   // ignore: deprecated_member_use
@@ -783,6 +729,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
+    var urlGetPriceGroup = baseURL+"CustPriceGroup?so=${widget.so}&bu=${widget.bu}";
     final response = await http.get(Uri.parse(urlGetPriceGroup),headers: <String,String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetPriceGroup);
@@ -803,7 +750,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
   }
 
   //hit api Currency
-  var urlGetCurrency = "http://119.18.157.236:8893/Api/Currency";
+  var urlGetCurrency = baseURL+"Currency";
   String _valCurrency;
 
   // ignore: deprecated_member_use
@@ -835,7 +782,6 @@ class _StatusEditPageState extends State<StatusEditPage> {
   }
 
   //hit api Business Unit
-  var urlGetBusinessUnit = "http://119.18.157.236:8893/Api/ViewBU";
   String _valBusinessUnit;
 
   // ignore: deprecated_member_use
@@ -847,6 +793,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
+    var urlGetBusinessUnit = baseURL+"ViewBU?BU=${widget.bu}";
     final response = await http.get(Uri.parse(urlGetBusinessUnit),headers: <String,String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetBusinessUnit);
@@ -867,7 +814,6 @@ class _StatusEditPageState extends State<StatusEditPage> {
   }
 
   //hit api Sales Office
-  var urlGetSalesOffice = "http://119.18.157.236:8893/Api/ViewSO";
   String _valSalesOffice;
 
   // ignore: deprecated_member_use
@@ -879,6 +825,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
+    var urlGetSalesOffice = baseURL+"ViewSO?SO=${widget.so}";
     final response = await http.get(Uri.parse(urlGetSalesOffice),headers: <String,String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetSalesOffice);
@@ -993,7 +940,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
     var urlEditSubmitCustomerForm =
-        "http://119.18.157.236:8893/Api/NOOCustTables/" + widget.id.toString();
+        baseURL+"NOOCustTables/" + widget.id.toString();
     print("Ini url Post Submit Customer : $urlEditSubmitCustomerForm");
     var jsonSubmitCustomerForm = await http.put(
         Uri.parse(
@@ -1104,6 +1051,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
     print("maniac1 : $companyID");
     print("maniac2 : $taxID");
     print("mamiac3 : $deliveryID");
+    print("ini sales office dari detail: ${widget.so}");
+    print("ini business unit dari detail: ${widget.bu}");
     getSegment();
     getCategory();
     getClass();
@@ -1120,7 +1069,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
     //autofill customer form
     _customerNameControllerCustomer.text = widget.custName;
     _brandNameControllerCustomer.text = widget.brandName;
-    _valSalesOffice = widget.salesOffice;
+    _valSalesOffice = widget.salesOffice.toString();
     _valBusinessUnit = widget.businessUnit;
     _valCategory = widget.category;
     _valSegment = widget.distributionChannels;
@@ -1728,92 +1677,6 @@ class _StatusEditPageState extends State<StatusEditPage> {
                         decoration: InputDecoration(
                           isDense: true,
                           hintText: 'NPWP',
-                          filled: true,
-                          contentPadding: EdgeInsets.all(5),
-//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-
-              //SIUP
-              Row(
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      "SIUP                     :",
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    child: Expanded(
-                      child: TextFormField(
-                        // validator: (value) {
-                        //   if (value == null || value.isEmpty) {
-                        //     return 'Please enter SIUP!!';
-                        //   }
-                          // if(!(value.length > 15)&& value.isNotEmpty){
-                          //   return "NPWP number less than 15 digits!!";
-                          // }
-                          // return null;
-                        // },
-                        textAlign: TextAlign.center,
-                        controller: _siupControllerCustomer,
-                        keyboardType: TextInputType.number,
-                        autofocus: false,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          hintText: 'SIUP',
-                          filled: true,
-                          contentPadding: EdgeInsets.all(5),
-//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-
-              //SPPKP
-              Row(
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      "SPPKP                 :",
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    child: Expanded(
-                      child: TextFormField(
-                        // validator: (value) {
-                        //   if (value == null || value.isEmpty) {
-                        //     return 'Please enter SPPKP!!';
-                        //   }
-                        //   // if(!(value.length > 15)&& value.isNotEmpty){
-                        //   //   return "NPWP number less than 15 digits!!";
-                        //   // }
-                        //   return null;
-                        // },
-                        textAlign: TextAlign.center,
-                        controller: _sppkpControllerCustomer,
-                        keyboardType: TextInputType.number,
-                        autofocus: false,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          hintText: 'SPPKP',
                           filled: true,
                           contentPadding: EdgeInsets.all(5),
 //                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
@@ -3004,7 +2867,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                         Text("KTP"),
                                         SizedBox(height: 10,),
                                         Image.network(
-                                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotoktp}",
+                                          baseURL+"Files/GetFiles?fileName=${widget.fotoktp}",
                                         ),
                                       ],
                                     ):
@@ -3051,7 +2914,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                         Text("KTP"),
                                         SizedBox(height: 10,),
                                         Image.network(
-                                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotoktp}",
+                                          baseURL+"Files/GetFiles?fileName=${widget.fotoktp}",
                                         ),
                                       ],
                                     ): Column(
@@ -3103,7 +2966,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                         Text("NPWP"),
                                         SizedBox(height: 10,),
                                         Image.network(
-                                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotonpwp}"
+                                            baseURL+"Files/GetFiles?fileName=${widget.fotonpwp}"
                                         ),
                                       ],
                                     ): Column(
@@ -3147,7 +3010,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                       children: [
                                         Text("NPWP"),
                                         SizedBox(height: 10,),
-                                        Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotonpwp}",),
+                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotonpwp}",),
                                       ],
                                     ): Column(
                                       children: [
@@ -3197,7 +3060,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                       children: [
                                         Text("NIB"),
                                         SizedBox(height: 10,),
-                                        Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotonib}"),
+                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotonib}"),
                                       ],
                                     ): Column(
                                       children: [
@@ -3240,7 +3103,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                       children: [
                                         Text("NIB"),
                                         SizedBox(height: 10),
-                                        Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotonib}"),
+                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotonib}"),
                                       ],
                                     ): Column(
                                       children: [
@@ -3291,7 +3154,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                       children: [
                                         Text(" SPPKP"),
                                         SizedBox(height: 10),
-                                        Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotosppkp}"),
+                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotosppkp}"),
                                       ],
                                     ): Column(
                                       children: [
@@ -3334,7 +3197,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                       children: [
                                         Text("SPPKP"),
                                         SizedBox(height: 10),
-                                        Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotosppkp}"),
+                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotosppkp}"),
                                       ],
                                     ): Column(
                                       children: [
@@ -3385,7 +3248,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                       children: [
                                         Text("Front View"),
                                         SizedBox(height: 10),
-                                        Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotofrontview}"),
+                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotofrontview}"),
                                       ],
                                     ): Column(
                                       children: [
@@ -3428,7 +3291,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                       children: [
                                         Text("Front View"),
                                         SizedBox(height: 10,),
-                                        Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotofrontview}"),
+                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotofrontview}"),
                                       ],
                                     ): Column(
                                       children: [
@@ -3479,7 +3342,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                       children: [
                                         Text("Inside View"),
                                         SizedBox(height: 10,),
-                                        Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotoinsideview}"),
+                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotoinsideview}"),
                                       ],
                                     ): Column(
                                       children: [
@@ -3522,7 +3385,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                       children: [
                                         Text("Inside View"),
                                         SizedBox(height: 10),
-                                        Image.network("http://119.18.157.236:8893/api/Files/GetFiles?fileName=${widget.fotoinsideview}"),
+                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotoinsideview}"),
                                       ],
                                     ): Column(
                                       children: [

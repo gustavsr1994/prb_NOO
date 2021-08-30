@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-import 'package:prb_app/feature/dashboard/dashboard-employee/customer/customer-page.dart';
-import 'package:prb_app/testing.dart';
+import 'package:prb_app/base/base-url.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'feature/splash/splash-page.dart';
 
@@ -115,17 +115,13 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'PRB NOO',
+    return GetMaterialApp(
+      title: nooVersion,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      // home: CustomerPage(),
-      // home: Testing(),
-      home: SplashPage(
-
-      ),
+      home: SplashPage(),
       // home: SplashPage(),
     );
   }

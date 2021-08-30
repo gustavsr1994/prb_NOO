@@ -6,10 +6,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:prb_app/base/base-url.dart';
 import 'package:prb_app/feature/dashboard/dashboard-employee/status/status-edit-page.dart';
 import 'package:prb_app/model/address.dart';
-import 'package:prb_app/model/approval.dart';
-import 'package:prb_app/model/approvalstatus.dart';
 import 'package:prb_app/model/status.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
@@ -18,11 +17,15 @@ import 'package:http/http.dart';
 class StatusDetailPage extends StatefulWidget {
   int id;
   String userid;
+  String so;
+  String bu;
 
   StatusDetailPage({
     Key key,
     this.id,
     this.userid,
+    this.bu,
+    this.so,
   });
 
   @override
@@ -52,6 +55,8 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                 builder: (context) =>
                     StatusEditPage(
                       //Customer form
+                      so: widget.so,
+                      bu: widget.bu,
                       userid: widget.userid,
                       id: widget.id,
                       custName: data.custName,
@@ -128,7 +133,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    var urlGetApprovalDetail = "http://119.18.157.236:8893/api/NOOCustTables/" + widget.id.toString();
+    var urlGetApprovalDetail = baseURL+"NOOCustTables/" + widget.id.toString();
     Response r = await http.get(Uri.parse(urlGetApprovalDetail), headers: <String, String>{'authorization': basicAuth});
     var dataApprovalDetail = json.decode(r.body);
     statusDataApprovalDetail = dataApprovalDetail["Status"].toString();
@@ -163,7 +168,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    var urlGetApprovalStatus = "http://119.18.157.236:8893/api/Approval/"+widget.id.toString();
+    var urlGetApprovalStatus = baseURL+"Approval/"+widget.id.toString();
     print(urlGetApprovalStatus);
     Response r = await get(Uri.parse(urlGetApprovalStatus), headers: <String, String>{'authorization': basicAuth});
     // var dataApproval = json.decode(r.body.toString());
@@ -552,49 +557,49 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
           SizedBox(
             height: 10,
           ),
-          //siup
-          Row(
-            children: [
-              Text(
-                "SIUP                          :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  data.siup ?? "",
-                  style: TextStyle(fontSize: 17, color: Colors.black54),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          //sppkp
-          Row(
-            children: [
-              Text(
-                "SPPKP                      :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  data.sppkp ?? "",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
+          // //siup
+          // Row(
+          //   children: [
+          //     Text(
+          //       "SIUP                          :     ",
+          //       style: TextStyle(
+          //         fontSize: 17,
+          //       ),
+          //     ),
+          //     Flexible(
+          //       child: Text(
+          //         data.siup ?? "",
+          //         style: TextStyle(fontSize: 17, color: Colors.black54),
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          // SizedBox(
+          //   height: 10,
+          // ),
+          // //sppkp
+          // Row(
+          //   children: [
+          //     Text(
+          //       "SPPKP                      :     ",
+          //       style: TextStyle(
+          //         fontSize: 17,
+          //       ),
+          //     ),
+          //     Flexible(
+          //       child: Text(
+          //         data.sppkp ?? "",
+          //         style: TextStyle(
+          //           fontSize: 17,
+          //           color: Colors.black54,
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          // SizedBox(
+          //   height: 10,
+          // ),
           //phone no
           Row(
             children: [
@@ -1202,13 +1207,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                         context: context,
                         builder: (_) =>
                             Image.network(
-                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                              baseURL+"Files/GetFiles?fileName=${data
                                   .fotoKTP}",
                             ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                      baseURL+"Files/GetFiles?fileName=${data
                           .fotoKTP}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
@@ -1250,13 +1255,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                           context: context,
                           builder: (_) =>
                               Image.network(
-                                "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                                baseURL+"Files/GetFiles?fileName=${data
                                     .fotoNPWP}",
                               ),
                         );
                       },
                       child: Image.network(
-                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                        baseURL+"Files/GetFiles?fileName=${data
                             .fotoNPWP}",
                         // BaseUrl.urlFile+data.fotoNPWP,
                         loadingBuilder: (BuildContext context, Widget child,
@@ -1299,13 +1304,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                         context: context,
                         builder: (_) =>
                             Image.network(
-                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                              baseURL+"Files/GetFiles?fileName=${data
                                   .fotoSIUP}",
                             ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893//api/Files/GetFiles?fileName=${data
+                      baseURL+"Files/GetFiles?fileName=${data
                           .fotoSIUP}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
@@ -1348,13 +1353,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                         context: context,
                         builder: (_) =>
                             Image.network(
-                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                              baseURL+"Files/GetFiles?fileName=${data
                                   .fotoGedung3}",
                             ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                      baseURL+"Files/GetFiles?fileName=${data
                           .fotoGedung3}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
@@ -1397,13 +1402,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                         context: context,
                         builder: (_) =>
                             Image.network(
-                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                              baseURL+"Files/GetFiles?fileName=${data
                                   .fotoGedung1}",
                             ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                      baseURL+"Files/GetFiles?fileName=${data
                           .fotoGedung1}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
@@ -1446,13 +1451,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                         context: context,
                         builder: (_) =>
                             Image.network(
-                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                              baseURL+"Files/GetFiles?fileName=${data
                                   .fotoGedung2}",
                             ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                      baseURL+"Files/GetFiles?fileName=${data
                           .fotoGedung2}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
@@ -1496,13 +1501,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                         context: context,
                         builder: (_) =>
                             Image.network(
-                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                              baseURL+"Files/GetFiles?fileName=${data
                                   .custSignature}",
                             ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                      baseURL+"Files/GetFiles?fileName=${data
                           .custSignature}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
@@ -1546,13 +1551,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                         context: context,
                         builder: (_) =>
                             Image.network(
-                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                              baseURL+"Files/GetFiles?fileName=${data
                                   .salesSignature}",
                             ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                      baseURL+"Files/GetFiles?fileName=${data
                           .salesSignature}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
@@ -1596,13 +1601,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                         context: context,
                         builder: (_) =>
                             Image.network(
-                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                              baseURL+"Files/GetFiles?fileName=${data
                                   .approval1Signature}",
                             ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                      baseURL+"Files/GetFiles?fileName=${data
                           .approval1Signature}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
@@ -1647,13 +1652,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                         context: context,
                         builder: (_) =>
                             Image.network(
-                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                              baseURL+"Files/GetFiles?fileName=${data
                                   .approval2Signature}",
                             ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                      baseURL+"Files/GetFiles?fileName=${data
                           .approval2Signature}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
@@ -1698,13 +1703,13 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                         context: context,
                         builder: (_) =>
                             Image.network(
-                              "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                              baseURL+"Files/GetFiles?fileName=${data
                                   .approval3Signature}",
                             ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data
+                      baseURL+"Files/GetFiles?fileName=${data
                           .approval3Signature}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {

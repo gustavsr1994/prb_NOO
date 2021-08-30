@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:prb_app/base/base-url.dart';
 import 'package:prb_app/feature/dashboard/dashboard-employee/status/status-detail.dart';
 import 'package:prb_app/model/approvalstatus.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -10,8 +11,10 @@ import 'package:http/http.dart' as http;
 
 class StatusPage extends StatefulWidget {
   String name;
+  String so;
+  String bu;
 
-  StatusPage({Key key, this.name}) : super(key: key);
+  StatusPage({Key key, this.name, this.so, this.bu}) : super(key: key);
 
   @override
   _StatusPageState createState() => _StatusPageState();
@@ -30,7 +33,7 @@ class _StatusPageState extends State<StatusPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    var urlGetApproval = "http://119.18.157.236:8893/Api/FindNOObyUserId/$userId?page=$page";
+    var urlGetApproval = baseURL+"FindNOObyUserId/$userId?page=$page";
     print(urlGetApproval);
     Response r = await get(Uri.parse(urlGetApproval), headers: <String, String>{'authorization': basicAuth});
     // var dataApproval = json.decode(r.body.toString());
@@ -70,17 +73,14 @@ class _StatusPageState extends State<StatusPage> {
     _refreshController.loadComplete();
   }
 
-  ApprovalStatus dataApprovalStatus = new ApprovalStatus();
-  var urlGetApprovalDetail = "http://192.168.0.13:8893/api/Approval/10390";
-
-
   void initState() {
     // TODO: implement initState
     super.initState();
     // _onLoading();
     print("dibawah ini adalah list data card");
+    _onLoading();
+    _onRefresh();
     print("initState getData: ${getData()}");
-    getData();
     userId;
   }
 
@@ -89,6 +89,7 @@ class _StatusPageState extends State<StatusPage> {
     print("Ini Status Page");
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.white60,
           title: Text(
             "Status",
@@ -229,14 +230,16 @@ class _StatusPageState extends State<StatusPage> {
                                         color: Colors.blue,
                                       ),
                                     ),
-                                    onTap: () {
-                                      Navigator.push(
+                                    onTap: () async {
+                                      await Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   StatusDetailPage(
                                                     id: data[index]["id"],
                                                     userid: userId,
+                                                    bu: widget.bu,
+                                                    so: widget.so,
                                                   ))).then((value) {
                                         setState(() {
                                           _onRefresh();

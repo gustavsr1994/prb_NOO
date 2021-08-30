@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'package:commons/commons.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:prb_app/base/base-url.dart';
+import 'package:prb_app/feature/dashboard/dashboard-employee/dashboardemployee-page.dart';
+import 'package:prb_app/feature/dashboard/dashboard-manager/dashboardmanager-page.dart';
+import 'package:prb_app/feature/login/login-presenter.dart';
 import 'package:prb_app/model/user.dart';
-import 'package:progress_bars/circle_progress_bar/circle_progress_bar.dart';
 import 'package:progress_indicator_button/progress_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../dashboard/dashboard-employee/dashboardemployee-page.dart';
-import '../dashboard/dashboard-manager/dashboardmanager-page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -22,6 +22,18 @@ class _LoginPageState extends State<LoginPage> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  //Untuk enable-disable password
+  bool _obscureText = true;
+
+  String playerid;
+
+  getPlayerIDFromSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      playerid = (prefs.getString("getPlayerID") ?? "");
+    });
+  }
+
   processLogin(String username, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String usernameAuth = 'test';
@@ -31,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
     print(basicAuth);
 
     var urlPostLogin =
-        "http://119.18.157.236:8893/Api/Login?username=$username&password=${password.replaceAll("#", "%23")}&playerId=$playerid";
+        baseURL+"Login?username=$username&password=${password.replaceAll("#", "%23")}&playerId=$playerid";
     Response r = await post(Uri.parse(urlPostLogin),
         headers: <String, String>{'authorization': basicAuth});
     print(r.statusCode);
@@ -45,27 +57,27 @@ class _LoginPageState extends State<LoginPage> {
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
-                title: Text(
-                  'Error',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                content: Text(
-                  "Please Check Your Username and Password !!",
-                  style: TextStyle(
+            title: Text(
+              'Error',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            content: Text(
+              "Please Check Your Username and Password !!",
+              style: TextStyle(
 //                fontWeight: FontWeight.bold,
-                      color: Colors.red),
-                ),
-                actions: <Widget>[
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('OK'),
-                  )
-                ],
-              ));
+                  color: Colors.red),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              )
+            ],
+          ));
       return false;
     }
     var user = User.fromJson(jsonDecode(jsonLogin.body));
@@ -94,12 +106,12 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (context) => DashboardEmployeePage(
-                      username: user?.username ?? "",
-                      iduser: iduser,
-                      so: user?.so,
-                      bu: user?.bu,
-                    )),
-            (Route<dynamic> route) => false);
+                  username: user?.username ?? "",
+                  iduser: iduser,
+                  so: user?.so,
+                  bu: user?.bu,
+                )),
+                (Route<dynamic> route) => false);
         // Navigator.push(
         //     context,
         //     MaterialPageRoute(
@@ -113,10 +125,10 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (context) => DashboardManagerPage(
-                      username: user.username,
-                      Role: dataLogin['Role'],
-                    )),
-            (Route<dynamic> route) => false);
+                  username: user.username,
+                  Role: dataLogin['Role'],
+                )),
+                (Route<dynamic> route) => false);
       } else {
         throw Exception("Gagal Login");
       }
@@ -125,26 +137,6 @@ class _LoginPageState extends State<LoginPage> {
       txtMsg = dataLogin['Username'].toString();
     });
     print(dataLogin);
-  }
-
-  //Untuk enable-disable password
-  bool _obscureText = true;
-
-  void _toggle() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
-
-  bool isLoading = false;
-
-  String playerid;
-
-  getPlayerIDFromSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      playerid = (prefs.getString("getPlayerID") ?? "");
-    });
   }
 
   @override
@@ -171,14 +163,17 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 child: Image.asset('assets/images/prb-icon.png'),
               ),
-              // SizedBox(height: 20,),
-              Text(
-                "",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 30,
+              SizedBox(height: 10,),
+              Center(
+                child: Text(
+                  nooVersion,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
+              // SizedBox(height: 20,),
               SizedBox(
                 height: 15,
               ),
@@ -264,8 +259,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller.forward();
                     }
                     if (_formKey.currentState.validate()) {
-                      processLogin(
-                          _usernameController.text, _passController.text);
+                      processLogin(_usernameController.text, _passController.text);
                       controller.forward();
                       print("Ini proses login");
                     }

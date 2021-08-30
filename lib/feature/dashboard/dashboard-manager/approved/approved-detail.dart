@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:prb_app/base/base-url.dart';
 import 'package:prb_app/model/address.dart';
 import 'package:prb_app/model/approval.dart';
 import 'package:prb_app/model/status.dart';
@@ -38,7 +39,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
     var urlGetApprovalDetail =
-        "http://119.18.157.236:8893/api/NOOCustTables/" + widget.id.toString();
+        baseURL+"NOOCustTables/" + widget.id.toString();
     final response = await http.get(Uri.parse(urlGetApprovalDetail),headers: <String,String>{'authorization': basicAuth});
     final listData = json.decode(response.body);
     var DataCompany = (listData as Map<String, dynamic>)["CompanyAddresses"];
@@ -60,7 +61,7 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
   }
 
   UploadSignatureApproval(imageFile, String namaFile) async {
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var uri = Uri.parse(baseURL+"Upload");
     var request = new http.MultipartRequest("POST", uri);
     request.files.add(
         http.MultipartFile.fromBytes('file', imageFile, filename: namaFile));
@@ -415,50 +416,6 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               Flexible(
                 child: Text(
                   data.nPWP ?? "",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "SIUP                          :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  data.siup ?? "",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "SPPKP                      :     ",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  data.sppkp ?? "",
                   style: TextStyle(
                     fontSize: 17,
                     color: Colors.black54,
@@ -1050,12 +1007,12 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                         await showDialog(
                           context: context,
                           builder: (_) => Image.network(
-                            "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
+                            baseURL+"Files/GetFiles?fileName=${data.fotoNPWP}",
                           ),
                         );
                       },
                       child: Image.network(
-                        "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoNPWP}",
+                        baseURL+"Files/GetFiles?fileName=${data.fotoNPWP}",
                         loadingBuilder: (BuildContext context, Widget child,
                             ImageChunkEvent loadingProgress) {
                           if (loadingProgress == null) return child;
@@ -1094,12 +1051,12 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                       await showDialog(
                         context: context,
                         builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
+                          baseURL+"Files/GetFiles?fileName=${data.fotoKTP}",
                         ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoKTP}",
+                      baseURL+"Files/GetFiles?fileName=${data.fotoKTP}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1139,12 +1096,12 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                       await showDialog(
                         context: context,
                         builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoSIUP}",
+                          baseURL+"Files/GetFiles?fileName=${data.fotoSIUP}",
                         ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893//api/Files/GetFiles?fileName=${data.fotoSIUP}",
+                      baseURL+"Files/GetFiles?fileName=${data.fotoSIUP}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1185,12 +1142,12 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                       await showDialog(
                         context: context,
                         builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung1}",
+                          baseURL+"Files/GetFiles?fileName=${data.fotoGedung1}",
                         ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung1}",
+                      baseURL+"Files/GetFiles?fileName=${data.fotoGedung1}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1231,12 +1188,12 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                       await showDialog(
                         context: context,
                         builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung2}",
+                          baseURL+"Files/GetFiles?fileName=${data.fotoGedung2}",
                         ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung2}",
+                      baseURL+"Files/GetFiles?fileName=${data.fotoGedung2}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1277,12 +1234,12 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                       await showDialog(
                         context: context,
                         builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung3}",
+                          baseURL+"Files/GetFiles?fileName=${data.fotoGedung3}",
                         ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.fotoGedung3}",
+                      baseURL+"Files/GetFiles?fileName=${data.fotoGedung3}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1327,12 +1284,12 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                       await showDialog(
                         context: context,
                         builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.custSignature}",
+                          baseURL+"Files/GetFiles?fileName=${data.custSignature}",
                         ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.custSignature}",
+                      baseURL+"Files/GetFiles?fileName=${data.custSignature}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1374,12 +1331,12 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                       await showDialog(
                         context: context,
                         builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.salesSignature}",
+                          baseURL+"Files/GetFiles?fileName=${data.salesSignature}",
                         ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.salesSignature}",
+                      baseURL+"Files/GetFiles?fileName=${data.salesSignature}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1421,12 +1378,12 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                       await showDialog(
                         context: context,
                         builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.approval1Signature}",
+                          baseURL+"Files/GetFiles?fileName=${data.approval1Signature}",
                         ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.approval1Signature}",
+                      baseURL+"Files/GetFiles?fileName=${data.approval1Signature}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1469,12 +1426,12 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
                       await showDialog(
                         context: context,
                         builder: (_) => Image.network(
-                          "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.approval2Signature}",
+                          baseURL+"Files/GetFiles?fileName=${data.approval2Signature}",
                         ),
                       );
                     },
                     child: Image.network(
-                      "http://119.18.157.236:8893/api/Files/GetFiles?fileName=${data.approval2Signature}",
+                      baseURL+"Files/GetFiles?fileName=${data.approval2Signature}",
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;

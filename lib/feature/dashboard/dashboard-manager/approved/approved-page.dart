@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:prb_app/base/base-url.dart';
 import 'package:prb_app/feature/dashboard/dashboard-employee/status/status-detail.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,7 +31,7 @@ class _ApprovedPageState extends State<ApprovedPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    var urlGetApproved = "http://119.18.157.236:8893/api/ApprovedNOO/$userId?page=$page";
+    var urlGetApproved = baseURL+"ApprovedNOO/$userId?page=$page";
     print(urlGetApproved);
     final response = await http.get(Uri.parse(urlGetApproved),headers: <String,String>{'authorization': basicAuth});
     // data.addAll(jsonDecode(response.body));
@@ -71,11 +72,12 @@ class _ApprovedPageState extends State<ApprovedPage> {
     // TODO: implement initState
     super.initState();
     // getApproval();
-    // _onLoading();
+    _onLoading();
+    _onRefresh();
     print("dibawah ini adalah list data card");
     print(listData);
     listData;
-    getData();
+    // getData();
   }
 
   @override

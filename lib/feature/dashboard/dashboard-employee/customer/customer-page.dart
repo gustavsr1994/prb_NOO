@@ -10,13 +10,16 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:path/path.dart';
+import 'package:prb_app/base/base-url.dart';
+import 'package:prb_app/feature/dashboard/dashboard-employee/dashboardemployee-page.dart';
+import 'package:prb_app/feature/dashboard/dashboard-manager/approval/approval-page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'file:///C:/Users/mz002/StudioProjects/prb_NOO/lib/feature/dashboard/dashboard-employee/dashboardemployee-page.dart';
 import 'package:signature/signature.dart';
 
 
@@ -196,7 +199,7 @@ class _CustomerPageState extends State<CustomerPage> {
     var stream =
     new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var uri = Uri.parse(baseURL+"Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -254,7 +257,7 @@ class _CustomerPageState extends State<CustomerPage> {
     var stream =
     new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var uri = Uri.parse(baseURL+"Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -312,7 +315,7 @@ class _CustomerPageState extends State<CustomerPage> {
     var stream =
     new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var uri = Uri.parse(baseURL+"Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -325,62 +328,6 @@ class _CustomerPageState extends State<CustomerPage> {
       siupFromServer = value.replaceAll("\"", "");
     });
   }
-
-  // // getImageBuilding from camera
-  // Future getImageBuildingFromCamera() async {
-  //   final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
-  //   var nows = DateTime.now();
-  //   String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
-  //   var renamedFile = await File(pickedFile.path).rename(
-  //       '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/BUILDING_' +
-  //           dateNow.toString() +
-  //           '_' +
-  //           '.jpg');
-  //   setState(() {
-  //     if (pickedFile != null) {
-  //       _imageBuilding = renamedFile;
-  //     } else {
-  //       print('No image selected.');
-  //     }
-  //   });
-  // }
-  //
-  // // getImageBuilding from gallery
-  // Future getImageBuildingFromGallery() async {
-  //   final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
-  //   var nows = DateTime.now();
-  //   String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
-  //   var renamedFile = await File(pickedFile.path).rename(
-  //       '/storage/emulated/0/Android/data/id.prb.prb_app/files/Pictures/BUILDING_' +
-  //           dateNow.toString() +
-  //           '_' +
-  //           '.jpg');
-  //   setState(() {
-  //     if (pickedFile != null) {
-  //       _imageBuilding = renamedFile;
-  //     } else {
-  //       print('No image selected.');
-  //     }
-  //   });
-  // }
-
-  // UploadBuilding(File imageFile) async {
-  //   var stream =
-  //   new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-  //   var length = await imageFile.length();
-  //   var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
-  //   var request = new http.MultipartRequest("POST", uri);
-  //   var multipartFile = new http.MultipartFile('file', stream, length,
-  //       filename: basename(imageFile.path));
-  //   //contentType: new MediaType('image', 'png'));
-  //   request.files.add(multipartFile);
-  //   var response = await request.send();
-  //   print(response.statusCode);
-  //   response.stream.transform(utf8.decoder).listen((value) {
-  //     print(value);
-  //     buildingFromServer = value.replaceAll("\"", "");
-  //   });
-  // }
 
   // getImageBusinessPhotoFront from camera
   Future getImageBusinessPhotoFrontFromCamera() async {
@@ -427,7 +374,7 @@ class _CustomerPageState extends State<CustomerPage> {
     var stream =
     new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var uri = Uri.parse(baseURL+"Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -486,7 +433,7 @@ class _CustomerPageState extends State<CustomerPage> {
     var stream =
     new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var uri = Uri.parse(baseURL+"Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -545,7 +492,7 @@ class _CustomerPageState extends State<CustomerPage> {
     var stream =
     new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var uri = Uri.parse(baseURL+"Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -562,7 +509,7 @@ class _CustomerPageState extends State<CustomerPage> {
   UploadSignatureSales(imageFile, String namaFile) async {
     //var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     //var length = await imageFile.length();
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var uri = Uri.parse(baseURL+"Upload");
     var request = new http.MultipartRequest("POST", uri);
     //var multipartFile = new http.MultipartFile.fromBytes('file', imageFile,
     //filename: namaFile);
@@ -578,7 +525,7 @@ class _CustomerPageState extends State<CustomerPage> {
   }
 
   UploadSignatureCustomer(imageFile, String namaFile) async {
-    var uri = Uri.parse("http://119.18.157.236:8893/api/Upload");
+    var uri = Uri.parse(baseURL+"Upload");
     var request = new http.MultipartRequest("POST", uri);
     request.files.add(
         http.MultipartFile.fromBytes('file', imageFile, filename: namaFile));
@@ -591,7 +538,7 @@ class _CustomerPageState extends State<CustomerPage> {
   }
 
   //hit api Category
-  var urlGetCategory = "http://119.18.157.236:8893/Api/CustCategory";
+  var urlGetCategory = baseURL+"CustCategory";
   String _valCategory;
 
 
@@ -624,7 +571,7 @@ class _CustomerPageState extends State<CustomerPage> {
   }
 
   //Hit API Dropdown Segmen dan SubSegment
-  var urlGetSubSegment = "http://119.18.157.236:8893/Api/CustSubSegment";
+  var urlGetSubSegment = baseURL+"CustSubSegment";
   String _valSegment, _valSubSegment;
 
   // ignore: deprecated_member_use
@@ -636,7 +583,7 @@ class _CustomerPageState extends State<CustomerPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    var urlGetSegment = "http://119.18.157.236:8893/Api/CustSegment?bu=${widget.bu}";
+    var urlGetSegment = baseURL+"CustSegment?bu=${widget.bu}";
     final response = await http.get(Uri.parse(urlGetSegment),headers: <String,String>{'authorization': basicAuth}); //untuk melakukan request ke webservice
     var listData = jsonDecode(response.body); //lalu kita decode hasil datanya
     print(urlGetSegment);
@@ -687,7 +634,7 @@ class _CustomerPageState extends State<CustomerPage> {
   }
 
   //hit api Class
-  var urlGetClass = "http://119.18.157.236:8893/Api/CustClass";
+  var urlGetClass = baseURL+"CustClass";
   String _valClass;
   bool _selectedClass = false;
   List<dynamic> _dataClass = List();
@@ -718,7 +665,7 @@ class _CustomerPageState extends State<CustomerPage> {
   }
 
   //hit api CompanyStatus
-  var urlGetCompanyStatus = "http://119.18.157.236:8893/Api/CustCompanyChain";
+  var urlGetCompanyStatus = baseURL+"CustCompanyChain";
   String _valCompanyStatus;
   bool _selectedCompanyStatus = false;
   List<dynamic> _dataCompanyStatus = List();
@@ -760,7 +707,7 @@ class _CustomerPageState extends State<CustomerPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    var urlGetPriceGroup = "http://119.18.157.236:8893/Api/CustPriceGroup?so=${widget.so}&bu=${widget.bu}";
+    var urlGetPriceGroup = baseURL+"CustPriceGroup?so=${widget.so}&bu=${widget.bu}";
     final response = await http.get(Uri.parse(urlGetPriceGroup),headers: <String,String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetPriceGroup);
@@ -781,7 +728,7 @@ class _CustomerPageState extends State<CustomerPage> {
   }
 
   //hit api Currency
-  var urlGetCurrency = "http://119.18.157.236:8893/Api/Currency";
+  var urlGetCurrency = baseURL+"Currency";
   String _valCurrency;
 
   // ignore: deprecated_member_use
@@ -813,7 +760,6 @@ class _CustomerPageState extends State<CustomerPage> {
   }
 
   //hit api Business Unit
-  var urlGetBusinessUnit = "http://119.18.157.236:8893/Api/ViewBU";
   String _valBusinessUnit;
 
   // ignore: deprecated_member_use
@@ -825,6 +771,7 @@ class _CustomerPageState extends State<CustomerPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
+    var urlGetBusinessUnit = baseURL+"ViewBU?BU=${widget.bu}";
     final response = await http.get(Uri.parse(urlGetBusinessUnit),headers: <String,String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetBusinessUnit);
@@ -845,18 +792,17 @@ class _CustomerPageState extends State<CustomerPage> {
   }
 
   //hit api Sales Office
-  var urlGetSalesOffice = "http://119.18.157.236:8893/Api/ViewSO";
   String _valSalesOffice;
 
   // ignore: deprecated_member_use
   List<dynamic> _dataSalesOffice = List();
-
   void getSalesOffice() async {
     String usernameAuth = 'test';
     String passwordAuth = 'test456';
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
+    var urlGetSalesOffice = baseURL+"ViewSO?SO=${widget.so}";
     final response = await http.get(Uri.parse(urlGetSalesOffice),headers: <String,String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetSalesOffice);
@@ -950,8 +896,7 @@ class _CustomerPageState extends State<CustomerPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    var urlPostSubmitCustomerForm =
-        "http://119.18.157.236:8893/Api/NOOCustTables";
+    var urlPostSubmitCustomerForm = baseURL+"NOOCustTables";
     print("Ini url Post Submit Customer : $urlPostSubmitCustomerForm");
     var jsonSubmitCustomerForm = await http.post(
         Uri.parse(
@@ -1089,6 +1034,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white60,
         title: Text(
           "NOO Form",
@@ -1229,25 +1175,25 @@ class _CustomerPageState extends State<CustomerPage> {
                   SizedBox(
                     width: 10,
                   ),
-                    DropdownButton(
-                      hint: Text("Select Sales Office"),
-                      value: _valSalesOffice,
-                      items: _dataSalesOffice.map((item) {
-                        return DropdownMenuItem(
-                          child: Text(item['NameSO'] ?? "loading.."),
-                          value: item['NameSO'],
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _valSalesOffice = value;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
+                  DropdownButton(
+                    hint: Text("Select Sales Office"),
+                    value: _valSalesOffice,
+                    items: _dataSalesOffice.map((item) {
+                      return DropdownMenuItem(
+                        child: Text(item['NameSO'] ?? "loading.."),
+                        value: item['NameSO'],
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _valSalesOffice = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
               ),
 
               //Business Unit
@@ -1703,12 +1649,6 @@ class _CustomerPageState extends State<CustomerPage> {
                   Container(
                     child: Expanded(
                       child: TextFormField(
-                        // validator: (value) {
-                        //   if (value == null || value.isEmpty) {
-                        //     return 'Please enter FAX Number!!';
-                        //   }
-                        //   return null;
-                        // },
                         textAlign: TextAlign.center,
                         controller: _faxControllerCustomer,
                         keyboardType: TextInputType.number,
@@ -1718,7 +1658,6 @@ class _CustomerPageState extends State<CustomerPage> {
                           hintText: 'Fax',
                           filled: true,
                           contentPadding: EdgeInsets.all(5),
-//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
                         ),
                       ),
                     ),
@@ -1810,45 +1749,45 @@ class _CustomerPageState extends State<CustomerPage> {
               ),
 
               //Salesman
-              Row(
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      "Salesman            :",
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    child: Expanded(
-                      child: TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter Salesman!!';
-                          }
-                          return null;
-                        },
-                        textCapitalization: TextCapitalization.words,
-                        textAlign: TextAlign.center,
-                        controller: _salesmanControllerCustomer,
-                        keyboardType: TextInputType.text,
-                        autofocus: false,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          hintText: 'Salesman',
-                          filled: true,
-                          contentPadding: EdgeInsets.all(5),
-//                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 30,
-              ),
+//               Row(
+//                 children: <Widget>[
+//                   Container(
+//                     child: Text(
+//                       "Salesman            :",
+//                     ),
+//                   ),
+//                   SizedBox(
+//                     width: 10,
+//                   ),
+//                   Container(
+//                     child: Expanded(
+//                       child: TextFormField(
+//                         validator: (value) {
+//                           if (value == null || value.isEmpty) {
+//                             return 'Please enter Salesman!!';
+//                           }
+//                           return null;
+//                         },
+//                         textCapitalization: TextCapitalization.words,
+//                         textAlign: TextAlign.center,
+//                         controller: _salesmanControllerCustomer,
+//                         keyboardType: TextInputType.text,
+//                         autofocus: false,
+//                         decoration: InputDecoration(
+//                           isDense: true,
+//                           hintText: 'Salesman',
+//                           filled: true,
+//                           contentPadding: EdgeInsets.all(5),
+// //                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+//                         ),
+//                       ),
+//                     ),
+//                   )
+//                 ],
+//               ),
+//               SizedBox(
+//                 height: 30,
+//               ),
               Divider(
                 color: Colors.black,
                 height: 0,
@@ -2805,17 +2744,17 @@ class _CustomerPageState extends State<CustomerPage> {
                                     child: _imageKTP == null
                                         ? Text("KTP")
                                         : Column(
-                                          children: [
-                                            Text("KTP"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                      _imageKTP,
-                                      fit: BoxFit.cover,
+                                      children: [
+                                        Text("KTP"),
+                                        SizedBox(height: 10,),
+                                        Image.file(
+                                          _imageKTP,
+                                          fit: BoxFit.cover,
 //                                  width: 150,
 //                                  height: 80,
-                                    ),
-                                          ],
                                         ),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -2847,17 +2786,17 @@ class _CustomerPageState extends State<CustomerPage> {
                                     child: _imageKTP == null
                                         ? Text("KTP")
                                         : Column(
-                                          children: [
-                                            Text("KTP"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                      _imageKTP,
-                                      fit: BoxFit.cover,
+                                      children: [
+                                        Text("KTP"),
+                                        SizedBox(height: 10,),
+                                        Image.file(
+                                          _imageKTP,
+                                          fit: BoxFit.cover,
 //                                  width: 150,
 //                                  height: 80,
-                                    ),
-                                          ],
                                         ),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -2895,17 +2834,17 @@ class _CustomerPageState extends State<CustomerPage> {
                                     child: _imageNPWP == null
                                         ? Text("NPWP")
                                         : Column(
-                                          children: [
-                                            Text("NPWP"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                      _imageNPWP,
-                                      fit: BoxFit.cover,
+                                      children: [
+                                        Text("NPWP"),
+                                        SizedBox(height: 10,),
+                                        Image.file(
+                                          _imageNPWP,
+                                          fit: BoxFit.cover,
 //                                  width: 150,
 //                                  height: 80,
-                                    ),
-                                          ],
                                         ),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -2936,17 +2875,17 @@ class _CustomerPageState extends State<CustomerPage> {
                                     child: _imageNPWP == null
                                         ? Text("NPWP")
                                         : Column(
-                                          children: [
-                                            Text("NPWP"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                      _imageNPWP,
-                                      fit: BoxFit.cover,
+                                      children: [
+                                        Text("NPWP"),
+                                        SizedBox(height: 10,),
+                                        Image.file(
+                                          _imageNPWP,
+                                          fit: BoxFit.cover,
 //                                  width: 150,
 //                                  height: 80,
-                                    ),
-                                          ],
                                         ),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -2984,17 +2923,17 @@ class _CustomerPageState extends State<CustomerPage> {
                                     child: _imageSIUP == null
                                         ? Text("NIB")
                                         : Column(
-                                          children: [
-                                            Text("NIB"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                      _imageSIUP,
-                                      fit: BoxFit.cover,
+                                      children: [
+                                        Text("NIB"),
+                                        SizedBox(height: 10,),
+                                        Image.file(
+                                          _imageSIUP,
+                                          fit: BoxFit.cover,
 //                                  width: 150,
 //                                  height: 80,
-                                    ),
-                                          ],
                                         ),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3025,15 +2964,15 @@ class _CustomerPageState extends State<CustomerPage> {
                                     child: _imageSIUP == null
                                         ? Text("NIB")
                                         : Column(
-                                          children: [
-                                            Text("NIB"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                              _imageSIUP,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ],
+                                      children: [
+                                        Text("NIB"),
+                                        SizedBox(height: 10,),
+                                        Image.file(
+                                          _imageSIUP,
+                                          fit: BoxFit.cover,
                                         ),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3072,15 +3011,15 @@ class _CustomerPageState extends State<CustomerPage> {
                                     child: _imageSPPKP == null
                                         ? Text("SPPKP")
                                         : Column(
-                                          children: [
-                                            Text("SPPKP"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                              _imageSPPKP,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ],
+                                      children: [
+                                        Text("SPPKP"),
+                                        SizedBox(height: 10,),
+                                        Image.file(
+                                          _imageSPPKP,
+                                          fit: BoxFit.cover,
                                         ),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3111,15 +3050,15 @@ class _CustomerPageState extends State<CustomerPage> {
                                     child: _imageSPPKP == null
                                         ? Text("SPPKP")
                                         : Column(
-                                          children: [
-                                            Text("SPPKP"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                      _imageSPPKP,
-                                      fit: BoxFit.cover,
-                                    ),
-                                          ],
+                                      children: [
+                                        Text("SPPKP"),
+                                        SizedBox(height: 10,),
+                                        Image.file(
+                                          _imageSPPKP,
+                                          fit: BoxFit.cover,
                                         ),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3158,15 +3097,15 @@ class _CustomerPageState extends State<CustomerPage> {
                                     child: _imageBusinessPhotoFront == null
                                         ? Text("Front View")
                                         : Column(
-                                          children: [
-                                            Text("Front View"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                              _imageBusinessPhotoFront,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ],
+                                      children: [
+                                        Text("Front View"),
+                                        SizedBox(height: 10,),
+                                        Image.file(
+                                          _imageBusinessPhotoFront,
+                                          fit: BoxFit.cover,
                                         ),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3197,15 +3136,15 @@ class _CustomerPageState extends State<CustomerPage> {
                                     child: _imageBusinessPhotoFront == null
                                         ? Text("Front View")
                                         : Column(
-                                          children: [
-                                            Text("Front View"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                      _imageBusinessPhotoFront,
-                                      fit: BoxFit.cover,
-                                    ),
-                                          ],
+                                      children: [
+                                        Text("Front View"),
+                                        SizedBox(height: 10,),
+                                        Image.file(
+                                          _imageBusinessPhotoFront,
+                                          fit: BoxFit.cover,
                                         ),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3244,15 +3183,15 @@ class _CustomerPageState extends State<CustomerPage> {
                                     child: _imageBusinessPhotoInside == null
                                         ? Text("Inside View")
                                         : Column(
-                                          children: [
-                                            Text("Inside View"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                              _imageBusinessPhotoInside,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ],
+                                      children: [
+                                        Text("Inside View"),
+                                        SizedBox(height: 10,),
+                                        Image.file(
+                                          _imageBusinessPhotoInside,
+                                          fit: BoxFit.cover,
                                         ),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3283,15 +3222,15 @@ class _CustomerPageState extends State<CustomerPage> {
                                     child: _imageBusinessPhotoInside == null
                                         ? Text("Inside View")
                                         : Column(
-                                          children: [
-                                            Text("Inside View"),
-                                            SizedBox(height: 10,),
-                                            Image.file(
-                                              _imageBusinessPhotoInside,
-                                              fit: BoxFit.cover,
-                                    ),
-                                          ],
+                                      children: [
+                                        Text("Inside View"),
+                                        SizedBox(height: 10,),
+                                        Image.file(
+                                          _imageBusinessPhotoInside,
+                                          fit: BoxFit.cover,
                                         ),
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3432,7 +3371,7 @@ class _CustomerPageState extends State<CustomerPage> {
                                 //Clear Canvass
                                 // ignore: deprecated_member_use
                                 RaisedButton(
-                                  color: Colors.blue,
+                                    color: Colors.blue,
                                     child: Text(
                                       "Clear",
                                       style: TextStyle(
@@ -3440,9 +3379,9 @@ class _CustomerPageState extends State<CustomerPage> {
                                       ),
                                     ),
                                     onPressed: () {
-                                    setState(() =>
-                                        _signaturecontrollercustomer.clear());
-                                  }),
+                                      setState(() =>
+                                          _signaturecontrollercustomer.clear());
+                                    }),
                                 // IconButton(
                                 //     icon: const Icon(
                                 //       Icons.clear,
@@ -3537,9 +3476,21 @@ class _CustomerPageState extends State<CustomerPage> {
                         context,
                         "Success"
                     );
-                    Navigator.push(
-                      context,
-                      new MaterialPageRoute(builder: (context) => new DashboardEmployeePage()));
+                    print("ini navigator push submit");
+                    await Get.offAll(DashboardEmployeePage(
+                      username: widget.name,
+                      iduser: widget.iduser,
+                      bu: widget.bu,
+                      so: widget.so,
+                    ));
+                    // await Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(builder: (context) => DashboardEmployeePage(
+                    //       username: widget.name,
+                    //       iduser: widget.iduser,
+                    //       bu: widget.bu,
+                    //       so: widget.so,
+                    //     )));
                   }
                 },
                 child: Text(
