@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'dart:ui';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:commons/commons.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,12 +14,14 @@ import 'package:prb_app/model/status.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
 import 'package:http/http.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class StatusDetailPage extends StatefulWidget {
   int id;
   String userid;
   String so;
   String bu;
+  String name;
 
   StatusDetailPage({
     Key key,
@@ -26,6 +29,7 @@ class StatusDetailPage extends StatefulWidget {
     this.userid,
     this.bu,
     this.so,
+    this.name,
   });
 
   @override
@@ -55,6 +59,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                 builder: (context) =>
                     StatusEditPage(
                       //Customer form
+                      username: widget.name,
                       so: widget.so,
                       bu: widget.bu,
                       userid: widget.userid,
@@ -121,6 +126,7 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                       fotosppkp: data.fotoGedung3,
                       fotofrontview: data.fotoGedung1,
                       fotoinsideview: data.fotoGedung2,
+                      fotocustsignature: data.custSignature,
                     )),
           );
         })
@@ -1209,12 +1215,17 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                             Image.network(
                               baseURL+"Files/GetFiles?fileName=${data
                                   .fotoKTP}",
+                              filterQuality: FilterQuality.medium,
+                              cacheHeight: 400,
+                              cacheWidth: 300,
                             ),
                       );
                     },
                     child: Image.network(
-                      baseURL+"Files/GetFiles?fileName=${data
-                          .fotoKTP}",
+                      baseURL+"Files/GetFiles?fileName=${data.fotoKTP}",
+                      filterQuality: FilterQuality.low,
+                      cacheHeight: 400,
+                      cacheWidth: 300,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1257,13 +1268,18 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                               Image.network(
                                 baseURL+"Files/GetFiles?fileName=${data
                                     .fotoNPWP}",
+                                filterQuality: FilterQuality.medium,
+                                cacheHeight: 400,
+                                cacheWidth: 300,
                               ),
                         );
                       },
                       child: Image.network(
                         baseURL+"Files/GetFiles?fileName=${data
                             .fotoNPWP}",
-                        // BaseUrl.urlFile+data.fotoNPWP,
+                        filterQuality: FilterQuality.low,
+                        cacheHeight: 400,
+                        cacheWidth: 300,
                         loadingBuilder: (BuildContext context, Widget child,
                             ImageChunkEvent loadingProgress) {
                           if (loadingProgress == null) return child;
@@ -1306,12 +1322,18 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                             Image.network(
                               baseURL+"Files/GetFiles?fileName=${data
                                   .fotoSIUP}",
+                              filterQuality: FilterQuality.medium,
+                              cacheHeight: 400,
+                              cacheWidth: 300,
                             ),
                       );
                     },
                     child: Image.network(
                       baseURL+"Files/GetFiles?fileName=${data
                           .fotoSIUP}",
+                      filterQuality: FilterQuality.low,
+                      cacheHeight: 400,
+                      cacheWidth: 300,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1355,12 +1377,18 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                             Image.network(
                               baseURL+"Files/GetFiles?fileName=${data
                                   .fotoGedung3}",
+                              filterQuality: FilterQuality.medium,
+                              cacheHeight: 400,
+                              cacheWidth: 300,
                             ),
                       );
                     },
                     child: Image.network(
                       baseURL+"Files/GetFiles?fileName=${data
                           .fotoGedung3}",
+                      filterQuality: FilterQuality.low,
+                      cacheHeight: 400,
+                      cacheWidth: 300,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1404,12 +1432,18 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                             Image.network(
                               baseURL+"Files/GetFiles?fileName=${data
                                   .fotoGedung1}",
+                              filterQuality: FilterQuality.medium,
+                              cacheHeight: 400,
+                              cacheWidth: 300,
                             ),
                       );
                     },
                     child: Image.network(
                       baseURL+"Files/GetFiles?fileName=${data
                           .fotoGedung1}",
+                      filterQuality: FilterQuality.low,
+                      cacheHeight: 400,
+                      cacheWidth: 300,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1453,12 +1487,18 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                             Image.network(
                               baseURL+"Files/GetFiles?fileName=${data
                                   .fotoGedung2}",
+                              filterQuality: FilterQuality.medium,
+                              cacheHeight: 400,
+                              cacheWidth: 300,
                             ),
                       );
                     },
                     child: Image.network(
                       baseURL+"Files/GetFiles?fileName=${data
                           .fotoGedung2}",
+                      filterQuality: FilterQuality.low,
+                      cacheHeight: 400,
+                      cacheWidth: 300,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1503,12 +1543,17 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                             Image.network(
                               baseURL+"Files/GetFiles?fileName=${data
                                   .custSignature}",
+                              filterQuality: FilterQuality.medium,
+                              cacheHeight: 400,
+                              cacheWidth: 300,
                             ),
                       );
                     },
                     child: Image.network(
-                      baseURL+"Files/GetFiles?fileName=${data
-                          .custSignature}",
+                      baseURL+"Files/GetFiles?fileName=${data.custSignature}",
+                      filterQuality: FilterQuality.low,
+                      cacheHeight: 400,
+                      cacheWidth: 300,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1553,12 +1598,18 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                             Image.network(
                               baseURL+"Files/GetFiles?fileName=${data
                                   .salesSignature}",
+                              filterQuality: FilterQuality.medium,
+                              cacheHeight: 400,
+                              cacheWidth: 300,
                             ),
                       );
                     },
                     child: Image.network(
                       baseURL+"Files/GetFiles?fileName=${data
                           .salesSignature}",
+                      filterQuality: FilterQuality.low,
+                      cacheHeight: 400,
+                      cacheWidth: 300,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1601,14 +1652,18 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                         context: context,
                         builder: (_) =>
                             Image.network(
-                              baseURL+"Files/GetFiles?fileName=${data
-                                  .approval1Signature}",
+                              baseURL+"Files/GetFiles?fileName=${data.approval1Signature}",
+                              filterQuality: FilterQuality.medium,
+                              cacheHeight: 400,
+                              cacheWidth: 300,
                             ),
                       );
                     },
                     child: Image.network(
-                      baseURL+"Files/GetFiles?fileName=${data
-                          .approval1Signature}",
+                      baseURL+"Files/GetFiles?fileName=${data.approval1Signature}",
+                      filterQuality: FilterQuality.low,
+                      cacheHeight: 400,
+                      cacheWidth: 300,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1654,12 +1709,18 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                             Image.network(
                               baseURL+"Files/GetFiles?fileName=${data
                                   .approval2Signature}",
+                              filterQuality: FilterQuality.medium,
+                              cacheHeight: 400,
+                              cacheWidth: 300,
                             ),
                       );
                     },
                     child: Image.network(
                       baseURL+"Files/GetFiles?fileName=${data
                           .approval2Signature}",
+                      filterQuality: FilterQuality.low,
+                      cacheHeight: 400,
+                      cacheWidth: 300,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1705,12 +1766,18 @@ class _StatusDetailPageState extends State<StatusDetailPage> {
                             Image.network(
                               baseURL+"Files/GetFiles?fileName=${data
                                   .approval3Signature}",
+                              filterQuality: FilterQuality.medium,
+                              cacheHeight: 400,
+                              cacheWidth: 300,
                             ),
                       );
                     },
                     child: Image.network(
                       baseURL+"Files/GetFiles?fileName=${data
                           .approval3Signature}",
+                      filterQuality: FilterQuality.low,
+                      cacheHeight: 400,
+                      cacheWidth: 300,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;

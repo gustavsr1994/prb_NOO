@@ -236,6 +236,7 @@ class _StatusPageState extends State<StatusPage> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   StatusDetailPage(
+                                                    name: widget.name,
                                                     id: data[index]["id"],
                                                     userid: userId,
                                                     bu: widget.bu,

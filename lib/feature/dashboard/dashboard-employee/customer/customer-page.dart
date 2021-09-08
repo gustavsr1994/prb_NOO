@@ -5,7 +5,6 @@ import 'dart:typed_data';
 import 'package:async/async.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:commons/commons.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -1030,7 +1029,7 @@ class _CustomerPageState extends State<CustomerPage> {
 
     var ktpFormatter = new MaskTextInputFormatter(mask: '################', filter: { "#": RegExp(r'[0-9]') });
     var npwpFormatter = new MaskTextInputFormatter(mask: '##.###.###.#-###.###', filter: { "#": RegExp(r'[0-9]') });
-    var phoneFormatter = new MaskTextInputFormatter(mask: '#### #### ####', filter: { "#": RegExp(r'[0-9]') });
+    // var phoneFormatter = new MaskTextInputFormatter(mask: '#### #### ####', filter: { "#": RegExp(r'[0-9]') });
 
     return Scaffold(
       appBar: AppBar(
@@ -1606,9 +1605,6 @@ class _CustomerPageState extends State<CustomerPage> {
                   Container(
                     child: Expanded(
                       child: TextFormField(
-                        inputFormatters: [
-                          phoneFormatter
-                        ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter Phone Number!!';

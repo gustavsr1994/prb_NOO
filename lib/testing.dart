@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:prb_app/feature/splash/splash-page.dart';
+import 'package:get/get.dart';
+import 'package:prb_app/feature/login/login-page.dart';
 
-void main() {
-  runApp(MyApp());
+class HomePage extends StatefulWidget {
+  const HomePage({Key key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-
-        primarySwatch: Colors.blue,
+    return Scaffold(
+      body: Center(
+        child: Text(
+          "Ini HomePage",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 50,
+            color: Colors.black87,
+          ),
+        ),
       ),
-      home: SplashPage(),
     );
   }
 }

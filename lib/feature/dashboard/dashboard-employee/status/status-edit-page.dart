@@ -19,63 +19,150 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'file:///C:/Users/mz002/StudioProjects/prb_NOO/lib/feature/dashboard/dashboard-employee/dashboardemployee-page.dart';
 import 'package:signature/signature.dart';
 
-
 class StatusEditPage extends StatefulWidget {
   //autofil edit reject customer form
   String userid;
-  int id; String custName; String brandName; String category;
-  String distributionChannels; String channelSegmentation; String selectClass;
-  String phoneNo; String companyStatus; String faxNo; String contactPerson;
-  String emailAddress; String website; String npwp; String ktp;
-  String currency; String priceGroup; String salesman; String salesOffice;
-  String businessUnit; String siup; String sppkp;
+  String username;
+  int id;
+  String custName;
+  String brandName;
+  String category;
+  String distributionChannels;
+  String channelSegmentation;
+  String selectClass;
+  String phoneNo;
+  String companyStatus;
+  String faxNo;
+  String contactPerson;
+  String emailAddress;
+  String website;
+  String npwp;
+  String ktp;
+  String currency;
+  String priceGroup;
+  String salesman;
+  String salesOffice;
+  String businessUnit;
+  String siup;
+  String sppkp;
 
   //autofil edit reject company address form
-  int companyID; String companyName; String companyStreetName; String companyCity;
-  String companyState; String companyCountry; String companyZipCode;
+  int companyID;
+  String companyName;
+  String companyStreetName;
+  String companyCity;
+  String companyState;
+  String companyCountry;
+  String companyZipCode;
   int companyParentID;
 
   //autofil edit reject tax address form
-  int taxID; String taxName; String taxStreetName; String taxCity;
-  String taxState; String taxCountry; String taxZipCode; int taxParentID;
+  int taxID;
+  String taxName;
+  String taxStreetName;
+  String taxCity;
+  String taxState;
+  String taxCountry;
+  String taxZipCode;
+  int taxParentID;
 
   //autofil edit reject delivery address form
-  int deliveryID; String deliveryName; String deliveryStreetName; String deliveryCity;
-  String deliveryState; String deliveryCountry; String deliveryZipCode;
+  int deliveryID;
+  String deliveryName;
+  String deliveryStreetName;
+  String deliveryCity;
+  String deliveryState;
+  String deliveryCountry;
+  String deliveryZipCode;
   int deliveryParentID;
 
-  String fotoktp; String fotonpwp; String fotonib; String fotosppkp;
-  String fotofrontview; String fotoinsideview;
-  String autoLongitudeData; String autoLatitudeData; String addressDetail;
-  String streetName; String city; String countrys; String state;
-  String zipCode; String so; String bu;
+  String fotoktp;
+  String fotonpwp;
+  String fotonib;
+  String fotosppkp;
+  String fotofrontview;
+  String fotoinsideview;
+  String autoLongitudeData;
+  String autoLatitudeData;
+  String addressDetail;
+  String streetName;
+  String city;
+  String countrys;
+  String state;
+  String zipCode;
+  String so;
+  String bu;
+  String fotocustsignature;
+
   StatusEditPage({
     Key key,
+    this.username,
     this.so,
     this.bu,
     this.userid,
     this.id,
     //customer form
-    this.custName, this.brandName, this.category, this.distributionChannels,
-    this.channelSegmentation, this.selectClass, this.phoneNo, this.companyStatus,
-    this.faxNo, this.contactPerson, this.emailAddress, this.website,
-    this.npwp, this.ktp, this.currency, this.priceGroup, this.salesman,
-    this.salesOffice, this.businessUnit, this.sppkp, this.siup,
+    this.custName,
+    this.brandName,
+    this.category,
+    this.distributionChannels,
+    this.channelSegmentation,
+    this.selectClass,
+    this.phoneNo,
+    this.companyStatus,
+    this.faxNo,
+    this.contactPerson,
+    this.emailAddress,
+    this.website,
+    this.npwp,
+    this.ktp,
+    this.currency,
+    this.priceGroup,
+    this.salesman,
+    this.salesOffice,
+    this.businessUnit,
+    this.sppkp,
+    this.siup,
+    this.fotocustsignature,
 
     //company address form
-    this.companyID, this.companyName, this.companyStreetName, this.companyCity, this.companyState,
-    this.companyCountry, this.companyZipCode, this.companyParentID,
+    this.companyID,
+    this.companyName,
+    this.companyStreetName,
+    this.companyCity,
+    this.companyState,
+    this.companyCountry,
+    this.companyZipCode,
+    this.companyParentID,
 
     //tax address form
-    this.taxID, this.taxName, this.taxStreetName, this.taxCity, this.taxState,
-    this.taxCountry, this.taxZipCode, this.taxParentID,
+    this.taxID,
+    this.taxName,
+    this.taxStreetName,
+    this.taxCity,
+    this.taxState,
+    this.taxCountry,
+    this.taxZipCode,
+    this.taxParentID,
 
     //delivery address form
-    this.deliveryID, this.deliveryName, this.deliveryStreetName, this.deliveryCity, this.deliveryState,
-    this.deliveryCountry, this.deliveryZipCode, this.autoLongitudeData, this.autoLatitudeData,
+    this.deliveryID,
+    this.deliveryName,
+    this.deliveryStreetName,
+    this.deliveryCity,
+    this.deliveryState,
+    this.deliveryCountry,
+    this.deliveryZipCode,
+    this.autoLongitudeData,
+    this.autoLatitudeData,
     this.deliveryParentID,
     //attachment
-    this.fotoktp, this.fotonpwp, this.fotonib, this.fotosppkp, this.fotofrontview, this.fotoinsideview,
+    this.fotoktp,
+    this.fotonpwp,
+    this.fotonib,
+    this.fotosppkp,
+    this.fotofrontview,
+    this.fotoinsideview,
 
     //address and delivery form
     this.addressDetail,
@@ -85,22 +172,24 @@ class StatusEditPage extends StatefulWidget {
     this.countrys,
     this.zipCode,
   }) : super(key: key);
+
   @override
   _StatusEditPageState createState() => _StatusEditPageState();
 }
 
 class _StatusEditPageState extends State<StatusEditPage> {
-
-
   final _formkey = GlobalKey<FormState>();
 
   //Customer Controller
-  TextEditingController _customerNameControllerCustomer = TextEditingController();
+  TextEditingController _customerNameControllerCustomer =
+      TextEditingController();
   TextEditingController _brandNameControllerCustomer = TextEditingController();
   TextEditingController _phoneControllerCustomer = TextEditingController();
   TextEditingController _faxControllerCustomer = TextEditingController();
-  TextEditingController _contactPersonControllerCustomer = TextEditingController();
-  TextEditingController _emailAddressControllerCustomer = TextEditingController();
+  TextEditingController _contactPersonControllerCustomer =
+      TextEditingController();
+  TextEditingController _emailAddressControllerCustomer =
+      TextEditingController();
   TextEditingController _npwpControllerCustomer = TextEditingController();
   TextEditingController _siupControllerCustomer = TextEditingController();
   TextEditingController _sppkpControllerCustomer = TextEditingController();
@@ -144,17 +233,17 @@ class _StatusEditPageState extends State<StatusEditPage> {
   String zipCode = "";
   String salesmanId = "";
 
-  loadFromSharedPrefs() async{
-    SharedPreferences prefs =await SharedPreferences.getInstance();
+  loadFromSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      streetName = (prefs.getString("getStreetName")??"");
-      city = (prefs.getString("getCity")??"");
-      countrys = (prefs.getString("getCountry")??"");
-      state = (prefs.getString("getState")??"");
-      zipCode = (prefs.getString("getZipCode")??"");
-      longitudeData = (prefs.getString("getLongitude")??"");
-      latitudeData = (prefs.getString("getLatitude")??"");
-      addressDetail = (prefs.getString("getAddressDetail")??"");
+      streetName = (prefs.getString("getStreetName") ?? "");
+      city = (prefs.getString("getCity") ?? "");
+      countrys = (prefs.getString("getCountry") ?? "");
+      state = (prefs.getString("getState") ?? "");
+      zipCode = (prefs.getString("getZipCode") ?? "");
+      longitudeData = (prefs.getString("getLongitude") ?? "");
+      latitudeData = (prefs.getString("getLatitude") ?? "");
+      addressDetail = (prefs.getString("getAddressDetail") ?? "");
       print("ini loadlonglat: $longitudeData");
       print("Ini addressDetail: $addressDetail");
       print("ini detail street: $streetName");
@@ -167,6 +256,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
 
   var isImageCaptured = false;
   File _imageKTP;
+  File _imageKTPDefault;
   File _imageNPWP;
   File _imageSIUP;
   File _imageBuilding;
@@ -177,21 +267,36 @@ class _StatusEditPageState extends State<StatusEditPage> {
   Uint8List DataSignSales;
   Uint8List DataSignCustomer;
   var nows = DateTime.now();
-  String ktpFromServer = "KTP_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
-  String npwpFromServer = "NPWP_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
-  String siupFromServer = "SIUP_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
-  String buildingFromServer = "BUILDING_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
-  String businessPhotoFrontFromServer = "BUSINESSPHOTOFRONT_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
-  String businessPhotoInsideFromServer = "BUSINESSPHOTOINSIDE_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
-  String sppkpFromServer = "SPPKP_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
-  String signatureSalesFromServer = "SIGNATURESALES_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
-  String signatureCustomerFromServer = "SIGNATURECUSTOMER_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  String ktpFromServer =
+      "KTP_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  String npwpFromServer =
+      "NPWP_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  String siupFromServer =
+      "SIUP_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  String buildingFromServer = "BUILDING_" +
+      DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) +
+      "_.jpg";
+  String businessPhotoFrontFromServer = "BUSINESSPHOTOFRONT_" +
+      DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) +
+      "_.jpg";
+  String businessPhotoInsideFromServer = "BUSINESSPHOTOINSIDE_" +
+      DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) +
+      "_.jpg";
+  String sppkpFromServer =
+      "SPPKP_" + DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) + "_.jpg";
+  String signatureSalesFromServer = "SIGNATURESALES_" +
+      DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) +
+      "_.jpg";
+  String signatureCustomerFromServer = "SIGNATURECUSTOMER_" +
+      DateFormat("ddMMyyyy_hhmm").format(DateTime.now()) +
+      "_.jpg";
   final picker = ImagePicker();
   bool locationVal = false;
 
   // getImageKTP From Camera
   Future getImageKTPFromCamera() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality:20);
+    final pickedFile =
+        await picker.getImage(source: ImageSource.camera, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -210,7 +315,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
 
   // getImageKTP From Galery
   Future getImageKTPFromGalery() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality:20);
+    final pickedFile =
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -229,9 +335,9 @@ class _StatusEditPageState extends State<StatusEditPage> {
 
   UploadKTP(File imageFile) async {
     var stream =
-    new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse(baseURL+"Upload");
+    var uri = Uri.parse(baseURL + "Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -247,7 +353,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
 
   // getImageNPWP from camera
   Future getImageNPWPFromCamera() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
+    final pickedFile =
+        await picker.getImage(source: ImageSource.camera, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -266,7 +373,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
 
   // getImageNPWP from galery
   Future getImageNPWPFromGallery() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
+    final pickedFile =
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -285,9 +393,9 @@ class _StatusEditPageState extends State<StatusEditPage> {
 
   UploadNPWP(File imageFile) async {
     var stream =
-    new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse(baseURL+"Upload");
+    var uri = Uri.parse(baseURL + "Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -303,7 +411,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
 
   // getImageSIUP from camera
   Future getImageSIUPFromCamera() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
+    final pickedFile =
+        await picker.getImage(source: ImageSource.camera, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -322,7 +431,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
 
   // getImageSIUP from gallery
   Future getImageSIUPFromGallery() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
+    final pickedFile =
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -341,9 +451,9 @@ class _StatusEditPageState extends State<StatusEditPage> {
 
   UploadSIUP(File imageFile) async {
     var stream =
-    new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse(baseURL+"Upload");
+    var uri = Uri.parse(baseURL + "Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -359,7 +469,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
 
   // getImageBusinessPhotoFront from camera
   Future getImageBusinessPhotoFrontFromCamera() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
+    final pickedFile =
+        await picker.getImage(source: ImageSource.camera, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -378,7 +489,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
 
   // getImageBusinessPhotoFront from gallery
   Future getImageBusinessPhotoFrontFromGallery() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
+    final pickedFile =
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -398,9 +510,10 @@ class _StatusEditPageState extends State<StatusEditPage> {
   // uploadBusinessPhotoFront
   UploadBusinessPhotoFront(File imageFile) async {
     var stream =
-    new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+        // ignore: deprecated_member_use
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse(baseURL+"Upload");
+    var uri = Uri.parse(baseURL + "Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -416,7 +529,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
 
   // getImageBusinessPhotoInside from camera
   Future getImageBusinessPhotoInsideFromCamera() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
+    final pickedFile =
+        await picker.getImage(source: ImageSource.camera, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -435,7 +549,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
 
   // getImageBusinessPhotoInside from gallery
   Future getImageBusinessPhotoInsideFromGallery() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
+    final pickedFile =
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -455,9 +570,9 @@ class _StatusEditPageState extends State<StatusEditPage> {
   // uploadBusinessPhotoInside
   UploadBusinessPhotoInside(File imageFile) async {
     var stream =
-    new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse(baseURL+"Upload");
+    var uri = Uri.parse(baseURL + "Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -473,7 +588,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
 
   // getImageSPPKP from camera
   Future getImageSPPKP() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
+    final pickedFile =
+        await picker.getImage(source: ImageSource.camera, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -492,7 +608,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
 
   // getImageSPPKP from gallery
   Future getImageSPPKPFromGallery() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
+    final pickedFile =
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
     var nows = DateTime.now();
     String dateNow = DateFormat("ddMMyyyy_hhmm").format(nows);
     var renamedFile = await File(pickedFile.path).rename(
@@ -512,9 +629,9 @@ class _StatusEditPageState extends State<StatusEditPage> {
   // uploadSPPKP
   UploadSPPKP(File imageFile) async {
     var stream =
-    new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse(baseURL+"Upload");
+    var uri = Uri.parse(baseURL + "Upload");
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -531,7 +648,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
   UploadSignatureSales(imageFile, String namaFile) async {
     //var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     //var length = await imageFile.length();
-    var uri = Uri.parse(baseURL+"Upload");
+    var uri = Uri.parse(baseURL + "Upload");
     var request = new http.MultipartRequest("POST", uri);
     //var multipartFile = new http.MultipartFile.fromBytes('file', imageFile,
     //filename: namaFile);
@@ -547,7 +664,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
   }
 
   UploadSignatureCustomer(imageFile, String namaFile) async {
-    var uri = Uri.parse(baseURL+"Upload");
+    var uri = Uri.parse(baseURL + "Upload");
     var request = new http.MultipartRequest("POST", uri);
     request.files.add(
         http.MultipartFile.fromBytes('file', imageFile, filename: namaFile));
@@ -560,9 +677,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
   }
 
   //hit api Category
-  var urlGetCategory = baseURL+"CustCategory";
+  var urlGetCategory = baseURL + "CustCategory";
   String _valCategory;
-
 
   // ignore: deprecated_member_use
   List<dynamic> _dataCategory = List();
@@ -573,7 +689,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    final response = await http.get(Uri.parse(urlGetCategory), headers: <String, String>{'authorization': basicAuth});
+    final response = await http.get(Uri.parse(urlGetCategory),
+        headers: <String, String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetCategory);
     setState(() {
@@ -593,7 +710,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
   }
 
   //Hit API Dropdown Segmen dan SubSegment
-  var urlGetSubSegment = baseURL+"CustSubSegment";
+  var urlGetSubSegment = baseURL + "CustSubSegment";
   String _valSegment, _valSubSegment;
 
   // ignore: deprecated_member_use
@@ -605,8 +722,11 @@ class _StatusEditPageState extends State<StatusEditPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    var urlGetSegment = baseURL+"CustSegment?bu=${widget.bu}";
-    final response = await http.get(Uri.parse(urlGetSegment),headers: <String,String>{'authorization': basicAuth}); //untuk melakukan request ke webservice
+    var urlGetSegment = baseURL + "CustSegment?bu=${widget.bu}";
+    final response = await http.get(Uri.parse(urlGetSegment),
+        headers: <String, String>{
+          'authorization': basicAuth
+        }); //untuk melakukan request ke webservice
     var listData = jsonDecode(response.body); //lalu kita decode hasil datanya
     print(urlGetSegment);
     setState(() {
@@ -631,7 +751,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    final response = await http.get(Uri.parse(urlGetSubSegment),headers: <String,String>{'authorization': basicAuth});
+    final response = await http.get(Uri.parse(urlGetSubSegment),
+        headers: <String, String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(SelectedSegment);
     setState(() {
@@ -656,7 +777,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
   }
 
   //hit api Class
-  var urlGetClass = baseURL+"CustClass";
+  var urlGetClass = baseURL + "CustClass";
   String _valClass;
   bool _selectedClass = false;
   List<dynamic> _dataClass = List();
@@ -667,7 +788,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    final response = await http.get(Uri.parse(urlGetClass),headers: <String,String>{'authorization': basicAuth});
+    final response = await http.get(Uri.parse(urlGetClass),
+        headers: <String, String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetClass);
     setState(() {
@@ -687,7 +809,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
   }
 
   //hit api CompanyStatus
-  var urlGetCompanyStatus = baseURL+"CustCompanyChain";
+  var urlGetCompanyStatus = baseURL + "CustCompanyChain";
   String _valCompanyStatus;
   bool _selectedCompanyStatus = false;
   List<dynamic> _dataCompanyStatus = List();
@@ -698,7 +820,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    final response = await http.get(Uri.parse(urlGetCompanyStatus),headers: <String,String>{'authorization': basicAuth});
+    final response = await http.get(Uri.parse(urlGetCompanyStatus),
+        headers: <String, String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetCompanyStatus);
     setState(() {
@@ -729,8 +852,10 @@ class _StatusEditPageState extends State<StatusEditPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    var urlGetPriceGroup = baseURL+"CustPriceGroup?so=${widget.so}&bu=${widget.bu}";
-    final response = await http.get(Uri.parse(urlGetPriceGroup),headers: <String,String>{'authorization': basicAuth});
+    var urlGetPriceGroup =
+        baseURL + "CustPriceGroup?so=${widget.so}&bu=${widget.bu}";
+    final response = await http.get(Uri.parse(urlGetPriceGroup),
+        headers: <String, String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetPriceGroup);
     setState(() {
@@ -750,7 +875,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
   }
 
   //hit api Currency
-  var urlGetCurrency = baseURL+"Currency";
+  var urlGetCurrency = baseURL + "Currency";
   String _valCurrency;
 
   // ignore: deprecated_member_use
@@ -762,7 +887,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    final response = await http.get(Uri.parse(urlGetCurrency),headers: <String,String>{'authorization': basicAuth});
+    final response = await http.get(Uri.parse(urlGetCurrency),
+        headers: <String, String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetCurrency);
     setState(() {
@@ -793,8 +919,9 @@ class _StatusEditPageState extends State<StatusEditPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    var urlGetBusinessUnit = baseURL+"ViewBU?BU=${widget.bu}";
-    final response = await http.get(Uri.parse(urlGetBusinessUnit),headers: <String,String>{'authorization': basicAuth});
+    var urlGetBusinessUnit = baseURL + "ViewBU?BU=${widget.bu}";
+    final response = await http.get(Uri.parse(urlGetBusinessUnit),
+        headers: <String, String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetBusinessUnit);
     setState(() {
@@ -825,8 +952,9 @@ class _StatusEditPageState extends State<StatusEditPage> {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
-    var urlGetSalesOffice = baseURL+"ViewSO?SO=${widget.so}";
-    final response = await http.get(Uri.parse(urlGetSalesOffice),headers: <String,String>{'authorization': basicAuth});
+    var urlGetSalesOffice = baseURL + "ViewSO?SO=${widget.so}";
+    final response = await http.get(Uri.parse(urlGetSalesOffice),
+        headers: <String, String>{'authorization': basicAuth});
     var listData = jsonDecode(response.body);
     print(urlGetSalesOffice);
     setState(() {
@@ -881,66 +1009,67 @@ class _StatusEditPageState extends State<StatusEditPage> {
   int taxID;
   int deliveryID;
 
+
   //Proses di submit button
   processSubmitCustomerForm(
-      //Customer
-      String customerNameCustomer,
-      String brandNameCustomer,
-      String categoryCustomer,
-      String segmenCustomer,
-      String subSegmenCustomer,
-      String selectClassCustomer,
-      String phoneCustomer,
-      String companyStatusCustomer,
-      String faxCustomer,
-      String contactPersonCustomer,
-      String emailAddressCustomer,
-      String npwpCustomer,
-      String ktpCustomer,
-      String siupCustomer,
-      String sppkpCustomer,
-      String currencyCustomer,
-      String salesofficeCustomer,
-      String pricegroupCustomer,
-      String businessunitCustomer,
-      String salesmanCustomer,
-      String websiteCustomer,
-      String longitudeCustomer,
-      String latitudeCustomer,
-      // bool buttonloc,
-      // Position getLoc,
+    //Customer
+    String customerNameCustomer,
+    String brandNameCustomer,
+    String categoryCustomer,
+    String segmenCustomer,
+    String subSegmenCustomer,
+    String selectClassCustomer,
+    String phoneCustomer,
+    String companyStatusCustomer,
+    String faxCustomer,
+    String contactPersonCustomer,
+    String emailAddressCustomer,
+    String npwpCustomer,
+    String ktpCustomer,
+    String siupCustomer,
+    String sppkpCustomer,
+    String currencyCustomer,
+    String salesofficeCustomer,
+    String pricegroupCustomer,
+    String businessunitCustomer,
+    String salesmanCustomer,
+    String websiteCustomer,
+    String longitudeCustomer,
+    String latitudeCustomer,
+    // bool buttonloc,
+    // Position getLoc,
 
-      //Company
-      String nameCompany,
-      String streetnameCompany,
-      String cityCompany,
-      String countryCompany,
-      String stateCompany,
-      String zipcodeCompany,
+    //Company
+    String nameCompany,
+    String streetnameCompany,
+    String cityCompany,
+    String countryCompany,
+    String stateCompany,
+    String zipcodeCompany,
 
-      //Tax
-      String nameTax,
-      String streetNameTax,
-      String cityTax,
-      String countryTax,
-      String stateTax,
-      String zipcodeTax,
+    //Tax
+    String nameTax,
+    String streetNameTax,
+    String cityTax,
+    String countryTax,
+    String stateTax,
+    String zipcodeTax,
 
-      //Delivery
-      String nameDelivery,
-      String streetNameDelivery,
-      String cityDelivery,
-      String countryDelivery,
-      String stateDelivery,
-      String zipcodeDelivery,
-      ) async {
+    //Delivery
+    String nameDelivery,
+    String streetNameDelivery,
+    String cityDelivery,
+    String countryDelivery,
+    String stateDelivery,
+    String zipcodeDelivery,
+  ) async {
     String usernameAuth = 'test';
     String passwordAuth = 'test456';
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$usernameAuth:$passwordAuth'));
     print(basicAuth);
     var urlEditSubmitCustomerForm =
-        baseURL+"NOOCustTables/" + widget.id.toString();
+        baseURL + "NOOCustTables/" + widget.id.toString();
     print("Ini url Post Submit Customer : $urlEditSubmitCustomerForm");
     var jsonSubmitCustomerForm = await http.put(
         Uri.parse(
@@ -991,7 +1120,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
           "CreatedDate": "2021-04-05T14:56:48.57",
           "TaxAddresses": [
             {
-              "id" : taxID,
+              "id": taxID,
               "Name": "$nameTax",
               "StreetName": "$streetNameTax",
               "City": "$cityTax",
@@ -1003,7 +1132,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
           ],
           "CompanyAddresses": [
             {
-              "id" : companyID,
+              "id": companyID,
               "Name": "$nameCompany",
               "StreetName": "$streetnameCompany",
               "City": "$cityCompany",
@@ -1015,7 +1144,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
           ],
           "DeliveryAddresses": [
             {
-              "id" : deliveryID,
+              "id": deliveryID,
               "Name": "$nameDelivery",
               "StreetName": "$streetNameDelivery",
               "City": "$cityDelivery",
@@ -1030,9 +1159,11 @@ class _StatusEditPageState extends State<StatusEditPage> {
     if (jsonSubmitCustomerForm.statusCode == 200) {
       return jsonDecode(jsonSubmitCustomerForm.body);
     } else {
+      print(jsonSubmitCustomerForm.statusCode);
       throw Exception("Failed");
     }
   }
+
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -1111,24 +1242,24 @@ class _StatusEditPageState extends State<StatusEditPage> {
     _zipCodeControllerDelivery.text = widget.deliveryZipCode;
     _longitudeControllerDelivery.text = widget.autoLongitudeData;
     _latitudeControllerDelivery.text = widget.autoLatitudeData;
-
   }
-
 
   String text = 'Press To Load';
   bool status = false;
 
   @override
   Widget build(BuildContext context) {
-
     print("ini customer page");
     final focus = FocusNode();
 
     print("Inilah jalanya WB : $streetName");
 
-    var ktpFormatter = new MaskTextInputFormatter(mask: '################', filter: { "#": RegExp(r'[0-9]') });
-    var npwpFormatter = new MaskTextInputFormatter(mask: '##.###.###.#-###.###', filter: { "#": RegExp(r'[0-9]') });
-    var phoneFormatter = new MaskTextInputFormatter(mask: '#### #### ####', filter: { "#": RegExp(r'[0-9]') });
+    var ktpFormatter = new MaskTextInputFormatter(
+        mask: '################', filter: {"#": RegExp(r'[0-9]')});
+    var npwpFormatter = new MaskTextInputFormatter(
+        mask: '##.###.###.#-###.###', filter: {"#": RegExp(r'[0-9]')});
+    var phoneFormatter = new MaskTextInputFormatter(
+        mask: '#### #### ####', filter: {"#": RegExp(r'[0-9]')});
 
     return Scaffold(
       appBar: AppBar(
@@ -1192,28 +1323,27 @@ class _StatusEditPageState extends State<StatusEditPage> {
                   ),
                   Container(
                       child: Expanded(
-                        child: TextFormField(
-                          textCapitalization: TextCapitalization.words,
-                          focusNode: focus,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter Customer Name!!';
-                            }
-                            return null;
-                          },
-                          textAlign: TextAlign.center,
-                          controller: _customerNameControllerCustomer,
-                          keyboardType: TextInputType.text,
-                          autofocus: false,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            hintText: 'Customer Name',
-                            filled: true,
-                            contentPadding: EdgeInsets.all(5),
-                          ),
-                        ),
-                      )
-                  )
+                    child: TextFormField(
+                      textCapitalization: TextCapitalization.words,
+                      focusNode: focus,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Customer Name!!';
+                        }
+                        return null;
+                      },
+                      textAlign: TextAlign.center,
+                      controller: _customerNameControllerCustomer,
+                      keyboardType: TextInputType.text,
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hintText: 'Customer Name',
+                        filled: true,
+                        contentPadding: EdgeInsets.all(5),
+                      ),
+                    ),
+                  ))
                 ],
               ),
               SizedBox(
@@ -1612,14 +1742,12 @@ class _StatusEditPageState extends State<StatusEditPage> {
                   Container(
                     child: Expanded(
                       child: TextFormField(
-                        inputFormatters: [
-                          ktpFormatter
-                        ],
+                        inputFormatters: [ktpFormatter],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter KTP!!';
                           }
-                          if(!(value.length > 15)&& value.isNotEmpty){
+                          if (!(value.length > 15) && value.isNotEmpty) {
                             return "KTP number less than 16 digits!!";
                           }
                           return null;
@@ -1658,14 +1786,12 @@ class _StatusEditPageState extends State<StatusEditPage> {
                   Container(
                     child: Expanded(
                       child: TextFormField(
-                        inputFormatters: [
-                          npwpFormatter
-                        ],
+                        inputFormatters: [npwpFormatter],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter NPWP!!';
                           }
-                          if(!(value.length > 15)&& value.isNotEmpty){
+                          if (!(value.length > 15) && value.isNotEmpty) {
                             return "NPWP number less than 15 digits!!";
                           }
                           return null;
@@ -1704,9 +1830,6 @@ class _StatusEditPageState extends State<StatusEditPage> {
                   Container(
                     child: Expanded(
                       child: TextFormField(
-                        inputFormatters: [
-                          phoneFormatter
-                        ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter Phone Number!!';
@@ -2354,7 +2477,6 @@ class _StatusEditPageState extends State<StatusEditPage> {
                     height: 10,
                   ),
 
-
                   //Country
                   Row(
                     children: <Widget>[
@@ -2529,7 +2651,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
                           child: TextFormField(
                             textCapitalization: TextCapitalization.words,
                             textAlign: TextAlign.center,
-                            controller:  _streetControllerDelivery,
+                            controller: _streetControllerDelivery,
                             keyboardType: TextInputType.text,
                             autofocus: false,
                             decoration: InputDecoration(
@@ -2712,7 +2834,9 @@ class _StatusEditPageState extends State<StatusEditPage> {
                 ],
               ),
 
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
 
               //Longlat label
               Row(
@@ -2721,7 +2845,9 @@ class _StatusEditPageState extends State<StatusEditPage> {
                   Column(
                     children: [
                       Text("Longitude"),
-                      SizedBox(height: 8,),
+                      SizedBox(
+                        height: 8,
+                      ),
                       Container(
                         width: 150,
                         child: TextFormField(
@@ -2730,11 +2856,15 @@ class _StatusEditPageState extends State<StatusEditPage> {
                       )
                     ],
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(
+                    width: 20,
+                  ),
                   Column(
                     children: [
                       Text("Latitude"),
-                      SizedBox(height: 8,),
+                      SizedBox(
+                        height: 8,
+                      ),
                       Container(
                         width: 150,
                         child: TextFormField(
@@ -2746,7 +2876,9 @@ class _StatusEditPageState extends State<StatusEditPage> {
                 ],
               ),
 
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
 
               //Location label
               Row(
@@ -2813,14 +2945,16 @@ class _StatusEditPageState extends State<StatusEditPage> {
                   //     },
                   //   ),
                   // ),
-                  Text(
-                      ""
-                  )
+                  Text("")
                 ],
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
 
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
 
               SizedBox(
                 height: 20,
@@ -2834,7 +2968,6 @@ class _StatusEditPageState extends State<StatusEditPage> {
                       "Attachment          :",
                     ),
                   ),
-
                 ],
               ),
               SizedBox(
@@ -2862,26 +2995,39 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child:_imageKTP == null ? Column(
-                                      children: [
-                                        Text("KTP"),
-                                        SizedBox(height: 10,),
-                                        Image.network(
-                                          baseURL+"Files/GetFiles?fileName=${widget.fotoktp}",
-                                        ),
-                                      ],
-                                    ):
-                                    Column(
-                                      children: [
-                                        Text("KTP"),
-                                        SizedBox(height: 10,),
-                                        Image.file(
-                                          _imageKTP,
-                                          fit: BoxFit.cover,
-                                        )
-                                      ],
-                                    )
-                                  ),
+                                      child: _imageKTP == null
+                                          ? Column(
+                                              children: [
+                                                Text("KTP"),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Image.network(
+                                                  baseURL +
+                                                      "Files/GetFiles?fileName=${widget.fotoktp}",
+                                                  filterQuality:
+                                                      FilterQuality.low,
+                                                  cacheHeight: 200,
+                                                  cacheWidth: 150,
+                                                ),
+                                              ],
+                                            )
+                                          : Column(
+                                              children: [
+                                                Text("KTP"),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Image.file(
+                                                  _imageKTP,
+                                                  filterQuality:
+                                                      FilterQuality.medium,
+                                                  cacheHeight: 200,
+                                                  cacheWidth: 150,
+                                                  fit: BoxFit.cover,
+                                                )
+                                              ],
+                                            )),
                                   SizedBox(
                                     height: 10,
                                   ),
@@ -2889,7 +3035,7 @@ class _StatusEditPageState extends State<StatusEditPage> {
                               ),
                               FloatingActionButton(
                                 onPressed: getImageKTPFromCamera,
-                                    // isImageCaptured = true;
+                                // isImageCaptured = true;
                                 tooltip: 'Pick Image',
                                 child: Icon(Icons.add_a_photo),
                               ),
@@ -2909,24 +3055,39 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageKTP == null ? Column(
-                                      children: [
-                                        Text("KTP"),
-                                        SizedBox(height: 10,),
-                                        Image.network(
-                                          baseURL+"Files/GetFiles?fileName=${widget.fotoktp}",
-                                        ),
-                                      ],
-                                    ): Column(
-                                      children: [
-                                        Text("KTP"),
-                                        SizedBox(height: 10,),
-                                        Image.file(
-                                          _imageKTP,
-                                          fit: BoxFit.cover,
-                                        )
-                                      ],
-                                    ),
+                                    child: _imageKTP == null
+                                        ? Column(
+                                            children: [
+                                              Text("KTP"),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Image.network(
+                                                baseURL +
+                                                    "Files/GetFiles?fileName=${widget.fotoktp}",
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                              ),
+                                            ],
+                                          )
+                                        : Column(
+                                            children: [
+                                              Text("KTP"),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Image.file(
+                                                _imageKTP,
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                                fit: BoxFit.cover,
+                                              )
+                                            ],
+                                          ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -2961,24 +3122,37 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageNPWP == null ? Column(
-                                      children: [
-                                        Text("NPWP"),
-                                        SizedBox(height: 10,),
-                                        Image.network(
-                                            baseURL+"Files/GetFiles?fileName=${widget.fotonpwp}"
-                                        ),
-                                      ],
-                                    ): Column(
-                                      children: [
-                                        Text("NPWP"),
-                                        SizedBox(height: 10,),
-                                        Image.file(
-                                          _imageNPWP,
-                                          fit: BoxFit.cover,
-                                        )
-                                      ]
-                                    ),
+                                    child: _imageNPWP == null
+                                        ? Column(
+                                            children: [
+                                              Text("NPWP"),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Image.network(
+                                                baseURL +
+                                                    "Files/GetFiles?fileName=${widget.fotonpwp}",
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                              ),
+                                            ],
+                                          )
+                                        : Column(children: [
+                                            Text("NPWP"),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Image.file(
+                                              _imageNPWP,
+                                              filterQuality:
+                                                  FilterQuality.medium,
+                                              cacheHeight: 200,
+                                              cacheWidth: 150,
+                                              fit: BoxFit.cover,
+                                            )
+                                          ]),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3006,22 +3180,39 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageNPWP == null ? Column(
-                                      children: [
-                                        Text("NPWP"),
-                                        SizedBox(height: 10,),
-                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotonpwp}",),
-                                      ],
-                                    ): Column(
-                                      children: [
-                                        Text("NPWP"),
-                                        SizedBox(height: 10,),
-                                        Image.file(
-                                          _imageNPWP,
-                                          fit: BoxFit.cover,
-                                        )
-                                      ],
-                                    ),
+                                    child: _imageNPWP == null
+                                        ? Column(
+                                            children: [
+                                              Text("NPWP"),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Image.network(
+                                                baseURL +
+                                                    "Files/GetFiles?fileName=${widget.fotonpwp}",
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                              ),
+                                            ],
+                                          )
+                                        : Column(
+                                            children: [
+                                              Text("NPWP"),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Image.file(
+                                                _imageNPWP,
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                                fit: BoxFit.cover,
+                                              )
+                                            ],
+                                          ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3056,22 +3247,39 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageSIUP == null ? Column(
-                                      children: [
-                                        Text("NIB"),
-                                        SizedBox(height: 10,),
-                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotonib}"),
-                                      ],
-                                    ): Column(
-                                      children: [
-                                        Text("NIB"),
-                                        SizedBox(height: 10,),
-                                        Image.file(
-                                          _imageSIUP,
-                                          fit: BoxFit.cover,
-                                        )
-                                      ],
-                                    ),
+                                    child: _imageSIUP == null
+                                        ? Column(
+                                            children: [
+                                              Text("NIB"),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Image.network(
+                                                baseURL +
+                                                    "Files/GetFiles?fileName=${widget.fotonib}",
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                              ),
+                                            ],
+                                          )
+                                        : Column(
+                                            children: [
+                                              Text("NIB"),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Image.file(
+                                                _imageSIUP,
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                                fit: BoxFit.cover,
+                                              )
+                                            ],
+                                          ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3099,22 +3307,37 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageSIUP == null ? Column(
-                                      children: [
-                                        Text("NIB"),
-                                        SizedBox(height: 10),
-                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotonib}"),
-                                      ],
-                                    ): Column(
-                                      children: [
-                                        Text("NIB"),
-                                        SizedBox(height: 10,),
-                                        Image.file(
-                                          _imageSIUP,
-                                          fit: BoxFit.cover,
-                                        )
-                                      ],
-                                    ),
+                                    child: _imageSIUP == null
+                                        ? Column(
+                                            children: [
+                                              Text("NIB"),
+                                              SizedBox(height: 10),
+                                              Image.network(
+                                                baseURL +
+                                                    "Files/GetFiles?fileName=${widget.fotonib}",
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                              ),
+                                            ],
+                                          )
+                                        : Column(
+                                            children: [
+                                              Text("NIB"),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Image.file(
+                                                _imageSIUP,
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                                fit: BoxFit.cover,
+                                              )
+                                            ],
+                                          ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3150,22 +3373,37 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageSPPKP == null ? Column(
-                                      children: [
-                                        Text(" SPPKP"),
-                                        SizedBox(height: 10),
-                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotosppkp}"),
-                                      ],
-                                    ): Column(
-                                      children: [
-                                        Text("SPPKP"),
-                                        SizedBox(height: 10,),
-                                        Image.file(
-                                          _imageSPPKP,
-                                          fit: BoxFit.cover,
-                                        )
-                                      ],
-                                    ),
+                                    child: _imageSPPKP == null
+                                        ? Column(
+                                            children: [
+                                              Text(" SPPKP"),
+                                              SizedBox(height: 10),
+                                              Image.network(
+                                                baseURL +
+                                                    "Files/GetFiles?fileName=${widget.fotosppkp}",
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                              ),
+                                            ],
+                                          )
+                                        : Column(
+                                            children: [
+                                              Text("SPPKP"),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Image.file(
+                                                _imageSPPKP,
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                                fit: BoxFit.cover,
+                                              )
+                                            ],
+                                          ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3193,22 +3431,37 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageSPPKP == null ? Column(
-                                      children: [
-                                        Text("SPPKP"),
-                                        SizedBox(height: 10),
-                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotosppkp}"),
-                                      ],
-                                    ): Column(
-                                      children: [
-                                        Text("SPPKP"),
-                                        SizedBox(height: 10,),
-                                        Image.file(
-                                          _imageSPPKP,
-                                          fit: BoxFit.cover,
-                                        )
-                                      ],
-                                    ),
+                                    child: _imageSPPKP == null
+                                        ? Column(
+                                            children: [
+                                              Text("SPPKP"),
+                                              SizedBox(height: 10),
+                                              Image.network(
+                                                baseURL +
+                                                    "Files/GetFiles?fileName=${widget.fotosppkp}",
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                              ),
+                                            ],
+                                          )
+                                        : Column(
+                                            children: [
+                                              Text("SPPKP"),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Image.file(
+                                                _imageSPPKP,
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                                fit: BoxFit.cover,
+                                              )
+                                            ],
+                                          ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3244,22 +3497,37 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageBusinessPhotoFront == null ? Column(
-                                      children: [
-                                        Text("Front View"),
-                                        SizedBox(height: 10),
-                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotofrontview}"),
-                                      ],
-                                    ): Column(
-                                      children: [
-                                        Text("Front View"),
-                                        SizedBox(height: 10,),
-                                        Image.file(
-                                          _imageBusinessPhotoFront,
-                                          fit: BoxFit.cover,
-                                        )
-                                      ],
-                                    ),
+                                    child: _imageBusinessPhotoFront == null
+                                        ? Column(
+                                            children: [
+                                              Text("Front View"),
+                                              SizedBox(height: 10),
+                                              Image.network(
+                                                baseURL +
+                                                    "Files/GetFiles?fileName=${widget.fotofrontview}",
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                              ),
+                                            ],
+                                          )
+                                        : Column(
+                                            children: [
+                                              Text("Front View"),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Image.file(
+                                                _imageBusinessPhotoFront,
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                                fit: BoxFit.cover,
+                                              )
+                                            ],
+                                          ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3287,22 +3555,39 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageBusinessPhotoFront == null ? Column(
-                                      children: [
-                                        Text("Front View"),
-                                        SizedBox(height: 10,),
-                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotofrontview}"),
-                                      ],
-                                    ): Column(
-                                      children: [
-                                        Text("Front View"),
-                                        SizedBox(height: 10,),
-                                        Image.file(
-                                          _imageBusinessPhotoFront,
-                                          fit: BoxFit.cover,
-                                        )
-                                      ],
-                                    ),
+                                    child: _imageBusinessPhotoFront == null
+                                        ? Column(
+                                            children: [
+                                              Text("Front View"),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Image.network(
+                                                baseURL +
+                                                    "Files/GetFiles?fileName=${widget.fotofrontview}",
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                              ),
+                                            ],
+                                          )
+                                        : Column(
+                                            children: [
+                                              Text("Front View"),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Image.file(
+                                                _imageBusinessPhotoFront,
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                                fit: BoxFit.cover,
+                                              )
+                                            ],
+                                          ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3310,7 +3595,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                 ],
                               ),
                               FloatingActionButton(
-                                onPressed: getImageBusinessPhotoFrontFromGallery,
+                                onPressed:
+                                    getImageBusinessPhotoFrontFromGallery,
                                 tooltip: 'Pick Image',
                                 child: Icon(Icons.photo_album),
                               ),
@@ -3338,22 +3624,39 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageBusinessPhotoInside == null ? Column(
-                                      children: [
-                                        Text("Inside View"),
-                                        SizedBox(height: 10,),
-                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotoinsideview}"),
-                                      ],
-                                    ): Column(
-                                      children: [
-                                        Text("Inside View"),
-                                        SizedBox(height: 10,),
-                                        Image.file(
-                                          _imageBusinessPhotoInside,
-                                          fit: BoxFit.cover,
-                                        )
-                                      ],
-                                    ),
+                                    child: _imageBusinessPhotoInside == null
+                                        ? Column(
+                                            children: [
+                                              Text("Inside View"),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Image.network(
+                                                baseURL +
+                                                    "Files/GetFiles?fileName=${widget.fotoinsideview}",
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                              ),
+                                            ],
+                                          )
+                                        : Column(
+                                            children: [
+                                              Text("Inside View"),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Image.file(
+                                                _imageBusinessPhotoInside,
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                                fit: BoxFit.cover,
+                                              )
+                                            ],
+                                          ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3361,7 +3664,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                 ],
                               ),
                               FloatingActionButton(
-                                onPressed: getImageBusinessPhotoInsideFromCamera,
+                                onPressed:
+                                    getImageBusinessPhotoInsideFromCamera,
                                 tooltip: 'Pick Image',
                                 child: Icon(Icons.add_a_photo),
                               ),
@@ -3381,22 +3685,37 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                     height: 10,
                                   ),
                                   Center(
-                                    child: _imageBusinessPhotoInside == null ? Column(
-                                      children: [
-                                        Text("Inside View"),
-                                        SizedBox(height: 10),
-                                        Image.network(baseURL+"Files/GetFiles?fileName=${widget.fotoinsideview}"),
-                                      ],
-                                    ): Column(
-                                      children: [
-                                        Text("Inside View"),
-                                        SizedBox(height: 10,),
-                                        Image.file(
-                                          _imageBusinessPhotoInside,
-                                          fit: BoxFit.cover,
-                                        )
-                                      ],
-                                    ),
+                                    child: _imageBusinessPhotoInside == null
+                                        ? Column(
+                                            children: [
+                                              Text("Inside View"),
+                                              SizedBox(height: 10),
+                                              Image.network(
+                                                baseURL +
+                                                    "Files/GetFiles?fileName=${widget.fotoinsideview}",
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                              ),
+                                            ],
+                                          )
+                                        : Column(
+                                            children: [
+                                              Text("Inside View"),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Image.file(
+                                                _imageBusinessPhotoInside,
+                                                filterQuality:
+                                                    FilterQuality.medium,
+                                                cacheHeight: 200,
+                                                cacheWidth: 150,
+                                                fit: BoxFit.cover,
+                                              )
+                                            ],
+                                          ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -3404,7 +3723,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                 ],
                               ),
                               FloatingActionButton(
-                                onPressed: getImageBusinessPhotoInsideFromGallery,
+                                onPressed:
+                                    getImageBusinessPhotoInsideFromGallery,
                                 tooltip: 'Pick Image',
                                 child: Icon(Icons.photo_album),
                               ),
@@ -3450,7 +3770,9 @@ class _StatusEditPageState extends State<StatusEditPage> {
                     front: Container(
                       child: Column(
                         children: [
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Text(
                             "Sales",
                             style: TextStyle(
@@ -3475,7 +3797,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
                             child: Container(
                               width: 355,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
                                   //Clear Canvass
@@ -3489,7 +3812,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                       ),
                                     ),
                                     onPressed: () {
-                                      setState(() => _signaturecontrollersales.clear());
+                                      setState(() =>
+                                          _signaturecontrollersales.clear());
                                     },
                                     // child: IconButton(
                                     //     icon: const Icon(
@@ -3511,7 +3835,9 @@ class _StatusEditPageState extends State<StatusEditPage> {
                     back: Container(
                       child: Column(
                         children: [
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Text(
                             "Customer",
                             style: TextStyle(
@@ -3522,10 +3848,13 @@ class _StatusEditPageState extends State<StatusEditPage> {
                             height: 10,
                           ),
                           Card(
-                            child: Signature(
-                              controller: _signaturecontrollercustomer,
+                            child: Container(
                               height: 300,
-                              backgroundColor: Colors.white,
+                              child: Image.network(
+                                baseURL +
+                                    "Files/GetFiles?fileName=${widget.fotocustsignature}",
+                                filterQuality: FilterQuality.medium,
+                              ),
                             ),
                           ),
                           //Oke dan button clear
@@ -3536,7 +3865,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
                             child: Container(
                               width: 355,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
                                   //Clear Canvass
@@ -3551,7 +3881,8 @@ class _StatusEditPageState extends State<StatusEditPage> {
                                       ),
                                       onPressed: () {
                                         setState(() =>
-                                            _signaturecontrollercustomer.clear());
+                                            _signaturecontrollercustomer
+                                                .clear());
                                       }),
                                   // IconButton(
                                   //     icon: const Icon(
@@ -3572,7 +3903,9 @@ class _StatusEditPageState extends State<StatusEditPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               // ignore: deprecated_member_use
               RaisedButton(
                 color: Colors.blue,
@@ -3580,18 +3913,16 @@ class _StatusEditPageState extends State<StatusEditPage> {
                   print(_formkey.currentState.validate());
                   if (_formkey.currentState.validate()) {
                     print("Ini proses submit");
-                    await UploadKTP(_imageKTP);
-                    await UploadNPWP(_imageNPWP);
-                    if(_imageSIUP!=null)await UploadSIUP(_imageSIUP);
-                    if(_imageSPPKP!=null)await UploadSPPKP(_imageSPPKP);
-                    await UploadBusinessPhotoFront(_imageBusinessPhotoFront);
-                    await UploadBusinessPhotoInside(_imageBusinessPhotoInside);
+                    if (_imageKTP !=null) await UploadKTP(_imageKTP);
+                    if (_imageNPWP !=null) await UploadNPWP(_imageNPWP);
+                    if (_imageSIUP != null) await UploadSIUP(_imageSIUP);
+                    if (_imageSPPKP != null) await UploadSPPKP(_imageSPPKP);
+                    if (_imageBusinessPhotoFront != null) await UploadBusinessPhotoFront(_imageBusinessPhotoFront);
+                    if (_imageBusinessPhotoInside != null) await UploadBusinessPhotoInside(_imageBusinessPhotoInside);
                     DataSignSales = await _signaturecontrollersales.toPngBytes();
-                    await UploadSignatureSales(
-                        DataSignSales, signatureSalesFromServer);
-                    DataSignCustomer = await _signaturecontrollercustomer.toPngBytes();
-                    await UploadSignatureCustomer(
-                        DataSignCustomer, signatureCustomerFromServer);
+                    await UploadSignatureSales(DataSignSales, signatureSalesFromServer);
+                    // DataSignCustomer = await _signaturecontrollercustomer.toPngBytes();
+                    // await UploadSignatureCustomer(DataSignCustomer, signatureCustomerFromServer);
                     processSubmitCustomerForm(
                       //Customer
                       _customerNameControllerCustomer.text,
@@ -3644,13 +3975,16 @@ class _StatusEditPageState extends State<StatusEditPage> {
                       _stateControllerDelivery.text,
                       _zipCodeControllerDelivery.text,
                     );
-                    successDialog(
-                        context,
-                        "Success"
-                    );
+                    successDialog(context, "Success");
                     Navigator.push(
                       context,
-                      new MaterialPageRoute(builder: (context) => new DashboardEmployeePage()),
+                      new MaterialPageRoute(
+                          builder: (context) => new DashboardEmployeePage(
+                            iduser: widget.id,
+                            username: widget.username,
+                            bu: widget.bu,
+                            so: widget.so,
+                          )),
                     );
                   }
                 },

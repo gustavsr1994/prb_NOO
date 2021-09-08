@@ -331,6 +331,32 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+
+          //Button Reject
+          // ignore: deprecated_member_use
+          RaisedButton(
+            color: Colors.blue,
+            onPressed: () {
+              getSharedPrefs();
+              processRejectButton(
+                  widget.id, 0, iduser, _remarkController.text);
+              Navigator.pop(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DashboardManagerPage()));
+              infoDialog(context, "Rejected");
+            },
+            child: Text(
+              "Reject",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 20,
+          ),
+          //button Approve
           // ignore: deprecated_member_use
           RaisedButton(
             color: Colors.blue,
@@ -360,30 +386,6 @@ class _ApprovalDetailPageState extends State<ApprovalDetailPage> {
               ),
             ),
           ),
-          SizedBox(
-            width: 20,
-          ),
-          //Button Reject
-          // ignore: deprecated_member_use
-          RaisedButton(
-            color: Colors.blue,
-            onPressed: () {
-              getSharedPrefs();
-              processRejectButton(
-                  widget.id, 0, iduser, _remarkController.text);
-              Navigator.pop(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => DashboardManagerPage()));
-              infoDialog(context, "Rejected");
-            },
-            child: Text(
-              "Reject",
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          )
         ],
       ),
     ):Container();
